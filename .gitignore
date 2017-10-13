@@ -1,0 +1,14 @@
+npm-debug.log*
+
+*.tmp
+.DS_Store
+logs
+log
+*.log
+*.swp
+node_modules
+.idea
+fecs.*
+
+dist
+
