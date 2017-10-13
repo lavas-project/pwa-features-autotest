@@ -26,6 +26,11 @@ console.log('\x1b[35m%s\x1b[0m', '[' + new Date().toLocaleString() + ']', '--web
 /* eslint-enable no-console */
 
 module.exports = {
+
+    // entry include
+    // 1. client entry js
+    // 2. all the test case entry js
+    // 3. all the test case service worker entry js
     entry: caseEntryFiles.reduce(
         function (result, filePath) {
             let caseName = filePath.replace(/\.js$/, '').slice(2);
@@ -40,7 +45,7 @@ module.exports = {
         filename: '[name].js',
         path: path.resolve(__dirname, './dist')
     },
-    devtool: mode === 'development' ? '#cheap-module-eval-source-map' : false,
+    // devtool: mode === 'development' ? '#eval-source-map' : false,
     module: {
         rules: [
             {

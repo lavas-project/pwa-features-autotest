@@ -1,11 +1,20 @@
+/**
+ * @file client entry js file
+ * @author clark-t (clarktanglei@163.com)
+ */
+
 import './index.styl';
 
 const caseList = process.env.CASE_ENTRY_LIST;
 
-async function test() {
-    return await 1;
+window.result = function (testCase, score) {
+    console.log(testCase + ' gets score:' + score);
+};
+
+function test(src) {
+    var iframe = document.createElement('iframe');
+    iframe.src = src;
+    document.body.appendChild(iframe);
 }
 
-console.log('hehe');
-
-test();
+caseList.forEach(test);
