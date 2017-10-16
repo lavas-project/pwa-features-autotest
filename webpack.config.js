@@ -45,11 +45,21 @@ module.exports = {
         filename: '[name].js',
         path: path.resolve(__dirname, './dist')
     },
-    devtool: mode === 'development' ? 'source-map' : false,
+    devtool: mode === 'development' ? 'cheap-module-eval-source-map' : false,
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
+        // host: 'localhost',
         port: 8849,
         inline: true
+    },
+    resolve: {
+        alias: {
+            /* eslint-disable camelcase */
+            'utils': path.resolve('./common/utils.js'),
+            'store': path.resolve('./common/store.js'),
+            'helper': path.resolve('./common/helper.js')
+            /* eslint-enable camelcase */
+        }
     },
     module: {
         rules: [
@@ -144,6 +154,7 @@ module.exports = {
             filename: 'index.html',
             chunks: ['index']
         })
+        // new webpack.HotModuleReplacementPlugin()
     ]
     .concat(
         caseIndexFiles.map(function (filePath) {
