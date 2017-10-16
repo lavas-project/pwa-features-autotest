@@ -1,1 +1,1 @@
-console.log('in sw --- 蛤蛤蛤!');
+console.log('in sw');

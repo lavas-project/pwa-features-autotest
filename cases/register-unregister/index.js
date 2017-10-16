@@ -17,11 +17,15 @@ async function main() {
 
     console.log('register!');
     console.log(sw);
+    console.log(await navigator.serviceWorker.getRegistration());
 
     await sleep(3000);
 
     const result = await sw.unregister();
     console.log('unregister!');
+    console.log(result);
+
+    console.log(await navigator.serviceWorker.getRegistration());
 }
 
 main();
