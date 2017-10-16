@@ -1,5 +1,5 @@
 /**
- * @file service worker related helper
+ * @file helper.js
  * @author clark -t (clarktanglei@163.com)
  */
 
