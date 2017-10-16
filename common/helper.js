@@ -28,7 +28,9 @@ export async function init() {
  * @return {Promise} promise object to block execute
  */
 export async function reload() {
-    return new Promise(location.reload);
+    return new Promise(() => {
+        location.reload();
+    });
 }
 
 /**
@@ -67,4 +69,37 @@ export function sleep(duration) {
     return new Promise(resolve => {
         setTimeout(resolve, duration);
     });
+}
+
+export function createStep({name, prefix = 'pwa-test-step-'}) {
+    const key = prefix + name;
+
+    const getStep = () => localStorage.getItem(key);
+
+    let stepNumber = -1;
+    let target = getStep();
+
+    const step = async function (fn) {
+        stepNumber++;
+
+        if (target == null || target < stepNumber) {
+            localStorage.setItem(key, stepNumber);
+            await reload();
+        }
+        else if (target === stepNumber) {
+            await fn();
+        }
+    };
+
+    step.getCurrentStep = function () {
+        return stepNumber;
+    };
+
+    step.getStep = getStep;
+
+    step.done = function () {
+        localStorage.removeItem(key);
+    };
+
+    return step;
 }
