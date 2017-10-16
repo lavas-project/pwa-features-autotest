@@ -45,7 +45,7 @@ module.exports = {
         filename: '[name].js',
         path: path.resolve(__dirname, './dist')
     },
-    // devtool: mode === 'development' ? '#eval-source-map' : false,
+    devtool: mode === 'development' ? 'source-map' : false,
     module: {
         rules: [
             {
@@ -66,14 +66,41 @@ module.exports = {
                 test: /\.styl$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader', 'postcss-loader', 'stylus-loader']
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: mode === 'development'
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: mode === 'development' ? 'inline' : false
+                            }
+                        },
+                        'stylus-loader'
+                    ]
                 })
             },
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
-                    use: ['css-loader', 'postcss-loader']
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: mode === 'development'
+                            }
+                        },
+                        {
+                            loader: 'postcss-loader',
+                            options: {
+                                sourceMap: mode === 'development' ? 'inline' : false
+                            }
+                        }
+                    ]
                 })
             },
             {
