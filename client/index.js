@@ -16,5 +16,3 @@ function test(src) {
     iframe.src = src;
     document.body.appendChild(iframe);
 }
-
-caseList.forEach(test);
