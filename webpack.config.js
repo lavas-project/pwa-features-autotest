@@ -46,6 +46,11 @@ module.exports = {
         path: path.resolve(__dirname, './dist')
     },
     devtool: mode === 'development' ? 'source-map' : false,
+    devServer: {
+        contentBase: path.join(__dirname, 'dist'),
+        port: 8849,
+        inline: true
+    },
     module: {
         rules: [
             {

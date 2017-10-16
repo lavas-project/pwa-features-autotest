@@ -8,7 +8,7 @@ setTimeout(function () {
     && parent.result
     && typeof parent.result === 'function'
     && parent.result('global', 'haha')
-    || console.log('global haha...');
+    || console.log('global hehe...');
 }, 5000);
 
 console.log('in global');
