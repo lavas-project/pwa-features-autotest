@@ -100,7 +100,11 @@ self.addEventListener('install', function (event) {
         matchCache = await cache1.match(urlPut);
         value = Number(!matchCache);
         await featureStore.setItem('cache.delete', value);
-        console.log('- cache delete done -', value, matchCache);
+        console.log('- cache delete done -', value);
+
+        // delete test cache
+        await caches.delete('caches-1');
+        console.log('- cache test done -');
 
     })());
     /* eslint-enable */

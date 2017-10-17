@@ -33,6 +33,7 @@ const list = [
         return;
     }
 
+    console.log('sw-cache register');
     const reg = await navigator.serviceWorker.register('./sw-cache.js', {scope: '/cases/cache/'});
     await sleep(5000);
     await reg.unregister();
