@@ -11,8 +11,6 @@ export const SCOPE = '/cases/skipwaiting/';
 async function main() {
     await init(SCOPE);
 
-    // log.init();
-
     log('start to register sw-1!');
     let reg1 = await register(SCOPE + 'sw-1.js', SCOPE);
     log('Registered sw-1:', reg1);

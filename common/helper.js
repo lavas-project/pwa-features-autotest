@@ -77,17 +77,16 @@ export function limit(fn, time) {
     return new Promise((resolve, reject) => {
         fn().then(resolve);
         sleep(time).then(reject);
-    })
-    // return Promise.race([fn(), sleep(time)]);
+    });
 }
 
-export function until(fn, interval) {
+export function until(fn, interval = 50) {
     return new Promise(resolve => {
         let timer = setInterval(
             async () => {
                 if (await fn()) {
-                    resolve();
                     clearInterval(timer);
+                    resolve();
                 }
             },
             interval
@@ -106,12 +105,11 @@ export function createStep({name, prefix = 'pwa-test-step-'}) {
 
     const step = async fn => {
         stepNumber++;
-        if (target == null || target < stepNumber) {
+
+        if (target === stepNumber) {
+            await fn();
             localStorage.setItem(key, stepNumber);
             await reload();
-        }
-        else if (target === stepNumber) {
-            await fn();
         }
     };
 
