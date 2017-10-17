@@ -76,12 +76,11 @@ export function createStep({name, prefix = 'pwa-test-step-'}) {
 
     const getStep = () => localStorage.getItem(key);
 
-    let stepNumber = -1;
-    let target = getStep();
+    let stepNumber = 0;
+    let target = +getStep();
 
     const step = async function (fn) {
         stepNumber++;
-
         if (target == null || target < stepNumber) {
             localStorage.setItem(key, stepNumber);
             await reload();
