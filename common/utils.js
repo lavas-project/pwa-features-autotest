@@ -3,11 +3,6 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-// init
-export function init() {
-
+export function isFunction(obj) {
+    return typeof obj === 'function';
 }
-
-
-
-

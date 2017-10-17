@@ -5,14 +5,27 @@
 
 import {sleep} from 'helper';
 
+export const CHECK_LIST = [
+    'navigator.serviceWorker',
+    'navigator.serviceWorker.ready',
+    'Registered',
+    'Unregistered'
+];
+
+export const SCOPE = '/cases/register-unregister/';
+
 async function main() {
     if (!navigator.serviceWorker) {
         return;
     }
 
+    navigator.serviceWorker.ready.then(() => {
+        console.log('sw is ready');
+    });
+
     const sw = await navigator.serviceWorker.register(
         '/cases/register-unregister/sw.js',
-        {scope: '/cases/register-unregister/'}
+        {scope: SCOPE}
     );
 
     console.log('register!');
