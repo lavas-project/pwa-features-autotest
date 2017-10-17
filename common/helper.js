@@ -6,19 +6,23 @@
 /**
  * unregister sw controller and then reload the page
  */
-export async function init() {
+export async function init(scope) {
     const sw = navigator.serviceWorker;
 
     if (!sw) {
         return;
     }
 
-    const reg = await sw.getRegistration();
+    const reg = await sw.getRegistration(scope);
 
     if (reg && reg.unregister) {
         await reg.unregister();
         await reload();
     }
+}
+
+export async function register(filePath, scope) {
+    return navigator.serviceWorker.register(filePath, {scope});
 }
 
 /**
@@ -56,7 +60,7 @@ export async function one(target, event, fn) {
         }
 
         target.addEventListener(event, handler);
-    })
+    });
 }
 
 /**
@@ -66,20 +70,41 @@ export async function one(target, event, fn) {
  * @return {Promise} promise
  */
 export function sleep(duration) {
+    return new Promise(resolve => setTimeout(resolve, duration));
+}
+
+export function limit(fn, time) {
+    return new Promise((resolve, reject) => {
+        fn().then(resolve);
+        sleep(time).then(reject);
+    })
+    // return Promise.race([fn(), sleep(time)]);
+}
+
+export function until(fn, interval) {
     return new Promise(resolve => {
-        setTimeout(resolve, duration);
+        let timer = setInterval(
+            async () => {
+                if (await fn()) {
+                    resolve();
+                    clearInterval(timer);
+                }
+            },
+            interval
+        );
     });
 }
+
 
 export function createStep({name, prefix = 'pwa-test-step-'}) {
     const key = prefix + name;
 
-    const getStep = () => localStorage.getItem(key);
+    const getStep = () => +localStorage.getItem(key);
 
     let stepNumber = 0;
-    let target = +getStep();
+    let target = getStep();
 
-    const step = async function (fn) {
+    const step = async fn => {
         stepNumber++;
         if (target == null || target < stepNumber) {
             localStorage.setItem(key, stepNumber);
@@ -90,13 +115,17 @@ export function createStep({name, prefix = 'pwa-test-step-'}) {
         }
     };
 
-    step.getCurrentStep = function () {
-        return stepNumber;
+    step.getCurrentStep = () => stepNumber;
+
+    step.getTargetStep = getStep;
+
+    step.beforeRun = async fn => {
+        if (target === 0 && stepNumber === 0) {
+            await fn();
+        }
     };
 
-    step.getStep = getStep;
-
-    step.done = function () {
+    step.done = () => {
         localStorage.removeItem(key);
     };
 

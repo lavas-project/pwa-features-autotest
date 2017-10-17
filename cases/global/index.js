@@ -23,10 +23,10 @@ async function main() {
     console.log('step 3:');
     await step(sleep.bind(null, 4000));
     console.log('step number:');
-    console.log(step.getStep());
+    console.log(step.getTargetStep());
     console.log('execute done:');
     step.done();
-    console.log(step.getStep());
+    console.log(step.getTargetStep());
     console.log('finish!');
 }
 
