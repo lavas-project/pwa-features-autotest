@@ -1,5 +1,5 @@
 /**
- * @file push-test
+ * @file sw-push
  * @author ruoran (liuruoran@baidu.com)
  */
 
@@ -14,21 +14,16 @@ self.addEventListener('activate', function (event) {
     console.log('Activate event');
 });
 
-self.addEventListener('push', function (event) {
+self.addEventListener('push', async function (event) {
     console.log('Push event');
-    event.waitUntil(self.registration.showNotification('Hi', {
-        body: 'push event works.',
+
+    event.waitUntil(self.registration.showNotification('Push', {
+        body: 'push event done.',
         icon: 'https://avatars2.githubusercontent.com/u/29660949?s=200&v=4'
     }));
-    featureStore.setItem('pushEvent', 1);
+
+    await featureStore.setItem('pushEvent', 1);
+    console.log('- pushEvent done -', 1);
 });
 
-
-self.addEventListener('notificationclick', function (event) {
-    console.log('NotificationClick event');
-    event.notification.close();
-    event.waitUntil(
-        self.clients.openWindow('https://lavas.baidu.com/ready')
-    );
-});
 

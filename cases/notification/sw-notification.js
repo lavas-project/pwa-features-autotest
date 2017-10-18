@@ -1,5 +1,5 @@
 /**
- * @file push-test
+ * @file sw-notification
  * @author ruoran (liuruoran@baidu.com)
  */
 

@@ -11,7 +11,7 @@ const list = [
     'notification.requestPermission',
     'showNotification',
     'getNotification',
-    'notificationclick' // 统计中可忽略
+    'notificationclick' // no statistics
 ];
 
 (async function () {
