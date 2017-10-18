@@ -5,30 +5,30 @@
 
 import {featureStore} from 'store';
 
-self.oninstall = function (event) {
+self.addEventListener('install', function (event) {
+    console.log('Install event');
     self.skipWaiting();
-};
+});
 
-self.onactivate = function () {
-    if (self.clients && self.clients.claim) {
-        self.clients.claim();
-    }
-};
+self.addEventListener('activate', function (event) {
+    console.log('Activate event');
+});
 
 self.addEventListener('push', function (event) {
-    event.waitUntil(self.registration.showNotification('Hmmm, how lucky you are', {
-        body: 'Yay it works.',
-        icon: 'https://p5.ssl.qhimg.com/t01245986c32f09718d.png'
+    console.log('Push event');
+    event.waitUntil(self.registration.showNotification('Hi', {
+        body: 'push event works.',
+        icon: 'https://avatars2.githubusercontent.com/u/29660949?s=200&v=4'
     }));
     featureStore.setItem('pushEvent', 1);
 });
 
 
 self.addEventListener('notificationclick', function (event) {
-
+    console.log('NotificationClick event');
     event.notification.close();
     event.waitUntil(
-        self.clients.openWindow('https://ispwaready.toxicjohann.com')
+        self.clients.openWindow('https://lavas.baidu.com/ready')
     );
 });
 
