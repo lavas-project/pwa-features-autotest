@@ -29,18 +29,6 @@ self.addEventListener('install', e => {
     }
 });
 
-self.addEventListener('install', e => {
-    console.log('in sw1: install2');
-    if (e.waitUntil) {
-        e.waitUntil(
-            sleep(2000)
-            .then(() => {
-                console.log('in sw1: install wait until after 2s');
-            })
-        );
-    }
-});
-
 self.addEventListener('activate', async e => {
     console.log('in sw1: activate');
     e.waitUntil(

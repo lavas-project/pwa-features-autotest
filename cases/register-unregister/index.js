@@ -3,42 +3,49 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {sleep} from 'helper';
+import {init, sleep, zero, score} from 'helper';
+import {featureStore} from 'store';
+import {log} from 'log';
 
 export const CHECK_LIST = [
-    'navigator.serviceWorker',
     'navigator.serviceWorker.ready',
     'Registered',
     'Unregistered'
 ];
 
-export const SCOPE = '/cases/register-unregister/';
+const SCOPE = '/cases/register-unregister/';
 
 async function main() {
-    if (!navigator.serviceWorker) {
+    await init();
+    await zero(CHECK_LIST);
+
+    if (navigator.serviceWorker.ready) {
+        navigator.serviceWorker.ready.then(() => {
+            featureStore.setItem('navigator.serviceWorker.ready', 1);
+            log('sw is ready');
+        });
+    }
+    else {
+        log('unsupport navigator.serviceWorker.ready');
+    }
+
+    if (!navigator.serviceWorker.register) {
+        log('unsupport navigator.serviceWorker.register');
         return;
     }
 
-    navigator.serviceWorker.ready.then(() => {
-        console.log('sw is ready');
-    });
+    const reg = await navigator.serviceWorker.register(SCOPE + 'sw.js', {scope: SCOPE});
 
-    const sw = await navigator.serviceWorker.register(
-        '/cases/register-unregister/sw.js',
-        {scope: SCOPE}
-    );
+    await score('Registered', 1);
+    log('sw is registered:', reg);
 
-    console.log('register!');
-    console.log(sw);
-    console.log(await navigator.serviceWorker.getRegistration());
-
+    log('sleep for 3s...');
     await sleep(3000);
 
-    const result = await sw.unregister();
-    console.log('unregister!');
-    console.log(result);
+    const result = await reg.unregister();
 
-    console.log(await navigator.serviceWorker.getRegistration());
+    score('Unregistered', 1);
+    log('sw is unregistered:', result);
 }
 
 main();

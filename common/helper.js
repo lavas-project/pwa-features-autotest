@@ -3,26 +3,53 @@
  * @author clark -t (clarktanglei@163.com)
  */
 
+import {featureStore} from 'store';
+
 /**
  * unregister sw controller and then reload the page
  */
-export async function init(scope) {
+export async function init(scopes) {
     const sw = navigator.serviceWorker;
 
-    if (!sw) {
+    if (!sw || typeof sw.getRegistration !== 'function') {
         return;
     }
 
-    const reg = await sw.getRegistration(scope);
+    let results = await unregister(scopes);
 
-    if (reg && reg.unregister) {
-        await reg.unregister();
+    if (results.some(result => result === true)) {
         await reload();
     }
 }
 
 export async function register(filePath, scope) {
     return navigator.serviceWorker.register(filePath, {scope});
+}
+
+export async function unregister(scopes) {
+    let arr = Array.isArray(scopes) ? scopes : [scopes];
+
+    return await Promise.all(
+        arr.map(async scope => {
+            let reg;
+
+            switch (typeof scope) {
+                case 'string':
+                case 'undefined':
+                    reg = await navigator.serviceWorker.getRegistration(scope);
+                    break;
+                case 'object':
+                    reg = scope;
+                    break;
+                default:
+                    break;
+            }
+
+            if (reg) {
+                return await reg.unregister();
+            }
+        })
+    );
 }
 
 /**
@@ -94,22 +121,33 @@ export function until(fn, interval = 50) {
     });
 }
 
+export function zero(list) {
+    return Promise.all(list.map(feature => score(feature, 0)));
+}
+
+export function score(feature, score) {
+    return featureStore.setItem(feature, score);
+}
 
 export function createStep({name, prefix = 'pwa-test-step-'}) {
     const key = prefix + name;
 
     const getStep = () => +localStorage.getItem(key);
 
-    let stepNumber = 0;
+    let stepNumber = -1;
     let target = getStep();
 
-    const step = async fn => {
+    const step = async (fn, needReload = true) => {
         stepNumber++;
 
         if (target === stepNumber) {
             await fn();
-            localStorage.setItem(key, stepNumber);
-            await reload();
+            target++;
+
+            if (needReload) {
+                localStorage.setItem(key, target);
+                await reload();
+            }
         }
     };
 
@@ -129,3 +167,7 @@ export function createStep({name, prefix = 'pwa-test-step-'}) {
 
     return step;
 }
+
+// export function createQueue(name, prefix = 'pwa-test-queue-') {
+//     const queue = async ()
+// }

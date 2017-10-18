@@ -3,7 +3,8 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, createStep, one, sleep} from 'helper';
+import {init, createStep, one, sleep, register} from 'helper';
+import {featureStore} from 'store';
 
 export const SCOPE = '/cases/lifecycle/';
 
@@ -13,17 +14,12 @@ async function main() {
 
     // await step.beforeRun(init);
 
-    if (navigator.serviceWorker.ready) {
-        navigator.serviceWorker.ready.then(() => {
-            console.log('sw is ready!');
-        });
-    }
 
-    console.log('start to register sw-1!');
-    navigator.serviceWorker.addEventListener('controllerchange', e => {
-        console.log('controller change!');
-    });
-    console.log('register sw-1!');
+    // console.log('start to register sw-1!');
+    // navigator.serviceWorker.addEventListener('controllerchange', e => {
+    //     console.log('controller change!');
+    // });
+    // console.log('register sw-1!');
 
     let reg = await navigator.serviceWorker.register('/cases/lifecycle/sw-1.js', {scope: SCOPE});
     console.log('Registered!');
@@ -36,6 +32,23 @@ async function main() {
     await sleep(5000);
     let unreg = await reg2.unregister();
     console.log('unregister:' + unreg);
+}
+
+function testReady() {
+    if (navigator.serviceWorker.ready) {
+        navigator.serviceWorker.ready.then(() => {
+            console.log('sw is ready!');
+        });
+    }
+}
+
+function testOnControllerChange() {
+    let num = 0;
+
+    navigator.serviceWorker.oncontrollerchange = e => {
+        num += 0.5;
+        featureStore.setItem('oncontrollerchange', num);
+    };
 }
 
 main();

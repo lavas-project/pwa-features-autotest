@@ -1,1 +1,9 @@
-console.log('this is sw');
+const CHECK_LIST = [
+    'Request',
+    'Response',
+    'fetch',
+    'Cache',
+    'caches',
+    'Promise',
+    'indexedDB'
+];
