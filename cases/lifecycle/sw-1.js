@@ -83,16 +83,40 @@ function testActivateWaitUntil() {
     log('lifecycle sw-1: activateEvent.waitUntil test');
     let score = 0;
 
+    self.addEventListener('install', e => {
+        listenToState()
+    });
+
     self.addEventListener('activate', e => {
+        listenToState();
+
         e.waitUntil(sleep(1000).then(() => {
             score = 0.5;
             log('lifecycle sw-1: activateEvent.waitUntil wait for 1s');
             log('lifecycle sw-1: current state is', self.registration.active.state);
         }));
+    });
 
-        self.registration.active.onstatechange = () => {
-            let state = self.registration.active.state;
-            log('lifecycle sw-1: active state change to', state);
+    let hasListenToState = false;
+    function listenToState() {
+        if (hasListenToState) {
+            return;
+        }
+
+        let sw = self.registration.installing || self.registration.waiting || self.registration.active;
+
+        if (!sw) {
+            return;
+        }
+
+        one(sw, 'statechange', () => {
+            grade('onstatechange', 1);
+        });
+
+        sw.onstatechange = () => {
+            let state = sw.state;
+            log('lifecycle sw-1: state change to', state);
+
             if (state === 'activated' && score === 0.5) {
                 grade('activateEvent.waitUntil', 1);
                 log('lifecycle sw-1: activateEvent.waitUntil success');
@@ -101,5 +125,7 @@ function testActivateWaitUntil() {
                 log('lifecycle sw-1: activateEvent.waitUntil fail');
             }
         };
-    });
+
+        hasListenToState = true;
+    }
 }
