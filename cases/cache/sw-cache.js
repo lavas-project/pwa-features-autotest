@@ -4,9 +4,10 @@
  */
 
 import {featureStore} from 'store';
+import {log} from 'log';
 
 self.addEventListener('install', function (event) {
-    console.log('Install event');
+    log('Install event');
 
     const baseUrl = '/cache/';
 
@@ -21,21 +22,21 @@ self.addEventListener('install', function (event) {
         value = Number(hasCaches1);
         await featureStore.setItem('caches.open', value);
         await featureStore.setItem('caches.has', value);
-        console.log('- caches open/has done -', value);
+        log('- caches open/has done -', value);
 
         // caches.keys
         await caches.open('caches-2');
         const hasCachesKeys = await caches.keys('caches-keys');
         value = Number(hasCachesKeys && hasCachesKeys.length >= 2);
         await featureStore.setItem('caches.keys', value);
-        console.log('- caches keys done -', value, hasCachesKeys);
+        log('- caches keys done -', value, hasCachesKeys);
 
         // caches.delete
         await caches.delete('caches-2');
         const hasCaches2 = await caches.has('caches-2');
         value = Number(!hasCaches2);
         await featureStore.setItem('caches.delete', value);
-        console.log('- caches delete done -', value);
+        log('- caches delete done -', value);
 
         // cache.add
         const urlAdd = baseUrl + 'add';
@@ -50,7 +51,7 @@ self.addEventListener('install', function (event) {
         value = Number(matchCachesData.data === urlAdd);
         await featureStore.setItem('cache.add', value);
         await featureStore.setItem('caches.match', value);
-        console.log('- caches match done -', value);
+        log('- caches match done -', value);
 
         // cache.match
         let matchCache = await cache1.match(urlAdd);
@@ -58,8 +59,8 @@ self.addEventListener('install', function (event) {
         value = Number(matchCacheData.data === urlAdd);
         await featureStore.setItem('cache.add', value);
         await featureStore.setItem('cache.match', value);
-        console.log('- cache add done -', value);
-        console.log('- cache match done -', value);
+        log('- cache add done -', value);
+        log('- cache match done -', value);
 
         // cache.addAll
         const urlAddAll = [
@@ -73,14 +74,14 @@ self.addEventListener('install', function (event) {
 
         const cacheKeys = await cache1.keys();
         value = Number(cacheKeys && cacheKeys.length >= 4);
-        console.log('- cache addAll done -', value, cacheKeys);
+        log('- cache addAll done -', value, cacheKeys);
 
 
         // cache.matchAll
         const matchAllCache = await cache1.matchAll(baseUrl);
         value = Number(matchAllCache && matchAllCache.length >= 4);
         await featureStore.setItem('cache.matchAll', value);
-        console.log('- cache matchAll done -', value, matchAllCache);
+        log('- cache matchAll done -', value, matchAllCache);
 
 
         // cache.put
@@ -93,18 +94,18 @@ self.addEventListener('install', function (event) {
         matchCacheData = await matchCache.json();
         value = Number(matchCacheData.data === urlPut);
         await featureStore.setItem('cache.put', value);
-        console.log('- cache put done -', value);
+        log('- cache put done -', value);
 
         // cache.delete
         await cache1.delete(urlPut);
         matchCache = await cache1.match(urlPut);
         value = Number(!matchCache);
         await featureStore.setItem('cache.delete', value);
-        console.log('- cache delete done -', value);
+        log('- cache delete done -', value);
 
         // delete test cache
         await caches.delete('caches-1');
-        console.log('- cache test done -');
+        log('- cache test done -');
 
     })());
     /* eslint-enable */
@@ -113,6 +114,6 @@ self.addEventListener('install', function (event) {
 });
 
 self.addEventListener('activate', function (event) {
-    console.log('Activate event');
+    log('Activate event');
 });
 

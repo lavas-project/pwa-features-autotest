@@ -4,7 +4,8 @@
  */
 
 import {featureStore} from 'store';
-import {sleep} from 'helper';
+import {sleep, showCaseName} from 'helper';
+import {log} from 'log';
 const list = [
     'caches.open',
     'caches.has',
@@ -21,7 +22,9 @@ const list = [
 ];
 
 (async function () {
-    console.log('<< cache test >>');
+    showCaseName('cache');
+
+    log('<< cache test >>');
 
     // init store
     list.map(async item => {
@@ -33,10 +36,15 @@ const list = [
         return;
     }
 
-    console.log('sw-cache register');
+    log('sw-cache register');
     const reg = await navigator.serviceWorker.register('./sw-cache.js', {scope: '/cases/cache/'});
     await sleep(5000);
     await reg.unregister();
-    console.log('sw-cache unregister');
+    log('sw-cache unregister');
+
+    if (parent) {
+        log('cache parent result');
+        parent.result('cache');
+    }
 
 })();

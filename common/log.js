@@ -37,7 +37,7 @@ function init() {
     if (typeof document !== 'undefined') {
         wrapper = document.createElement('div');
         wrapper.style.wordBreak = 'break-all';
-        wrapper.style.background = '#dcdcdc';
+        wrapper.style.background = 'rgba(0,0,0,0.5)';
         document.body.appendChild(wrapper);
 
         const tictok = () => setTimeout(async () => {
@@ -93,7 +93,7 @@ export function mainLog(...args) {
     let html = logStack.sort((a, b) => a[0] - b[0])
         .map(msg => {
             let str = msg.slice(1).join(' - ');
-            return `<div style="word-break: break-all; color: #f00">${str}</div>`;
+            return `<div style="word-break: break-all; color: #fff">${str}</div>`;
         })
         .join('');
 

@@ -4,23 +4,21 @@
  */
 
 import {featureStore} from 'store';
+import {log} from 'log';
 
 self.addEventListener('install', function (event) {
-    console.log('Install event');
+    log('Install event');
     self.skipWaiting();
 });
 
 self.addEventListener('activate', function (event) {
-    console.log('Activate event');
+    log('Activate event');
 });
 
 self.addEventListener('notificationclick', async function (event) {
 
     await featureStore.setItem('notificationclick', 1);
-    console.log('- notificationclick done -', 1);
+    log('- notificationclick done -', 1);
     event.notification.close();
-    if (self.clients.openWindow) {
-        self.clients.openWindow('/');
-    }
 });
 

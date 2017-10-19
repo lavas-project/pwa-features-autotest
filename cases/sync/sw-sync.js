@@ -4,18 +4,19 @@
  */
 
 import {featureStore} from 'store';
+import {log} from 'log';
 
 self.addEventListener('install', function (event) {
-    console.log('Install event');
+    log('Install event');
     self.skipWaiting();
 });
 
 self.addEventListener('activate', function (event) {
-    console.log('Activate event');
+    log('Activate event');
 });
 
 self.addEventListener('sync', function (event) {
-    console.log('Sync event', event);
+    log('Sync event', event);
     featureStore.setItem('syncEvent', 1);
 });
 

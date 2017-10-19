@@ -213,3 +213,10 @@ export function createStepTest(totalStep, onSuccess, onFail) {
 
     return tester;
 }
+
+export function showCaseName(caseName) {
+    let div = document.createElement('div');
+    div.style = "width:100%;height:20px;text-align:center;background:rgba(0,0,0,0.5);color:#fff;position:fixed;top:0;left:0";
+    div.innerHTML = caseName;
+    document.body.appendChild(div);
+}

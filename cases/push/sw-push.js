@@ -4,18 +4,19 @@
  */
 
 import {featureStore} from 'store';
+import {log} from 'log';
 
 self.addEventListener('install', function (event) {
-    console.log('Install event');
+    log('Install event');
     self.skipWaiting();
 });
 
 self.addEventListener('activate', function (event) {
-    console.log('Activate event');
+    log('Activate event');
 });
 
 self.addEventListener('push', async function (event) {
-    console.log('Push event');
+    log('Push event');
 
     event.waitUntil(self.registration.showNotification('Push', {
         body: 'push event done.',
@@ -23,7 +24,7 @@ self.addEventListener('push', async function (event) {
     }));
 
     await featureStore.setItem('pushEvent', 1);
-    console.log('- pushEvent done -', 1);
+    log('- pushEvent done -', 1);
 });
 
 

@@ -4,10 +4,13 @@
  */
 
 import {featureStore} from 'store';
-import {sleep} from 'helper';
+import {sleep, showCaseName} from 'helper';
+import {log} from 'log';
 
 (async function () {
-    console.log('<< sync test >>');
+    showCaseName('sync');
+
+    log('<< sync test >>');
 
     // sw support
     if (!navigator.serviceWorker) {
@@ -17,7 +20,7 @@ import {sleep} from 'helper';
     featureStore.setItem('syncEvent', 0);
 
     // syncEvent
-    console.log('- syncEvent test -');
+    log('- syncEvent test -');
     const reg = await navigator.serviceWorker.register('./sw-sync.js', {scope: '/cases/sync/'});
     await sleep(3000);
 
@@ -25,11 +28,11 @@ import {sleep} from 'helper';
     try {
         const tags = await reg.sync.getTags();
         if (tags.includes('syncEventTest')) {
-            console.log('exist syncEventTest background');
+            log('exist syncEventTest background');
         }
         else {
             reg.sync.register('syncEventTest');
-            console.log('Sync registered');
+            log('Sync registered');
         }
     }
     catch (error) {

@@ -5,7 +5,9 @@
 
 import 'whatwg-fetch';
 import {featureStore} from 'store';
-import {sleep} from 'helper';
+import {sleep, showCaseName} from 'helper';
+import {log} from 'log';
+const webpush = require('web-push');
 const list = [
     'pushManager', // no statistics
     'pushManager.permissionState',
@@ -15,12 +17,14 @@ const list = [
     'pushEvent' // no statistics
 ];
 
-const applicationServerKey = urlB64ToUint8Array(
-    'BDm6z7ImnFDW6GJ3bwtFdR4ifKGE0CVGXNRfGJhWGm8gwX1sXHH9uq3zo6mYd7fkjVrzfiDHhS5gYfCbxj2g-Bo'
-);
+const vapidKeys = webpush.generateVAPIDKeys();
+
+const applicationServerKey = urlB64ToUint8Array(vapidKeys.publicKey);
 
 (async function () {
-    console.log('<< push-test >>');
+    showCaseName('push');
+
+    log('<< push-test >>');
 
     list.map(async item => {
         await featureStore.setItem(item, 0);
@@ -39,11 +43,11 @@ const applicationServerKey = urlB64ToUint8Array(
 
     // pushManager test
     if (!pushManager) {
-        console.log('no pushManager');
+        log('no pushManager');
         return await reg.unregister();
     }
     await featureStore.setItem('pushManager', 1);
-    console.log('- pushManager done', pushManager);
+    log('- pushManager done -', 1);
 
     // pushManager.permissionState test
     try {
@@ -53,11 +57,11 @@ const applicationServerKey = urlB64ToUint8Array(
         });
         await featureStore.setItem('pushManager.permissionState', 1);
         if (permissionState === 'denied') {
-            console.log('permission denied');
+            log('permission denied');
             await reg.unregister();
             return;
         }
-        console.log('- pushManager.permissionState done -', 1);
+        log('- pushManager.permissionState done -', 1);
     }
     catch (err) {
         console.error(err);
@@ -72,36 +76,38 @@ const applicationServerKey = urlB64ToUint8Array(
         });
     }
     catch (err) {
-        console.log('Failed to subscribe the user: ', err);
+        log('Failed to subscribe the user: ', err);
     }
+    // debugger
 
     // getSubscription test
     let getSubscribe = await pushManager.getSubscription();
     if (getSubscribe) {
         await featureStore.setItem('pushManager.subscribe', 1);
-        console.log('- pushManager.subscribe done -', 1, subscribe);
+        log('- pushManager.subscribe done -', 1);
 
         await featureStore.setItem('pushManager.getSubscription', 1);
-        console.log('- pushManager.getSubscription done -', 1, getSubscribe);
+        log('- pushManager.getSubscription done -', 1);
     }
 
     if (subscribe) {
 
+        // unsubscribe test
         await subscribe.unsubscribe();
         getSubscribe = await pushManager.getSubscription();
         if (!getSubscribe) {
             await featureStore.setItem('pushManager.unsubscribe', 1);
         }
-        console.log('- pushManager.unsubscribe done -', Number(!getSubscribe));
+        log('- pushManager.unsubscribe done -', Number(!getSubscribe));
         await sleep(5000);
         await reg.unregister();
-        console.log('unregister');
+        log('unregister');
         return;
     }
 
     await sleep(5000);
     await reg.unregister();
-    console.log('unregister');
+    log('unregister');
 
 })();
 

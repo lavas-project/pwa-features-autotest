@@ -4,7 +4,8 @@
  */
 
 import {featureStore} from 'store';
-import {sleep, one} from 'helper';
+import {sleep, one, showCaseName} from 'helper';
+import {log} from 'log';
 const list = [
     'sw-msg-send',
     'sw-msg-got',
@@ -15,7 +16,9 @@ const list = [
 let ch;
 
 (async function () {
-    console.log('<< postMessage test >>');
+    showCaseName('postMessage');
+
+    log('<< postMessage test >>');
 
     // sw support
     if (!navigator.serviceWorker) {
@@ -23,7 +26,7 @@ let ch;
     }
 
     const messageWaiter = messageFromSWListener();
-    console.log('sw-postmessage register');
+    log('sw-postmessage register');
     const reg = await navigator.serviceWorker.register('./sw-postmessage.js', {scope: '/cases/postmessage/'});
     await sleep(3000);
 
@@ -34,7 +37,7 @@ let ch;
             port: ch && ch.port2
         }, [ch && ch.port2]);
         await featureStore.setItem('main-msg-send', 1);
-        console.log('- main-msg-send done -', 1);
+        log('- main-msg-send done -', 1);
     }
     catch (err) {
         console.error(err);
@@ -43,7 +46,7 @@ let ch;
             text: 'Hi!'
         });
         await featureStore.setItem('main-msg-send', 0.5);
-        console.log('- main-msg-send done -', 0.5);
+        log('- main-msg-send done -', 0.5);
     }
 
     // main-msg-got test
@@ -61,10 +64,10 @@ let ch;
     const result = (point / list.length).toFixed(2);
 
     await featureStore.setItem('postMessage', result);
-    console.log('- postmessage -', result);
+    log('- postmessage -', result);
 
     await reg.unregister();
-    console.log('sw-postmessage Unregistered');
+    log('sw-postmessage Unregistered');
 
 })();
 
@@ -75,9 +78,9 @@ async function messageFromSWListener() {
         // set up a message channel to communicate with the SW
         ch = new MessageChannel();
         ch.port1.onmessage = async event => {
-            console.log('Got reply from sw via ch.port2', event.data);
+            log('Got reply from sw via ch.port2', event.data);
             await featureStore.setItem('main-msg-got', 0.8);
-            console.log('- main-msg-got done -', 0.8);
+            log('- main-msg-got done -', 0.8);
             // await store.put('feature', 'messageChannel.port1', 'main-msg-got-by')
         };
     }
@@ -87,18 +90,18 @@ async function messageFromSWListener() {
         one(window, 'error', async error => {
             console.error(error);
             await featureStore.setItem('main-msg-got', 0);
-            console.log('- main-msg-send done -', 0);
+            log('- main-msg-send done -', 0);
         }),
         one(window, 'message', async event => {
             console.warn('Got reply from serviceWorker via window', event.data);
             await featureStore.setItem('main-msg-got', 0.5);
-            console.log('- main-msg-got done -', 0.5);
+            log('- main-msg-got done -', 0.5);
           // await store.put('feature', 'window', 'main-msg-got-by')
         }),
         one(navigator.serviceWorker, 'message', async event => {
-            console.log('Got reply from serviceWorker via navigator.serviceWorker', event);
+            log('Got reply from serviceWorker via navigator.serviceWorker', event);
             await featureStore.setItem('main-msg-got', 1);
-            console.log('- main-msg-got done -', 1);
+            log('- main-msg-got done -', 1);
           // await store.put('feature', 'navigator.serviceWorker', 'main-msg-got-by')
         })
     ]);
