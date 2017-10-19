@@ -3,63 +3,68 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, one, sleep, register, grade} from 'helper';
+import {init, one, sleep, register, grade, zero} from 'helper';
+import {log} from 'log';
 // import {featureStore} from 'store';
 
 const CHECK_LIST = [
     'navigator.serviceWorker',
     'navigator.serviceWorker.ready',
-    'navigator.serviceWorker.oncontrollerchange',
+    'oncontrollerchange',
+    'Registered',
+    'Unregistered'
 ];
 
 const SCOPE = '/cases/lifecycle/';
 
 async function main() {
     await init(SCOPE);
+    await zero(CHECK_LIST);
+
+    if (navigator.serviceWorker) {
+        await grade('navigator.serviceWorker', 1);
+        log('lifecycle: navigator.serviceWorker exist');
+    }
+    else {
+        log('lifecycle: navigator.serviceWorker unsupport');
+        return;
+    }
 
     testReady();
     testOnControllerChange();
     testClientsClaim();
-    // const step = createStep({name: 'lifecycle'});
 
-    // await step.beforeRun(init);
-
-
-    // console.log('start to register sw-1!');
-    // navigator.serviceWorker.addEventListener('controllerchange', e => {
-    //     console.log('controller change!');
-    // });
-    console.log('register sw-1!');
+    log('lifecycle: register sw-1.js');
 
     let reg1 = await register(SCOPE + 'sw-1.js', SCOPE);
-    console.log('sw-1 registered!');
 
-    console.log('sleep for 5s');
+    log('lifecycle: sw-1.js registered', reg1);
+    await grade('Registered', 1);
+
+    log('lifecycle: sleep for 5s');
     await sleep(5000);
 
-    console.log('register sw-2!');
-
+    log('lifecycle: register sw-2.js');
     let reg2 = await register(SCOPE + 'sw-2.js', SCOPE);
-    console.log('sw-2 registered!');
+    log('lifecycle: sw-2.js registered', reg2);
 
-    await sleep(3000);
-    // let reg = await navigator.serviceWorker.register('/cases/lifecycle/sw-1.js', {scope: SCOPE});
-    // console.log('Registered!');
-    // await sleep(5000);
-    // console.log('start to register sw-2!');
+    log('lifecycle: sleep for 5s');
+    await sleep(5000);
 
-    // console.log('register sw-2!');
-    // let reg2 = await navigator.serviceWorker.register('/cases/lifecycle/sw-2.js', {scope: SCOPE});
-    // console.log('Registered2!');
-    // await sleep(5000);
-    // let unreg = await reg2.unregister();
-    // console.log('unregister:' + unreg);
+    log('lifecycle: unregister sw-2.js');
+    let result = await reg2.unregister();
+
+    log('lifecycle: sw-2.js is unregistered', result);
+    await grade('Unregistered', 1);
+
+    log('lifecycle: finished');
 }
 
 function testReady() {
     if (navigator.serviceWorker.ready) {
         navigator.serviceWorker.ready.then(() => {
-            console.log('sw is ready!');
+            grade('navigator.serviceWorker.ready', 1);
+            log('lifecycle: sw is ready');
         });
     }
 }
@@ -68,23 +73,16 @@ function testOnControllerChange() {
     let score = 0;
 
     navigator.serviceWorker.oncontrollerchange = e => {
-        console.log('oncontrollerchange');
         score += 0.5;
         grade('oncontrollerchange', Math.min(score, 1));
-
-        // if (score === 1) {
-        //     let url = getScriptURL(navigator.serviceWorker.controller);
-        //     if (url && /sw-2\.js$/.test(url)) {
-
-        //     }
-        // }
+        log('lifecycle: oncontrollerchange');
     };
 }
 
 function testClientsClaim() {
     one(navigator.serviceWorker, 'controllerchange', e => {
-        console.log('clients.claim success!');
         grade('clients.claim', 1);
+        log('lifecycle: clients.claim success');
     });
 }
 

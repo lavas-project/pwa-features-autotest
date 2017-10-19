@@ -1,1 +1,3 @@
-console.log('in sw2');
+import {log} from 'log';
+
+log('getregistration: in sw-2/sw.js');

@@ -4,6 +4,7 @@
  */
 
 import {init, zero, register, unregister, sleep, grade, checkProperties} from 'helper';
+import {log} from 'log';
 
 const CHECK_LIST = [
     'fetch',
@@ -14,11 +15,14 @@ const CHECK_LIST = [
     'fetchEvent.request',
     'fetchEvent.respondWith'
 ];
+
 const SCOPE = '/cases/fetch/';
 
 async function main() {
     await init(SCOPE);
     await zero(CHECK_LIST);
+
+    log('fetch: start');
 
     /* eslint-disable fecs-camelcase */
     await checkProperties(window, {
@@ -28,12 +32,17 @@ async function main() {
         Headers: 1
     });
     /* eslint-enable fecs-camelcase */
+    log('fetch: register sw.js');
 
     let reg = await register(SCOPE + 'sw.js', SCOPE);
 
+    log('fetch: registered');
+
+    log('fetch: sleep 3s');
+
     await sleep(3000);
 
-    console.log('start to fetch');
+    console.log('fetch: start to fetch');
 
     let response = await fetch('/whoareyou.json');
     if (response.ok) {
@@ -43,12 +52,12 @@ async function main() {
                 await grade('fetch', 1),
                 await grade('Response', 1)
             ]);
-            console.log('get response:', data);
+            log('fetch: get response', data);
         }
     }
 
     await unregister(reg);
-    console.log('fetch test finish');
+    log('fetch: test finish');
 }
 
 main();

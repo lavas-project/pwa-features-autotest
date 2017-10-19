@@ -23,11 +23,16 @@ async function main() {
     await init(SCOPE_LIST);
     await zero(CHECK_LIST);
 
+    log('getregistration: start');
+    log('getregistration: register several sw');
+
     let regs = await Promise.all([
         register(SCOPE + 'sw.js', SCOPE),
         register(SUB_SCOPE_1 + 'sw.js', SUB_SCOPE_1),
         register(SUB_SCOPE_2 + 'sw.js', SUB_SCOPE_2)
     ]);
+
+    log('getregistration: sw registered');
 
     await Promise.all([
         testGetRegistration(),
@@ -38,6 +43,8 @@ async function main() {
 }
 
 async function testGetRegistration() {
+    log('getregistration: getRegistration test');
+
     if (navigator.serviceWorker.getRegistration) {
         let [reg, subReg] = await Promise.all([
             navigator.serviceWorker.getRegistration(),
@@ -47,17 +54,19 @@ async function testGetRegistration() {
         let num = (reg ? 0.5 : 0) + (subReg ? 0.5 : 0);
         grade('navigator.serviceWorker.getRegistration', num);
 
-        log('getRegistration with params:', subReg);
-        log('getRegistration with no params:', reg);
+        log('getregistration: getRegistration with params:', subReg);
+        log('getregistration: getRegistration with no params:', reg);
     }
     else {
-        log('unsupport getRegistration');
+        log('getregistration: getRegistration unsupport');
     }
 }
 
 const SCOPE_LIST_REGEXP = SCOPE_LIST.map(scope => new RegExp(scope + '$'));
 
 async function testGetRegistrations() {
+    log('getregistration: getRegistrations test');
+
     if (navigator.serviceWorker.getRegistrations) {
         let regs = await navigator.serviceWorker.getRegistrations();
 
@@ -67,14 +76,14 @@ async function testGetRegistrations() {
             && SCOPE_LIST_REGEXP.every(regex => regs.some(reg => regex.test(reg.scope)))
         ) {
             await grade('navigator.serviceWorker.getRegistrations', 1);
-            log('getRegistrations:', regs);
+            log('getregistration: getRegistrations', regs);
         }
         else {
-            log('unexpect return from getRegistrations');
+            log('getregistration: getRegistrations return a unexpect value', regs);
         }
     }
     else {
-        log('unsupport getRegistrations');
+        log('getregistration: getRegistrations unsupport');
     }
 }
 

@@ -5,13 +5,14 @@
 
 import {sleep, grade} from 'helper';
 import {isFunction} from 'utils';
+import {log} from 'log';
 
 self.addEventListener('install', e => {
-    console.log('in sw-1 install');
+    log('lifecycle sw-1: oninstall');
 });
 
 self.addEventListener('activate', e => {
-    console.log('in sw-1 activate');
+    log('lifecycle sw-1: onactivate');
 });
 
 testSkipWaiting();
@@ -20,11 +21,13 @@ testInstallWaitUntil();
 testActivateWaitUntil();
 
 function testSkipWaiting() {
+    log('lifecycle sw-1: skipWaiting test');
+
     let score = 0;
 
     self.addEventListener('install', e => {
         self.skipWaiting().then(() => {
-            console.log('skipWaiting!');
+            log('lifecycle sw-1: skipWaiting called');
             score = 0.5;
         });
     });
@@ -32,27 +35,35 @@ function testSkipWaiting() {
     self.addEventListener('activate', e => {
         if (score === 0.5) {
             grade('skipWaiting', 1);
+            log('lifecycle sw-1: skipWaiting success');
+        }
+        else {
+            log('lifecycle sw-1: skipWaiting fail');
         }
     });
 }
 
 function testClientsClaim() {
+    log('lifecycle sw-1: clients.claim test');
+
     self.addEventListener('activate', e => {
         self.clients.claim().then(() => {
-            console.log('claim!');
+            log('lifecycle sw-1: clients.claim called');
         })
     });
 }
 
 function testInstallWaitUntil() {
+    log('lifecycle sw-1: installEvent.waitUntil test');
+
     let score = 0;
 
     self.addEventListener('install', e => {
         e.waitUntil(
             sleep(1000)
             .then(() => {
-                console.log('sw-1 install wait 1s!');
                 score = 0.5;
+                log('lifecycle sw-1: installEvent.waitUntil wait for 1s');
             })
         );
     });
@@ -60,21 +71,35 @@ function testInstallWaitUntil() {
     self.addEventListener('activate', e => {
         if (score === 0.5) {
             grade('installEvent.waitUntil', 1);
+            log('lifecycle sw-1: installEvent.waitUntil success');
+        }
+        else {
+            log('lifecycle sw-1: installEvent.waitUntil fail');
         }
     });
 }
 
 function testActivateWaitUntil() {
+    log('lifecycle sw-1: activateEvent.waitUntil test');
+    let score = 0;
+
     self.addEventListener('activate', e => {
         e.waitUntil(sleep(1000).then(() => {
-            console.log('sw-1 activate wait 1s!');
-            console.log(self.registration.active.state)
+            score = 0.5;
+            log('lifecycle sw-1: activateEvent.waitUntil wait for 1s');
+            log('lifecycle sw-1: current state is', self.registration.active.state);
         }));
 
         self.registration.active.onstatechange = () => {
-            console.log('sw-1 installing state change')
-            console.log(self.registration.waiting)
-            console.log(self.registration.active)
+            let state = self.registration.active.state;
+            log('lifecycle sw-1: active state change to', state);
+            if (state === 'activated' && score === 0.5) {
+                grade('activateEvent.waitUntil', 1);
+                log('lifecycle sw-1: activateEvent.waitUntil success');
+            }
+            else {
+                log('lifecycle sw-1: activateEvent.waitUntil fail');
+            }
         };
     });
 }
