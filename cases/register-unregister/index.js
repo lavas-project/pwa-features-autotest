@@ -3,8 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, sleep, zero, score} from 'helper';
-import {featureStore} from 'store';
+import {init, sleep, zero, grade} from 'helper';
 import {log} from 'log';
 
 export const CHECK_LIST = [
@@ -21,7 +20,7 @@ async function main() {
 
     if (navigator.serviceWorker.ready) {
         navigator.serviceWorker.ready.then(() => {
-            featureStore.setItem('navigator.serviceWorker.ready', 1);
+            grade('navigator.serviceWorker.ready', 1);
             log('sw is ready');
         });
     }
@@ -36,7 +35,7 @@ async function main() {
 
     const reg = await navigator.serviceWorker.register(SCOPE + 'sw.js', {scope: SCOPE});
 
-    await score('Registered', 1);
+    await grade('Registered', 1);
     log('sw is registered:', reg);
 
     log('sleep for 3s...');
@@ -44,7 +43,7 @@ async function main() {
 
     const result = await reg.unregister();
 
-    score('Unregistered', 1);
+    grade('Unregistered', 1);
     log('sw is unregistered:', result);
 }
 

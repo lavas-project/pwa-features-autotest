@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, sleep, zero, score, register, unregister} from 'helper';
+import {init, sleep, zero, grade, register, unregister} from 'helper';
 import {featureStore} from 'store';
 import {log} from 'log';
 
@@ -45,7 +45,7 @@ async function testGetRegistration() {
         ]);
 
         let num = (reg ? 0.5 : 0) + (subReg ? 0.5 : 0);
-        score('navigator.serviceWorker.getRegistration', num);
+        grade('navigator.serviceWorker.getRegistration', num);
 
         log('getRegistration with params:', subReg);
         log('getRegistration with no params:', reg);
@@ -66,7 +66,7 @@ async function testGetRegistrations() {
             && regs.length >= 3
             && SCOPE_LIST_REGEXP.every(regex => regs.some(reg => regex.test(reg.scope)))
         ) {
-            await score('navigator.serviceWorker.getRegistrations', 1);
+            await grade('navigator.serviceWorker.getRegistrations', 1);
             log('getRegistrations:', regs);
         }
         else {

@@ -3,6 +3,7 @@
  * @author clark -t (clarktanglei@163.com)
  */
 
+import {get} from 'utils';
 import {featureStore} from 'store';
 
 /**
@@ -50,6 +51,28 @@ export async function unregister(scopes) {
             }
         })
     );
+}
+
+export async function checkProperties(scope, list, score, config) {
+    let map;
+
+    if (Array.isArray(list)) {
+        map = list.map(name => [name, score]);
+    }
+    else {
+        map = Object.keys(list).map(name => [name, list[name]]);
+        config = score;
+    }
+
+    await Promise.all(
+        map.map(item => checkProperty(scope, item[0], item[1], config))
+    );
+}
+
+export async function checkProperty(scope, name, score, {prefix = ''} = {}) {
+    if (get(scope, ...name.split('.')) !== undefined) {
+        await grade(prefix + name, score);
+    }
 }
 
 /**
@@ -122,10 +145,10 @@ export function until(fn, interval = 50) {
 }
 
 export function zero(list) {
-    return Promise.all(list.map(feature => score(feature, 0)));
+    return Promise.all(list.map(feature => grade(feature, 0)));
 }
 
-export function score(feature, score) {
+export function grade(feature, score) {
     return featureStore.setItem(feature, score);
 }
 
