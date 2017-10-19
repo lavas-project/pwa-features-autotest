@@ -3,50 +3,79 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {sleep} from 'helper';
+import {sleep, grade} from 'helper';
 import {isFunction} from 'utils';
 
 self.addEventListener('install', e => {
-    console.log('in sw1: install');
-    if (e.waitUntil) {
+    console.log('in sw-1 install');
+});
+
+self.addEventListener('activate', e => {
+    console.log('in sw-1 activate');
+});
+
+testSkipWaiting();
+testClientsClaim();
+testInstallWaitUntil();
+testActivateWaitUntil();
+
+function testSkipWaiting() {
+    let score = 0;
+
+    self.addEventListener('install', e => {
+        self.skipWaiting().then(() => {
+            console.log('skipWaiting!');
+            score = 0.5;
+        });
+    });
+
+    self.addEventListener('activate', e => {
+        if (score === 0.5) {
+            grade('skipWaiting', 1);
+        }
+    });
+}
+
+function testClientsClaim() {
+    self.addEventListener('activate', e => {
+        self.clients.claim().then(() => {
+            console.log('claim!');
+        })
+    });
+}
+
+function testInstallWaitUntil() {
+    let score = 0;
+
+    self.addEventListener('install', e => {
         e.waitUntil(
             sleep(1000)
             .then(() => {
-                console.log('in sw1: install wait until after 1s');
+                console.log('sw-1 install wait 1s!');
+                score = 0.5;
             })
         );
-    }
+    });
 
-    if (isFunction(self.skipWaiting)) {
-        console.log('in sw1: has skipWaiting');
-        self.skipWaiting()
-        .then(() => {
-            console.log('in sw1: skipWaiting!');
-        });
-    }
-    else {
-        console.log('in sw1: no skipWaiting');
-    }
-});
-
-self.addEventListener('activate', async e => {
-    console.log('in sw1: activate');
-    e.waitUntil(
-        sleep(1000)
-        .then(() => {
-            console.log('in sw1: activate wait until after 1s');
-        })
-    )
-
-    sleep(2000).then(async () => {
-        if (isFunction(self.clients.claim)) {
-            console.log('in sw1: has clients.cliam');
-            await self.clients.claim();
-            console.log('in sw1: after claim');
-        }
-        else {
-            console.log('in sw1: no clients claim');
+    self.addEventListener('activate', e => {
+        if (score === 0.5) {
+            grade('installEvent.waitUntil', 1);
         }
     });
-});
+}
 
+function testActivateWaitUntil() {
+    self.addEventListener('activate', e => {
+        e.waitUntil(sleep(1000).then(() => {
+            console.log('sw-1 activate wait 1s!');
+            console.log(self.registration.active.state)
+        }));
+
+        self.registration.active.onstatechange = () => {
+            console.log('sw-1 installing state change')
+            console.log(event)
+            console.log(self.registration.waiting)
+            console.log(self.registration.active)
+        };
+    });
+}
