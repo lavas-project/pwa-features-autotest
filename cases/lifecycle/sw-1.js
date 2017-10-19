@@ -73,7 +73,6 @@ function testActivateWaitUntil() {
 
         self.registration.active.onstatechange = () => {
             console.log('sw-1 installing state change')
-            console.log(event)
             console.log(self.registration.waiting)
             console.log(self.registration.active)
         };

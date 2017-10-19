@@ -29,8 +29,11 @@ export function log(...args) {
 }
 
 let wrapper;
+let scope;
 
 function init() {
+    scope = location.pathname.split('/').slice(0, -1).join('/') + '-';
+
     if (typeof document !== 'undefined') {
         wrapper = document.createElement('div');
         wrapper.style.wordBreak = 'break-all';
@@ -38,11 +41,11 @@ function init() {
         document.body.appendChild(wrapper);
 
         const tictok = () => setTimeout(async () => {
-            if (await logStore.getItem('stack')) {
+            if (await logStore.getItem(scope + 'stack')) {
                 if (await lock('main')) {
-                    let stack = await logStore.getItem('stack');
+                    let stack = await logStore.getItem(scope + 'stack');
 
-                    await logStore.setItem('stack', '');
+                    await logStore.setItem(scope + 'stack', '');
                     await unlock();
 
                     try {
@@ -68,18 +71,18 @@ function init() {
 }
 
 async function lock(name) {
-    if (await logStore.getItem('lock')) {
+    if (await logStore.getItem(scope + 'lock')) {
         return false;
     }
 
-    await logStore.setItem('lock', name);
-    let lock = await logStore.getItem('lock');
+    await logStore.setItem(scope + 'lock', name);
+    let lock = await logStore.getItem(scope + 'lock');
 
     return lock === name;
 }
 
 async function unlock() {
-    await logStore.setItem('lock', '');
+    await logStore.setItem(scope + 'lock', '');
 }
 
 let logStack = [];
@@ -101,7 +104,7 @@ let count = 0;
 
 export async function swLog(...args) {
     await until(lock.bind(null, 'sw' + Math.floor(Math.random() * Date.now())));
-    let stack = await logStore.getItem('stack');
+    let stack = await logStore.getItem(scope + 'stack');
     if (stack) {
         stack = JSON.parse(stack);
         stack.push(args);
@@ -111,7 +114,7 @@ export async function swLog(...args) {
     }
 
     stack = JSON.stringify(stack);
-    await logStore.setItem('stack', stack);
+    await logStore.setItem(scope + 'stack', stack);
     await unlock();
 }
 
