@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, zero, register, sleep, grade, checkProperties, createOnce} from 'helper';
+import {init, zero, register, unregister, sleep, grade, checkProperties} from 'helper';
 
 const CHECK_LIST = [
     'fetch',
@@ -17,30 +17,21 @@ const CHECK_LIST = [
 const SCOPE = '/cases/fetch/';
 
 async function main() {
-    let once = createOnce('cases-fetch');
+    await init(SCOPE);
+    await zero(CHECK_LIST);
 
-    await once(async () => {
-        await init(SCOPE);
-    }, false);
-
-    await once(async () => {
-        await zero(CHECK_LIST);
-
-        await checkProperties(window, {
-            'fetch': 0.5,
-            'Request': 1,
-            'Response': 0.5,
-            'Headers': 1
-        });
-    }, false);
+    /* eslint-disable fecs-camelcase */
+    await checkProperties(window, {
+        fetch: 0.5,
+        Request: 1,
+        Response: 0.5,
+        Headers: 1
+    });
+    /* eslint-enable fecs-camelcase */
 
     let reg = await register(SCOPE + 'sw.js', SCOPE);
 
-    await once(async () => {
-        await sleep(3000);
-    });
-
-    once.done();
+    await sleep(3000);
 
     console.log('start to fetch');
 
@@ -55,6 +46,9 @@ async function main() {
             console.log('get response:', data);
         }
     }
+
+    await unregister(reg);
+    console.log('fetch test finish');
 }
 
 main();

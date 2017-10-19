@@ -3,21 +3,15 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {checkProperties, grade, sleep} from 'helper';
+import {checkProperties, grade} from 'helper';
 
-// self.addEventListener('install', e => {
-//     console.log('oninstall');
-//     self.skipWaiting();
-// });
+self.addEventListener('install', e => {
+    self.skipWaiting();
+});
 
-// self.addEventListener('activate', e => {
-//     console.log('onactivate');
-//     e.waitUntil(sleep(10000).then(() => {
-//         console.log('sleep for 10000');
-//         // self.clients.claim();
-//     }))
-//     // self.clients.claim();
-// });
+self.addEventListener('activate', e => {
+    self.clients.claim();
+});
 
 self.addEventListener('fetch', e => {
     console.log('onfetch');
