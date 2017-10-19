@@ -12,22 +12,22 @@
 // }, 5000);
 
 // console.log('in global');
-import {createStep, sleep} from 'helper';
+import {sleep} from 'helper';
 
 async function main() {
-    const step = createStep({name: 'cases-global'});
-    console.log('step 1:');
-    await step(sleep.bind(null, 3000));
-    console.log('step 2:');
-    await step(sleep.bind(null, 2000));
-    console.log('step 3:');
-    await step(sleep.bind(null, 4000));
-    console.log('step number:');
-    console.log(step.getTargetStep());
-    console.log('execute done:');
-    step.done();
-    console.log(step.getTargetStep());
-    console.log('finish!');
+    // const step = createStep({name: 'cases-global'});
+    // console.log('step 1:');
+    // await step(sleep.bind(null, 3000));
+    // console.log('step 2:');
+    // await step(sleep.bind(null, 2000));
+    // console.log('step 3:');
+    // await step(sleep.bind(null, 4000));
+    // console.log('step number:');
+    // console.log(step.getTargetStep());
+    // console.log('execute done:');
+    // step.done();
+    // console.log(step.getTargetStep());
+    // console.log('finish!');
 }
 
 

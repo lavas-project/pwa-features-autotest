@@ -152,45 +152,64 @@ export function grade(feature, score) {
     return featureStore.setItem(feature, score);
 }
 
-export function createStep({name, prefix = 'pwa-test-step-'}) {
+export function createOnce({name, prefix = 'pwa-test-once-'}) {
     const key = prefix + name;
 
-    const getStep = () => +localStorage.getItem(key);
+    // const getStep = () => +localStorage.getItem(key);
 
     let stepNumber = -1;
-    let target = getStep();
+    let target = +localStorage.getItem(key);
 
-    const step = async (fn, needReload = true) => {
+    const once = async (fn, needReload = true) => {
         stepNumber++;
 
         if (target === stepNumber) {
-            await fn();
             target++;
+            localStorage.setItem(key, target);
+
+            await fn();
 
             if (needReload) {
-                localStorage.setItem(key, target);
                 await reload();
             }
         }
     };
 
-    step.getCurrentStep = () => stepNumber;
-
-    step.getTargetStep = getStep;
-
-    step.beforeRun = async fn => {
-        if (target === 0 && stepNumber === 0) {
-            await fn();
-        }
-    };
-
-    step.done = () => {
+    once.done = () => {
         localStorage.removeItem(key);
     };
 
-    return step;
+    return once;
 }
 
-// export function createQueue(name, prefix = 'pwa-test-queue-') {
-//     const queue = async ()
-// }
+export function createStepTest(totalStep, onSuccess, onFail) {
+    let currentStepNo = 0;
+    let isFinished = false;
+
+    const tester = expectStepNo => {
+        if (isFinished) {
+            return;
+        }
+
+        if (expectStepNo !== currentStepNo) {
+            isFinished = true;
+            onFail();
+            return false;
+        }
+
+        if (expectStepNo + 1 === totalStep) {
+            isFinished = true;
+            onSuccess();
+        }
+        else {
+            currentStepNo++;
+        }
+
+        return true;
+    };
+
+    tester.currentStep = () => currentStepNo;
+    tester.isFinished = () => isFinished;
+
+    return tester;
+}

@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, zero, register, sleep, grade, checkProperties} from 'helper';
+import {init, zero, register, sleep, grade, checkProperties, createOnce} from 'helper';
 
 const CHECK_LIST = [
     'fetch',
@@ -17,20 +17,33 @@ const CHECK_LIST = [
 const SCOPE = '/cases/fetch/';
 
 async function main() {
-    await init(SCOPE);
-    await zero(CHECK_LIST);
+    let once = createOnce('cases-fetch');
 
-    await checkProperties(window, {
-        'fetch': 0.5,
-        'Request': 1,
-        'Response': 0.5,
-        'Headers': 1
-    });
+    await once(async () => {
+        await init(SCOPE);
+    }, false);
+
+    await once(async () => {
+        await zero(CHECK_LIST);
+
+        await checkProperties(window, {
+            'fetch': 0.5,
+            'Request': 1,
+            'Response': 0.5,
+            'Headers': 1
+        });
+    }, false);
 
     let reg = await register(SCOPE + 'sw.js', SCOPE);
 
-    await sleep(5000);
+    await once(async () => {
+        await sleep(3000);
+    });
+
+    once.done();
+
     console.log('start to fetch');
+
     let response = await fetch('/whoareyou.json');
     if (response.ok) {
         let data = await response.json();

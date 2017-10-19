@@ -3,13 +3,16 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, createStep, one, sleep, register} from 'helper';
+import {init, one, sleep, register} from 'helper';
 import {featureStore} from 'store';
 
 export const SCOPE = '/cases/lifecycle/';
 
 async function main() {
     await init(SCOPE);
+
+    testReady();
+    testOnControllerChange();
     // const step = createStep({name: 'lifecycle'});
 
     // await step.beforeRun(init);

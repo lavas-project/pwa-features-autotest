@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, createStep, one, sleep, register} from 'helper';
+import {init, one, sleep, register} from 'helper';
 import {log} from 'log';
 
 export const SCOPE = '/cases/skipwaiting/';
