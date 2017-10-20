@@ -11,6 +11,10 @@ const caseList = process.env.CASE_ENTRY_LIST;
 
 window.result = function (caseName) {
     let list = featureKeys[caseName.toLowerCase()];
+    const caseIdShow = '.schedule #' + caseName.toLowerCase() + '-show';
+    const casePart = document.querySelector(caseIdShow);
+    casePart.className = 'case-part finished';
+    // casePart.querySelector('.case-schedule').innerHTML = 'done';
     refreshFeatureScore(list);
 };
 
@@ -32,18 +36,27 @@ function test(src) {
 
 function initFeatureScore(obj) {
     let tbody = [];
+    let schedule = [];
     for(let key in obj) {
         let mid = obj[key].map(item => {
             return [
-                '<tr id="' + item.toLowerCase().replace('.', '-') + '">',
+                '<tr id="' + item.toLowerCase().replace(/\./g, '-') + '">',
                 '<td class="name">' + item + '</td>',
                 '<td class="score">' + 0 + '</td>',
                 '</tr>'
             ].join('');
         });
 
+        schedule = schedule.concat([
+            '<div id="' + key + '-show" class="case-part">',
+            '<div class="case-name">' + key + '</div>',
+            // '<div class="case-schedule"></div>',
+            '</div>'
+        ]);
+
         tbody = tbody.concat(mid);
     }
+    document.querySelector('.schedule .all-case').innerHTML = schedule.join('');
     document.getElementsByTagName('tbody')[0].innerHTML = tbody.join('');
 }
 
@@ -52,7 +65,7 @@ function refreshFeatureScore(list) {
     list.forEach(async item => {
         let score = await featureStore.getItem(item);
         console.log('++++++++++++', item, score);
-        let idClass = '#' + item.toLowerCase().replace('.', '-') + ' .score'
+        let idClass = '#' + item.toLowerCase().replace(/\./g, '-') + ' .score'
         document.querySelector(idClass).innerHTML = score;
     });
 }

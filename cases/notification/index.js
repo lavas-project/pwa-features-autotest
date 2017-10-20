@@ -57,13 +57,13 @@ const list = [
 
     // notification.showNotification test
     await reg.showNotification('Hello World!');
-    await featureStore.setItem('notification.showNotification', 1);
-    log('- notification.showNotification done -', 1);
+    await featureStore.setItem('showNotification', 1);
+    log('- showNotification done -', 1);
 
     // notification.getNotification test
     const hasNotification = await reg.getNotifications();
-    await featureStore.setItem('notification.getNotification', 1);
-    log('- notification.getNotifications done -', 1, hasNotification);
+    await featureStore.setItem('getNotification', 1);
+    log('- getNotifications done -', 1, hasNotification);
 
 
     await sleep(5000);

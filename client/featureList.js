@@ -26,13 +26,6 @@ export const featureKeys = {
         'navigator.serviceWorker.getRegistration',
         'navigator.serviceWorker.getRegistrations'
     ],
-    lifecycle: [
-        'navigator.serviceWorker',
-        'navigator.serviceWorker.ready',
-        'oncontrollerchange',
-        'Registered',
-        'Unregistered'
-    ],
     notification: [
         'notification',
         'notification.requestPermission',
@@ -53,6 +46,13 @@ export const featureKeys = {
     ],
     sync: [
         'syncEvent'
+    ],
+    lifecycle: [
+        'navigator.serviceWorker',
+        'navigator.serviceWorker.ready',
+        'oncontrollerchange',
+        'Registered',
+        'Unregistered'
     ]
 };
 

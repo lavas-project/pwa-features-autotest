@@ -96,9 +96,9 @@ const applicationServerKey = urlB64ToUint8Array(vapidKeys.publicKey);
         await subscribe.unsubscribe();
         getSubscribe = await pushManager.getSubscription();
         if (!getSubscribe) {
-            await featureStore.setItem('pushManager.unsubscribe', 1);
+            await featureStore.setItem('pushSubscription.unsubscribe', 1);
         }
-        log('- pushManager.unsubscribe done -', Number(!getSubscribe));
+        log('- pushSubscription.unsubscribe done -', Number(!getSubscribe));
     }
 
     await sleep(5000);

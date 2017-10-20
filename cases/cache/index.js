@@ -42,7 +42,7 @@ const list = [
     await reg.unregister();
     log('cache: test finish');
 
-    if (parent) {
+    if (parent && parent.result) {
         log('refresh score');
         parent.result('cache');
     }
