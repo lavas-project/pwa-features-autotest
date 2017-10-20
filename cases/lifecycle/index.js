@@ -11,6 +11,7 @@ const CHECK_LIST = [
     'navigator.serviceWorker',
     'navigator.serviceWorker.ready',
     'oncontrollerchange',
+    'onstatechange',
     'Registered',
     'Unregistered'
 ];
