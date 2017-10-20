@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, sleep, zero, grade, register, unregister} from 'helper';
+import {init, sleep, zero, grade, register, unregister, showCaseName} from 'helper';
 import {featureStore} from 'store';
 import {log} from 'log';
 
@@ -19,6 +19,7 @@ const SUB_SCOPE_2 = '/cases/getregistration/sw-2/';
 const SCOPE_LIST = [SCOPE, SUB_SCOPE_1, SUB_SCOPE_2];
 
 async function main() {
+    showCaseName('getregistration');
 
     await init(SCOPE_LIST);
     await zero(CHECK_LIST);
@@ -40,6 +41,12 @@ async function main() {
     ]);
 
     await unregister(regs);
+    log('getregistration: test finish');
+
+    if (parent) {
+        log('refresh score');
+        parent.result('getregistration');
+    }
 }
 
 async function testGetRegistration() {

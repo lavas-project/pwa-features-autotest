@@ -4,7 +4,8 @@
  */
 
 import {get} from 'utils';
-import {featureStore} from 'store';
+import {featureStore, uaStore} from 'store';
+import UAParser from 'ua-parser-js';
 
 /**
  * unregister sw controller and then reload the page
@@ -220,3 +221,26 @@ export function showCaseName(caseName) {
     div.innerHTML = caseName;
     document.body.appendChild(div);
 }
+
+export async function uaParse() {
+    const parser = new UAParser();
+    const {browser, os, device, ua} = parser.getResult();
+    console.log('!!!!!!uaParser');
+
+    document.querySelector('.browser span').innerHTML = browser.name + ' ' + browser.version;
+    document.querySelector('.os span').innerHTML = os.name + ' ' + os.version;
+    document.querySelector('.device span').innerHTML = device.type + ' ' + device.model + ' ' + device.vendor;
+    await uaStore.setItem('browser', JSON.stringify(browser));
+    await uaStore.setItem('os', JSON.stringify(os));
+    await uaStore.setItem('device', JSON.stringify(device));
+    await uaStore.setItem('ua', JSON.stringify(ua));
+
+    // await Promise.all([
+    //     uaStore.setItem('browser', JSON.stringify(browser)),
+    //     uaStore.setItem('os', JSON.stringify(os)),
+    //     uaStore.setItem('device', JSON.stringify(device)),
+    //     uaStore.setItem('ua', JSON.stringify(ua))
+    // ]);
+}
+
+

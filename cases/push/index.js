@@ -99,15 +99,16 @@ const applicationServerKey = urlB64ToUint8Array(vapidKeys.publicKey);
             await featureStore.setItem('pushManager.unsubscribe', 1);
         }
         log('- pushManager.unsubscribe done -', Number(!getSubscribe));
-        await sleep(5000);
-        await reg.unregister();
-        log('unregister');
-        return;
     }
 
     await sleep(5000);
     await reg.unregister();
-    log('unregister');
+    log('push: test finish');
+
+    if (parent) {
+        log('refresh score');
+        parent.result('push');
+    }
 
 })();
 

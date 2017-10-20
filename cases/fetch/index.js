@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, zero, register, unregister, sleep, grade, checkProperties} from 'helper';
+import {init, zero, register, unregister, sleep, grade, checkProperties, showCaseName} from 'helper';
 import {log} from 'log';
 
 const CHECK_LIST = [
@@ -19,6 +19,8 @@ const CHECK_LIST = [
 const SCOPE = '/cases/fetch/';
 
 async function main() {
+    showCaseName('fetch');
+
     await init(SCOPE);
     await zero(CHECK_LIST);
 
@@ -58,6 +60,11 @@ async function main() {
 
     await unregister(reg);
     log('fetch: test finish');
+
+    if (parent) {
+        log('refresh score');
+        parent.result('fetch');
+    }
 }
 
 main();

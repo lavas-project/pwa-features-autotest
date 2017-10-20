@@ -13,14 +13,46 @@ export const featureKeys = {
         'cache.matchAll',
         'cache.put'
     ],
-    sync: [
-        'syncEvent'
+    fetch: [
+        'fetch',
+        'Request',
+        'Response',
+        'Headers',
+        'fetchEvent',
+        'fetchEvent.request',
+        'fetchEvent.respondWith'
     ],
-    pushmanager: [
+    getregistration: [
+        'navigator.serviceWorker.getRegistration',
+        'navigator.serviceWorker.getRegistrations'
+    ],
+    lifecycle: [
+        'navigator.serviceWorker',
+        'navigator.serviceWorker.ready',
+        'oncontrollerchange',
+        'Registered',
+        'Unregistered'
+    ],
+    notification: [
+        'notification',
+        'notification.requestPermission',
+        'showNotification',
+        'getNotification'
+    ],
+    postmessage: [
+        'sw-msg-send',
+        'sw-msg-got',
+        'main-msg-send',
+        'main-msg-got'
+    ],
+    push: [
         'pushManager.subscribe',
         'pushManager.getSubscription',
         'pushManager.permissionState',
         'pushSubscription.unsubscribe'
+    ],
+    sync: [
+        'syncEvent'
     ]
 };
 

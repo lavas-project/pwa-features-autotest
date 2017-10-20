@@ -19,8 +19,7 @@ import {log} from 'log';
 
     featureStore.setItem('syncEvent', 0);
 
-    // syncEvent
-    log('- syncEvent test -');
+    // syncEvent test
     const reg = await navigator.serviceWorker.register('./sw-sync.js', {scope: '/cases/sync/'});
     await sleep(3000);
 
@@ -32,7 +31,7 @@ import {log} from 'log';
         }
         else {
             reg.sync.register('syncEventTest');
-            log('Sync registered');
+            log('sync registered');
         }
     }
     catch (error) {
@@ -40,6 +39,12 @@ import {log} from 'log';
         console.error(error.message);
         return;
     }
-
+    await sleep(5000);
     await reg.unregister();
+    log('sync: test finish');
+
+    if (parent) {
+        log('refresh score');
+        parent.result('sync');
+    }
 })();

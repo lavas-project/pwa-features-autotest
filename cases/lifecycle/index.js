@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, one, sleep, register, grade, zero} from 'helper';
+import {init, one, sleep, register, grade, zero, showCaseName} from 'helper';
 import {log} from 'log';
 // import {featureStore} from 'store';
 
@@ -18,6 +18,8 @@ const CHECK_LIST = [
 const SCOPE = '/cases/lifecycle/';
 
 async function main() {
+    showCaseName('lifecycle');
+
     await init(SCOPE);
     await zero(CHECK_LIST);
 
@@ -57,7 +59,12 @@ async function main() {
     log('lifecycle: sw-2.js is unregistered', result);
     await grade('Unregistered', 1);
 
-    log('lifecycle: finished');
+    log('lifecycle: test finished');
+
+    if (parent) {
+        log('refresh score');
+        parent.result('lifecycle');
+    }
 }
 
 function testReady() {

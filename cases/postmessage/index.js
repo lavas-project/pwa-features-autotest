@@ -66,8 +66,14 @@ let ch;
     await featureStore.setItem('postMessage', result);
     log('- postmessage -', result);
 
+    await sleep(5000);
     await reg.unregister();
-    log('sw-postmessage Unregistered');
+    log('postmessage: test finish');
+
+    if (parent) {
+        log('refresh score');
+        parent.result('postmessage');
+    }
 
 })();
 

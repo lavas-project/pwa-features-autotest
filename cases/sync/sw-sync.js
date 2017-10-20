@@ -16,7 +16,7 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('sync', function (event) {
-    log('Sync event', event);
     featureStore.setItem('syncEvent', 1);
+    log('- syncEvent test -', 1);
 });
 

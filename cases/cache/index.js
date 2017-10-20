@@ -40,10 +40,10 @@ const list = [
     const reg = await navigator.serviceWorker.register('./sw-cache.js', {scope: '/cases/cache/'});
     await sleep(5000);
     await reg.unregister();
-    log('sw-cache unregister');
+    log('cache: test finish');
 
     if (parent) {
-        log('cache parent result');
+        log('refresh score');
         parent.result('cache');
     }
 

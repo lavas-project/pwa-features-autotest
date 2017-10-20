@@ -68,6 +68,11 @@ const list = [
 
     await sleep(5000);
     await reg.unregister();
-    log('unregister');
+    log('notification: test finish');
+
+    if (parent) {
+        log('refresh score');
+        parent.result('notification');
+    }
 
 })();
