@@ -7,18 +7,24 @@
     <title>title</title>
 </head>
 <body>
-    <div class="top">PWA TEST</div>
+    <div class="top-bar">PWA TEST</div>
     <div class="wrapper">
-        <section class="env">
-            <p class="browser">浏览器：<span></span>.</p>
-            <p class="os">操作系统：<span></span>.</p>
-            <p class="device">设备型号：<span></span>.</p>
-            <!-- <span class="test-again">重新测试</span>
-            <span class="send-data hide">发送数据</span> -->
+        <section class="top">
+            <div class="env">
+                <p class="browser">浏览器：<span></span>.</p>
+                <p class="os">操作系统：<span></span>.</p>
+                <p class="device">设备型号：<span></span>.</p>
+            </div>
+
+            <div class="score-wrapper">
+                <div class="title">测试进度:  <span>0 %</span></div>
+                <p class="total-score">0</p>
+                <span class="test-again hide">重新测试</span>
+                <span class="send-data hide">发送数据</span>
+            </div>
         </section>
 
         <section class="schedule">
-            <div class="title">测试进度: </div>
             <div class="all-case"></div>
         </section>
 

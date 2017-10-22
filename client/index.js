@@ -9,6 +9,12 @@ import {sleep, uaParse} from 'helper';
 import {featureKeys} from './featureList.js';
 const caseList = process.env.CASE_ENTRY_LIST;
 
+let totalTestNum = 0;
+let totalTestDone = 0;
+let totalTestScore = 0;
+const totalScore = document.querySelector('.score-wrapper .total-score');
+const totalSchedule = document.querySelector('.score-wrapper .title span');
+
 window.result = function (caseName) {
     let list = featureKeys[caseName.toLowerCase()];
     const caseIdShow = '.schedule #' + caseName.toLowerCase() + '-show';
@@ -30,7 +36,6 @@ caseList.forEach(test);
 function test(src) {
     var iframe = document.createElement('iframe');
     iframe.src = src;
-    iframe.style = "width:40%;min-width:100px;height:100px;margin-bottom:20px;background:rgba(0,0,0,0.5);"
     document.body.appendChild(iframe);
 }
 
@@ -53,6 +58,7 @@ function initFeatureScore(obj) {
             // '<div class="case-schedule"></div>',
             '</div>'
         ]);
+        totalTestNum += obj[key].length;
 
         tbody = tbody.concat(mid);
     }
@@ -62,9 +68,18 @@ function initFeatureScore(obj) {
 
 function refreshFeatureScore(list) {
     list = list || [];
+    totalTestDone += list.length;
+    console.log('++++++++++++', totalTestNum, totalTestDone, totalScore);
+    totalSchedule.innerHTML = parseInt(totalTestDone / totalTestNum * 100, 10) + ' %';
+    totalScore.innerHTML = parseInt(totalTestScore / totalTestNum * 100, 10);
+    if (totalTestNum === totalTestDone) {
+        document.querySelector('.score-wrapper .send-data').className = 'send-data';
+        document.querySelector('.score-wrapper .test-again').className = 'test-again';
+    }
     list.forEach(async item => {
         let score = await featureStore.getItem(item);
-        console.log('++++++++++++', item, score);
+        totalTestScore += score;
+        // console.log('++++++++++++', item, score);
         let idClass = '#' + item.toLowerCase().replace(/\./g, '-') + ' .score'
         document.querySelector(idClass).innerHTML = score;
     });

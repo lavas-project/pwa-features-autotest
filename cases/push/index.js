@@ -78,7 +78,6 @@ const applicationServerKey = urlB64ToUint8Array(vapidKeys.publicKey);
     catch (err) {
         log('Failed to subscribe the user: ', err);
     }
-    // debugger
 
     // getSubscription test
     let getSubscribe = await pushManager.getSubscription();
