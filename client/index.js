@@ -34,7 +34,7 @@ window.result = function (caseName) {
 sendDataBtnBind();
 
 // ua
-uaParse();
+uaProcess();
 
 // init page table
 initFeatureScore();
@@ -78,20 +78,26 @@ function initFeatureScore() {
 
 function refreshFeatureScore(list) {
     list = list || [];
-    totalTestDone += list.length;
-    console.log('++++++++++++', totalTestNum, totalTestDone, totalScore);
-    totalSchedule.innerHTML = parseInt(totalTestDone / totalTestNum * 100, 10) + ' %';
-    totalScore.innerHTML = parseInt(totalTestScore / totalTestNum * 100, 10);
-    if (totalTestNum === totalTestDone) {
-        sendDataBtn.classList.remove('hide');
-    }
     list.forEach(async item => {
         let score = await featureStore.getItem(item);
         totalTestScore += score;
         summary.feature[item] = score;
-        // console.log('++++++++++++', item, score);
+        // console.log('++++++++++++', item, score, totalTestScore);
         let idClass = '#' + item.toLowerCase().replace(/\./g, '-') + ' .score'
         document.querySelector(idClass).innerHTML = score;
+        totalTestDone ++;
+        totalSchedule.innerHTML = parseInt(totalTestDone / totalTestNum * 100, 10) + ' %';
+        totalScore.innerHTML = parseInt(totalTestScore / totalTestNum * 100, 10);
+        if (totalTestNum === totalTestDone) {
+            sendDataBtn.classList.remove('hide');
+        }
+    });
+}
+
+function uaProcess() {
+    uaParse();
+    uaKeys.forEach(async item => {
+        summary.info[item] = await uaStore.getItem(item);
     });
 }
 
@@ -111,9 +117,6 @@ function sendDataBtnBind() {
             // }
             // console.log('!!!!!!!!!1', id);
             // send ua
-            uaKeys.forEach(async item => {
-                summary.info[item] = await uaStore.getItem(item);
-            });
 
             let res = await axios({
                 method: 'post',

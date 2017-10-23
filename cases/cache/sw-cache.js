@@ -74,7 +74,12 @@ self.addEventListener('install', function (event) {
 
         const cacheKeys = await cache1.keys();
         value = Number(cacheKeys && cacheKeys.length >= 4);
+        await featureStore.setItem('cache.addAll', value);
         log('- cache addAll done -', value, cacheKeys);
+
+        value = Number(cacheKeys && cacheKeys.length >= 2);
+        await featureStore.setItem('cache.keys', value);
+        log('- cache keys done -', value, cacheKeys);
 
 
         // cache.matchAll

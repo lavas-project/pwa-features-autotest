@@ -10,7 +10,7 @@ export const featureKeys = {
         'cache.delete',
         'cache.keys',
         'cache.match',
-        'cache.matchAll',
+        // 'cache.matchAll',
         'cache.put'
     ],
     fetch: [
@@ -46,6 +46,10 @@ export const featureKeys = {
     ],
     sync: [
         'syncEvent'
+    ],
+    indexeddb: [
+        'indexedDB',
+        'indexedDB.getAll'
     ],
     lifecycle: [
         'navigator.serviceWorker',

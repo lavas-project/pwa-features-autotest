@@ -2,7 +2,7 @@
  * @file indexeddb index.js
  * @author clark-t (clarktanglei@163.com)
  */
-import {grade, zero} from 'helper';
+import {grade, zero, showCaseName} from 'helper';
 import {log} from 'log';
 
 export const CHECK_LIST = [
@@ -11,6 +11,8 @@ export const CHECK_LIST = [
 ];
 
 async function main() {
+    showCaseName('indexeddb');
+
     await zero(CHECK_LIST);
 
     if (typeof indexedDB === 'undefined') {
@@ -71,6 +73,11 @@ async function main() {
     }
 
     log('indexeddb: test finish');
+
+    if (parent) {
+        log('refresh score');
+        parent.result('indexeddb');
+    }
 }
 
 const DB_NAME = 'pwa-test-indexeddb';
