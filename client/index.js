@@ -29,53 +29,8 @@ window.result = function (caseName) {
     refreshFeatureScore(list);
 };
 
-let sendDataBtn = document.querySelector('.send-data');
-sendDataBtn.addEventListener('click', async function (e) {
-    let sendDataConfirm = confirm('send data to the database ?');
-
-    if (sendDataConfirm) {
-        // send uuid
-        let id = await uuidStore.getItem('id');
-        if (!id) {
-            id = uuid();
-            await uuidStore.setItem('id', id);
-        }
-        // send ua
-        uaKeys.forEach(async item => {
-            summary.info[item] = await featureStore.getItem(item);
-        });
-
-        let res = await axios({
-            method: 'post',
-            url: 'https://lavas.baidu.com/api/ready/statistic',
-            data: {
-                id,
-                info: summary.info,
-                feature: summary.feature
-            }
-        });
-
-        let sendTip = document.querySelector('.send-data-tip');
-        if (res && res.data && res.data.status === 0) {
-            sendTip.innerHTML = 'Success!';
-            sendTip.classList.remove('hide-tip');
-            sendTip.classList.add('show-tip');
-            setTimeout(function () {
-                sendTip.classList.remove('show-tip');
-                sendTip.classList.add('hide-tip');
-            }, 3000);
-        }
-        else {
-            sendTip.innerHTML = 'Failed!';
-            sendTip.classList.remove('hide-tip');
-            sendTip.classList.add('show-tip');
-            setTimeout(function () {
-                sendTip.classList.remove('show-tip');
-                sendTip.classList.add('hide-tip');
-            }, 3000);
-        }
-    }
-});
+// sendDataBtnBind
+sendDataBtnBind();
 
 // ua
 uaParse();
@@ -137,5 +92,57 @@ function refreshFeatureScore(list) {
         let idClass = '#' + item.toLowerCase().replace(/\./g, '-') + ' .score'
         document.querySelector(idClass).innerHTML = score;
     });
+}
+
+function sendDataBtnBind() {
+
+    let sendDataBtn = document.querySelector('.send-data');
+    sendDataBtn.addEventListener('click', async function (e) {
+        let sendDataConfirm = confirm('send data to the database ?');
+
+        if (sendDataConfirm) {
+            // send uuid
+            let id = await uuidStore.getItem('id');
+            if (!id) {
+                id = uuid();
+                await uuidStore.setItem('id', id);
+            }
+            // send ua
+            uaKeys.forEach(async item => {
+                summary.info[item] = await featureStore.getItem(item);
+            });
+
+            let res = await axios({
+                method: 'post',
+                url: 'https://lavas.baidu.com/api/ready/statistic',
+                data: {
+                    id,
+                    info: summary.info,
+                    feature: summary.feature
+                }
+            });
+
+            let sendTip = document.querySelector('.send-data-tip');
+            if (res && res.data && res.data.status === 0) {
+                sendTip.innerHTML = 'Success!';
+                sendTip.classList.remove('hide-tip');
+                sendTip.classList.add('show-tip');
+                setTimeout(function () {
+                    sendTip.classList.remove('show-tip');
+                    sendTip.classList.add('hide-tip');
+                }, 3000);
+            }
+            else {
+                sendTip.innerHTML = 'Failed!';
+                sendTip.classList.remove('hide-tip');
+                sendTip.classList.add('show-tip');
+                setTimeout(function () {
+                    sendTip.classList.remove('show-tip');
+                    sendTip.classList.add('hide-tip');
+                }, 3000);
+            }
+        }
+    });
+
 }
 
