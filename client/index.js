@@ -5,7 +5,7 @@
 
 import './index.styl';
 import axios from 'axios';
-import {featureStore, uuidStore} from 'store';
+import {featureStore, uaStore, uuidStore} from 'store';
 import {sleep, uaParse, uuid} from 'helper';
 import {featureKeys, uaKeys} from './featureList.js';
 const caseList = process.env.CASE_ENTRY_LIST;
@@ -20,6 +20,7 @@ let totalTestDone = 0;
 let totalTestScore = 0;
 const totalScore = document.querySelector('.score-wrapper .total-score');
 const totalSchedule = document.querySelector('.score-wrapper .title span');
+const sendDataBtn = document.querySelector('.send-data');
 
 window.result = function (caseName) {
     let list = featureKeys[caseName.toLowerCase()];
@@ -96,27 +97,29 @@ function refreshFeatureScore(list) {
 
 function sendDataBtnBind() {
 
-    let sendDataBtn = document.querySelector('.send-data');
     sendDataBtn.addEventListener('click', async function (e) {
         let sendDataConfirm = confirm('send data to the database ?');
 
         if (sendDataConfirm) {
+            console.log('!!!!!!!!!0', summary);
             // send uuid
-            let id = await uuidStore.getItem('id');
-            if (!id) {
-                id = uuid();
-                await uuidStore.setItem('id', id);
-            }
+            // let id = await uuidStore.getItem('id');
+            // console.log('!!!!!!!!!00', id);
+            // if (!id) {
+            //     id = uuid();
+            //     await uuidStore.setItem('id', id);
+            // }
+            // console.log('!!!!!!!!!1', id);
             // send ua
             uaKeys.forEach(async item => {
-                summary.info[item] = await featureStore.getItem(item);
+                summary.info[item] = await uaStore.getItem(item);
             });
 
             let res = await axios({
                 method: 'post',
                 url: 'https://lavas.baidu.com/api/ready/statistic',
                 data: {
-                    id,
+                    // id,
                     info: summary.info,
                     feature: summary.feature
                 }

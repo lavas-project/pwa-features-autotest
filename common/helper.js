@@ -246,6 +246,7 @@ export async function uaParse() {
     await uaStore.setItem('os', JSON.stringify(os));
     await uaStore.setItem('device', JSON.stringify(device));
     await uaStore.setItem('ua', JSON.stringify(ua));
+    console.log('!!!!!!!!uaParse', parser.getResult());
 
     // await Promise.all([
     //     uaStore.setItem('browser', JSON.stringify(browser)),
