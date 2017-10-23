@@ -16,8 +16,8 @@ iframe
 
 .top-bar
     width 100%
-    height 45px
-    line-height 45px
+    height 52px
+    line-height 52px
     text-align center
     border-bottom 1px solid #ccc
     font-weight bold
@@ -27,19 +27,32 @@ iframe
 .wrapper
     padding 20px
     .top
+        width 100%
         display flex
+        margin-bottom 10px
 
         .env
-            flex 1
+            // flex 1
+            // text-align center
+            div
+                font-weight bold
+                line-height 24px
+                span
+                    display block
+                    font-size 12px
 
         .score-wrapper
-            flex none
-            text-align center
+            // flex 1
+            // text-align center
 
             .title
-                margin-bottom 5px
+                // width 20%
+                font-weight bold
+                margin 0 auto 10px
+                span
+                    font-size 16px
             .total-score
-                width 100px
+                // width 20%
                 height 50px
                 background #39b54a
                 color #fff
@@ -48,18 +61,17 @@ iframe
                 font-size 36px
                 font-weight bold
                 border-radius 5px
+                margin 0 auto 10px
             .send-data, .test-again
-                // display inline-block
-                height 24px
-                line-height 24px
-                background rgb(0, 150, 24)
+                // width 20%
+                height 36px
+                line-height 36px
+                background #39b54a
                 color #fff
-                font-size 12px
-                padding 0 10px
-                border-radius 5px
-                // margin-right 10px
-                margin-bottom 5px
+                font-size 16px
+                border-radius 3px
                 cursor pointer
+                margin 0 auto 10px
 
         .hide
             display none
@@ -67,17 +79,14 @@ iframe
 
     .schedule
         margin-bottom 10px
+        border-bottom solid 1px #999
         .all-case
-            text-align center
             .case-part
                 font-size 12px
                 display inline-block
                 background #fa743e
                 color #fff
                 border-radius 3px
-                padding 5px
-                margin 5px 5px 5px 0
-                width 90px
                 text-align center
                 .case-name
                     color #fff
@@ -124,3 +133,79 @@ iframe
                     overflow hidden
                 .score
                     text-align center
+
+.send-data-tip
+    z-index 10000
+    width 200px
+    height 40px
+    line-height 40px
+    text-align center
+    border-radius 5px
+    background rgb(0, 0, 0, 0.7)
+    color #fff
+    position fixed
+    top 50%
+    left 50%
+    margin-left -100px
+
+
+.show-tip
+    opacity 0.7
+
+.hide-tip
+    opacity 0
+
+
+.trans-fadeout
+    -webkit-transition all 0.5s linear
+    -moz-transition all 0.5s linear
+    -ms-transition all 0.5s linear
+    -o-transition all 0.5s linear
+    transition all 0.5s linear
+
+@media screen and (min-width: 500px)
+    .schedule
+        .all-case
+            text-align center
+            .case-part
+                width 90px
+                margin 5px 5px 5px 0
+                padding 5px
+    .top
+        .env
+            flex 1
+            text-align center
+
+        .score-wrapper
+            flex 1
+            text-align center
+
+            .title,.total-score,.send-data, .test-again
+                width 30%
+
+@media screen and (max-width: 500px)
+    .schedule
+        .all-case
+            text-align left
+            .case-part
+                width 30%
+                margin 0 1% 2% 0
+                padding 5px 3px
+    .top
+        .env
+            flex 1
+            text-align center
+
+        .score-wrapper
+            flex none
+            text-align center
+            width 84px
+
+            .title
+                width 100%
+            .total-score
+                width 100%
+            .send-data, .test-again
+                width 100%
+
+

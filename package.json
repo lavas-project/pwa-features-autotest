@@ -23,7 +23,8 @@
     "url": "https://github.com/lavas-project/pwa-test/issues"
   },
   "dependencies": {
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "axios": "^0.16.2"
   },
   "devDependencies": {
     "assert": "^1.4.1",

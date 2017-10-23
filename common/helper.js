@@ -124,6 +124,16 @@ export function sleep(duration) {
     return new Promise(resolve => setTimeout(resolve, duration));
 }
 
+// uuid
+export function uuid(duration) {
+    return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4() + '-' + Date.now());
+}
+
+// 4 random number
+export function S4() {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+}
+
 export function limit(fn, time) {
     return new Promise((resolve, reject) => {
         fn().then(resolve);
@@ -225,11 +235,13 @@ export function showCaseName(caseName) {
 export async function uaParse() {
     const parser = new UAParser();
     const {browser, os, device, ua} = parser.getResult();
-    console.log('!!!!!!uaParser');
+
+    let deviceTip = (device.type || '---') + ' ' + (device.model || '---') + ' ' + (device.vendor || '---');
+
 
     document.querySelector('.browser span').innerHTML = browser.name + ' ' + browser.version;
     document.querySelector('.os span').innerHTML = os.name + ' ' + os.version;
-    document.querySelector('.device span').innerHTML = device.type + ' ' + device.model + ' ' + device.vendor;
+    document.querySelector('.device span').innerHTML = deviceTip;
     await uaStore.setItem('browser', JSON.stringify(browser));
     await uaStore.setItem('os', JSON.stringify(os));
     await uaStore.setItem('device', JSON.stringify(device));

@@ -56,3 +56,6 @@ export const featureKeys = {
     ]
 };
 
+export const uaKeys = ['browser', 'os', 'system', 'ua'];
+
+
