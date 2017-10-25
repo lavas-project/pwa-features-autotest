@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {sleep, grade} from 'helper';
+import {sleep, grade, one} from 'helper';
 import {isFunction} from 'utils';
 import {log} from 'log';
 
