@@ -46,7 +46,8 @@ export async function unregister(scopes) {
                 default:
                     break;
             }
-
+            // QQ browser 7.2.0.2930 unexpectedly returns a STRANGE boolean value `true`
+            // when there is no registration (=_=!)
             if (reg && typeof reg === 'object') {
                 return await reg.unregister();
             }
