@@ -14,6 +14,7 @@ export const featureKeys = {
         'cache.put'
     ],
     fetch: [
+        'Promise',
         'fetch',
         'Request',
         'Response',
@@ -25,6 +26,22 @@ export const featureKeys = {
     getregistration: [
         'navigator.serviceWorker.getRegistration',
         'navigator.serviceWorker.getRegistrations'
+    ],
+    indexeddb: [
+        'indexedDB',
+        'indexedDB.getAll'
+    ],
+    lifecycle: [
+        'navigator.serviceWorker',
+        'navigator.serviceWorker.ready',
+        'oncontrollerchange',
+        'onstatechange',
+        'Registered',
+        'Unregistered',
+        'clients.claim',
+        'skipWaiting',
+        'installEvent.waitUntil',
+        'activateEvent.waitUntil'
     ],
     notification: [
         'notification',
@@ -46,17 +63,6 @@ export const featureKeys = {
     ],
     sync: [
         'syncEvent'
-    ],
-    indexeddb: [
-        'indexedDB',
-        'indexedDB.getAll'
-    ],
-    lifecycle: [
-        'navigator.serviceWorker',
-        'navigator.serviceWorker.ready',
-        'oncontrollerchange',
-        'Registered',
-        'Unregistered'
     ]
 };
 

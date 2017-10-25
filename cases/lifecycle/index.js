@@ -13,7 +13,11 @@ const CHECK_LIST = [
     'oncontrollerchange',
     'onstatechange',
     'Registered',
-    'Unregistered'
+    'Unregistered',
+    'clients.claim',
+    'skipWaiting',
+    'installEvent.waitUntil',
+    'activateEvent.waitUntil'
 ];
 
 const SCOPE = '/cases/lifecycle/';

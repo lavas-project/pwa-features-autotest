@@ -7,6 +7,7 @@ import {init, zero, register, unregister, sleep, grade, checkProperties, showCas
 import {log} from 'log';
 
 const CHECK_LIST = [
+    'Promise',
     'fetch',
     'Request',
     'Response',
@@ -25,6 +26,11 @@ async function main() {
     await zero(CHECK_LIST);
 
     log('fetch: start');
+
+    const value = Number(!!(window.Promise));
+    await grade('Promise', value);
+    log('- Promise done -', value);
+
 
     /* eslint-disable fecs-camelcase */
     await checkProperties(window, {

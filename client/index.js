@@ -9,6 +9,7 @@ import {featureStore, uaStore, uuidStore} from 'store';
 import {sleep, uaParse, uuid} from 'helper';
 import {featureKeys, uaKeys} from './featureList.js';
 const caseList = process.env.CASE_ENTRY_LIST;
+// console.log('!!!!!!!!caseList', caseList);
 
 let summary = {
     info: {},
@@ -40,7 +41,19 @@ uaProcess();
 initFeatureScore();
 
 // test case
-caseList.forEach(test);
+// caseList.forEach(test);
+[
+'/cases/lifecycle/index.html',
+'/cases/cache/index.html',
+'/cases/fetch/index.html',
+'/cases/getregistration/index.html',
+'/cases/indexeddb/index.html',
+// ,
+'/cases/notification/index.html',
+'/cases/postmessage/index.html',
+'/cases/push/index.html',
+'/cases/sync/index.html'
+].forEach(item => test(item));
 
 function test(src) {
     var iframe = document.createElement('iframe');
