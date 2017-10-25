@@ -43,7 +43,7 @@ async function main() {
     await unregister(regs);
     log('getregistration: test finish');
 
-    if (parent) {
+    if (parent && parent.result) {
         log('refresh score');
         parent.result('getregistration');
     }

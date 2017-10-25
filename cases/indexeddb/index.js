@@ -74,7 +74,7 @@ async function main() {
 
     log('indexeddb: test finish');
 
-    if (parent) {
+    if (parent && parent.result) {
         log('refresh score');
         parent.result('indexeddb');
     }

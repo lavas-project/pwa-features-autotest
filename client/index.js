@@ -43,16 +43,16 @@ initFeatureScore();
 // test case
 // caseList.forEach(test);
 [
-'/cases/lifecycle/index.html',
-'/cases/cache/index.html',
-'/cases/fetch/index.html',
-'/cases/getregistration/index.html',
-'/cases/indexeddb/index.html',
-// ,
-'/cases/notification/index.html',
-'/cases/postmessage/index.html',
-'/cases/push/index.html',
-'/cases/sync/index.html'
+    '/cases/lifecycle/index.html',
+    '/cases/cache/index.html',
+    '/cases/fetch/index.html',
+    '/cases/getregistration/index.html',
+    '/cases/indexeddb/index.html',
+    // ,
+    '/cases/notification/index.html',
+    '/cases/postmessage/index.html',
+    '/cases/push/index.html',
+    '/cases/sync/index.html'
 ].forEach(item => test(item));
 
 function test(src) {

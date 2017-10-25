@@ -70,7 +70,7 @@ const list = [
     await reg.unregister();
     log('notification: test finish');
 
-    if (parent) {
+    if (parent && parent.result) {
         log('refresh score');
         parent.result('notification');
     }
