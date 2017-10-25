@@ -84,7 +84,7 @@ function testActivateWaitUntil() {
     let score = 0;
 
     self.addEventListener('install', e => {
-        listenToState()
+        listenToState();
     });
 
     self.addEventListener('activate', e => {

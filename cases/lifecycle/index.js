@@ -66,7 +66,7 @@ async function main() {
 
     log('lifecycle: test finished');
 
-    if (parent) {
+    if (parent && parent.result) {
         log('refresh score');
         parent.result('lifecycle');
     }
