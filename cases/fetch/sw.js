@@ -19,8 +19,13 @@ self.addEventListener('fetch', e => {
 
     grade('fetchEvent', 1);
     checkProperties(e, ['request', 'respondWith'], 1, {prefix: 'fetchEvent.'});
+    log('fetch sw: get url', e.request.url);
+
     let url = new URL(e.request.url);
-    if (url.pathname.endsWith('/whoareyou.json')) {
+
+    log('fetch sw: create new url', url.pathname);
+
+    if (/\/whoareyou\.json$/.test(url.pathname)) {
         let mock = {im: 'fetch-sw'};
         log('fetch sw: mock respone', mock);
 

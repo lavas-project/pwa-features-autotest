@@ -47,7 +47,7 @@ export async function unregister(scopes) {
                     break;
             }
 
-            if (reg) {
+            if (reg && typeof reg === 'object') {
                 return await reg.unregister();
             }
         })

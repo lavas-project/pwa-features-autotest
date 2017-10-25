@@ -25,7 +25,7 @@ var caseIndexFiles = caseEntryFiles.filter(function (filePath) {
 console.log('\x1b[35m%s\x1b[0m', '[' + new Date().toLocaleString() + ']', '--webpack start');
 /* eslint-enable no-console */
 
-module.exports = {
+var webpackConfig = {
 
     // entry include
     // 1. client entry js
@@ -44,13 +44,6 @@ module.exports = {
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, './dist')
-    },
-    devtool: mode === 'development' ? 'cheap-module-eval-source-map' : false,
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        // host: 'localhost',
-        port: 8849,
-        inline: true
     },
     resolve: {
         alias: {
@@ -168,3 +161,17 @@ module.exports = {
         })
     )
 };
+
+if (mode === 'development') {
+    Object.assign(webpackConfig, {
+        devtool: 'cheap-module-eval-source-map',
+        devServer: {
+            contentBase: path.join(__dirname, 'dist'),
+            // host: 'localhost',
+            port: 8849,
+            inline: true
+        }
+    });
+}
+
+module.exports = webpackConfig;

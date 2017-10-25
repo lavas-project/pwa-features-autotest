@@ -50,19 +50,25 @@ async function main() {
 
     await sleep(3000);
 
-    console.log('fetch: start to fetch');
+    log('fetch: start to fetch');
 
     let response = await fetch('/whoareyou.json');
-    if (response.ok) {
+
+    if (response && +response.status === 200) {
         let data = await response.json();
+        log('fetch: get response', data);
         if (data && data.im === 'fetch-sw') {
             await Promise.all([
                 await grade('fetch', 1),
                 await grade('Response', 1)
             ]);
-            log('fetch: get response', data);
+            log('fetch: full score');
         }
     }
+
+    log('fetch: sleep 3s');
+
+    await sleep(3000);
 
     await unregister(reg);
     log('fetch: test finish');

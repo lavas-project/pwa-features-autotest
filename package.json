@@ -4,7 +4,7 @@
   "description": "浏览器 PWA 功能支持度自动化测试",
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "rm -rf dist && webpack --env.mode='production'",
+    "build": "rm -rf dist && cross-env NODE_ENV=production webpack",
     "test": "",
     "precommit": ""
   },
@@ -35,6 +35,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "copy-webpack-plugin": "^4.1.1",
+    "cross-env": "^5.1.0",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.1",
     "file-loader": "^1.1.5",
