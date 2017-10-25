@@ -46,7 +46,7 @@ import {log} from 'log';
     await reg.unregister();
     log('sync: test finish');
 
-    if (parent) {
+    if (parent && parent.result) {
         log('refresh score');
         parent.result('sync');
     }

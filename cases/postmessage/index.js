@@ -70,7 +70,7 @@ let ch;
     await reg.unregister();
     log('postmessage: test finish');
 
-    if (parent) {
+    if (parent && parent.result) {
         log('refresh score');
         parent.result('postmessage');
     }

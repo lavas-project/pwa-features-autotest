@@ -7,7 +7,8 @@ import 'whatwg-fetch';
 import {featureStore} from 'store';
 import {sleep, showCaseName} from 'helper';
 import {log} from 'log';
-const webpush = require('web-push');
+import webpush from 'web-push';
+// const webpush = require();
 const list = [
     'pushManager', // no statistics
     'pushManager.permissionState',
@@ -104,7 +105,7 @@ const applicationServerKey = urlB64ToUint8Array(vapidKeys.publicKey);
     await reg.unregister();
     log('push: test finish');
 
-    if (parent) {
+    if (parent && parent.result) {
         log('refresh score');
         parent.result('push');
     }
