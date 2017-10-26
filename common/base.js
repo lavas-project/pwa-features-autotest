@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, zero} from 'helper';
+import {init, zero, showCaseName} from 'helper';
 
 export async function run({
     name,
@@ -12,6 +12,7 @@ export async function run({
     main,
     error
 }) {
+    showCaseName(name);
     await init(scope);
     await zero(features);
 
