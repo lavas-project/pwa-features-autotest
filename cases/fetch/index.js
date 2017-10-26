@@ -21,11 +21,6 @@ const CHECK_LIST = [
 const SCOPE = '/cases/fetch/';
 
 async function main() {
-    // showCaseName('fetch');
-
-    // await init(SCOPE);
-    // await zero(CHECK_LIST);
-
     log('fetch: start');
 
     const value = Number(!!(window.Promise));
@@ -74,11 +69,6 @@ async function main() {
     await unregister(reg);
 
     log('fetch: test finish');
-
-    // if (parent && parent.result) {
-    //     log('refresh score');
-    //     parent.result('fetch');
-    // }
 }
 
 run({

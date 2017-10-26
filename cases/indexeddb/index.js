@@ -2,6 +2,7 @@
  * @file indexeddb index.js
  * @author clark-t (clarktanglei@163.com)
  */
+import {run} from 'base';
 import {grade, zero, showCaseName} from 'helper';
 import {log} from 'log';
 
@@ -11,9 +12,9 @@ export const CHECK_LIST = [
 ];
 
 async function main() {
-    showCaseName('indexeddb');
+    // showCaseName('indexeddb');
 
-    await zero(CHECK_LIST);
+    // await zero(CHECK_LIST);
 
     if (typeof indexedDB === 'undefined') {
         log('indexeddb: indexedDB unsupport');
@@ -23,28 +24,28 @@ async function main() {
     let store = await createStore();
 
     try {
-        if (await promisify(store.get('a'))) {
-            await promisify(store.delete('a'))
+        if (await store.get('a')) {
+            await store.delete('a');
         }
 
         let data = {key: 'a', value: 'b'};
-        await promisify(store.add(data));
+        await store.add(data);
         log('indexeddb: add data', data);
 
-        data = await promisify(store.get('a'));
+        data = await store.get('a');
         log('indexeddb: get data after add', data);
 
         data = {key: 'a', value: 'c'};
-        await promisify(store.put(data));
+        await store.put(data);
         log('indexeddb: put data', data);
 
-        data = await promisify(store.get('a'));
+        data = await store.get('a');
         log('indexeddb: get data after put', data);
 
-        await promisify(store.delete('a'));
+        await store.delete('a');
         log('indexeddb: delete data');
 
-        data = await promisify(store.get('a'));
+        data = await store.get('a');
         log('indexeddb: get data after delete', data);
 
         grade('indexedDB', 1);
@@ -56,11 +57,11 @@ async function main() {
     if (store.getAll) {
         try {
             await Promise.all([
-                promisify(store.put({key: 'a', value: '1'})),
-                promisify(store.put({key: 'b', value: '2'}))
+                store.put({key: 'a', value: '1'}),
+                store.put({key: 'b', value: '2'})
             ]);
 
-            let result = await promisify(store.getAll());
+            let result = await store.getAll();
             grade('indexedDB.getAll', 1);
             log('indexeddb: getAll', result);
         }
@@ -74,10 +75,10 @@ async function main() {
 
     log('indexeddb: test finish');
 
-    if (parent && parent.result) {
-        log('refresh score');
-        parent.result('indexeddb');
-    }
+    // if (parent && parent.result) {
+    //     log('refresh score');
+    //     parent.result('indexeddb');
+    // }
 }
 
 const DB_NAME = 'pwa-test-indexeddb';
@@ -105,7 +106,18 @@ function createStore() {
 
             let transaction = db.transaction('test', 'readwrite');
             let store = transaction.objectStore('test');
-            resolve(store);
+
+            let promisifyStore = ['add', 'get', 'put', 'delete', 'getAll'].reduce(
+                (obj, key) => {
+                    if (typeof store[key] === 'function') {
+                        obj[key] = (...args) => promisify(store[key](...args));
+                    }
+                    return obj;
+                },
+                {}
+            );
+
+            resolve(promisifyStore);
         };
     })
 }
@@ -126,4 +138,8 @@ function promisify(request) {
     });
 }
 
-main();
+run({
+    name: 'indexeddb',
+    features: CHECK_LIST,
+    main: main
+});
