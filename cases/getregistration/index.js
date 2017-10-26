@@ -2,7 +2,7 @@
  * @file test register/unregister
  * @author clark-t (clarktanglei@163.com)
  */
-
+import {run} from 'base';
 import {init, sleep, zero, grade, register, unregister, showCaseName} from 'helper';
 import {featureStore} from 'store';
 import {log} from 'log';
@@ -19,11 +19,6 @@ const SUB_SCOPE_2 = '/cases/getregistration/sw-2/';
 const SCOPE_LIST = [SCOPE, SUB_SCOPE_1, SUB_SCOPE_2];
 
 async function main() {
-    showCaseName('getregistration');
-
-    await init(SCOPE_LIST);
-    await zero(CHECK_LIST);
-
     log('getregistration: start');
     log('getregistration: register several sw');
 
@@ -40,13 +35,10 @@ async function main() {
         testGetRegistrations()
     ]);
 
+    await sleep(3000);
+
     await unregister(regs);
     log('getregistration: test finish');
-
-    if (parent && parent.result) {
-        log('refresh score');
-        parent.result('getregistration');
-    }
 }
 
 async function testGetRegistration() {
@@ -94,4 +86,9 @@ async function testGetRegistrations() {
     }
 }
 
-main();
+run({
+    name: 'getregistration',
+    scope: SCOPE,
+    features: CHECK_LIST,
+    main: main
+});
