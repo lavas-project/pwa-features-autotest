@@ -243,17 +243,17 @@ export async function uaParse() {
     document.querySelector('.browser span').innerHTML = browser.name + ' ' + browser.version;
     document.querySelector('.os span').innerHTML = os.name + ' ' + os.version;
     document.querySelector('.device span').innerHTML = deviceTip;
-    await uaStore.setItem('browser', JSON.stringify(browser));
-    await uaStore.setItem('os', JSON.stringify(os));
-    await uaStore.setItem('device', JSON.stringify(device));
-    await uaStore.setItem('ua', JSON.stringify(ua));
+    // await uaStore.setItem('browser', JSON.stringify(browser));
+    // await uaStore.setItem('os', JSON.stringify(os));
+    // await uaStore.setItem('device', JSON.stringify(device));
+    // await uaStore.setItem('ua', JSON.stringify(ua));
 
-    // await Promise.all([
-    //     uaStore.setItem('browser', JSON.stringify(browser)),
-    //     uaStore.setItem('os', JSON.stringify(os)),
-    //     uaStore.setItem('device', JSON.stringify(device)),
-    //     uaStore.setItem('ua', JSON.stringify(ua))
-    // ]);
+    await Promise.all([
+        uaStore.setItem('browser', JSON.stringify(browser)),
+        uaStore.setItem('os', JSON.stringify(os)),
+        uaStore.setItem('device', JSON.stringify(device)),
+        uaStore.setItem('ua', JSON.stringify(ua))
+    ]);
 }
 
 
