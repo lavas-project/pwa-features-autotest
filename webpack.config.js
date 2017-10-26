@@ -51,6 +51,7 @@ var webpackConfig = {
             'utils': path.resolve('./common/utils.js'),
             'store': path.resolve('./common/store.js'),
             'helper': path.resolve('./common/helper.js'),
+            'base': path.resolve('./common/base.js'),
             'log': path.resolve('./common/log.js')
             /* eslint-enable camelcase */
         }

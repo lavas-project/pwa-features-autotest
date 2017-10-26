@@ -19,11 +19,17 @@ import {log} from 'log';
 
     featureStore.setItem('syncEvent', 0);
 
+    log('start to register sync sw');
     // syncEvent test
     const reg = await navigator.serviceWorker.register('./sw-sync.js', {scope: '/cases/sync/'});
+    log('sync sw registered', reg);
+
     await sleep(3000);
 
-    if (reg.sync) {
+
+
+    if (reg && reg.sync) {
+        log('has sync object');
          // sync register
         try {
             const tags = await reg.sync.getTags();
@@ -36,11 +42,13 @@ import {log} from 'log';
             }
         }
         catch (error) {
-            console.error('It broke (probably sync not supported or flag not enabled)');
-            console.error(error.message);
+            log('It broke (probably sync not supported or flag not enabled)', error.message);
+            // console.error(error.message);
             return;
         }
     }
+
+    log('sleep for 5000');
 
     await sleep(5000);
     await reg.unregister();

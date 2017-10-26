@@ -3,7 +3,8 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {init, zero, register, unregister, sleep, grade, checkProperties, showCaseName} from 'helper';
+import {run} from 'base';
+import {register, unregister, sleep, grade, checkProperties} from 'helper';
 import {log} from 'log';
 
 const CHECK_LIST = [
@@ -20,10 +21,10 @@ const CHECK_LIST = [
 const SCOPE = '/cases/fetch/';
 
 async function main() {
-    showCaseName('fetch');
+    // showCaseName('fetch');
 
-    await init(SCOPE);
-    await zero(CHECK_LIST);
+    // await init(SCOPE);
+    // await zero(CHECK_LIST);
 
     log('fetch: start');
 
@@ -71,12 +72,20 @@ async function main() {
     await sleep(3000);
 
     await unregister(reg);
+
     log('fetch: test finish');
 
-    if (parent && parent.result) {
-        log('refresh score');
-        parent.result('fetch');
-    }
+    // if (parent && parent.result) {
+    //     log('refresh score');
+    //     parent.result('fetch');
+    // }
 }
 
-main();
+run({
+    name: 'fetch',
+    scope: SCOPE,
+    features: CHECK_LIST,
+    main: main
+});
+
+// main();
