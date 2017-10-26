@@ -3,10 +3,11 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
+import {run} from 'base';
 import {featureStore} from 'store';
 import {sleep, showCaseName} from 'helper';
 import {log} from 'log';
-const list = [
+const CHECK_LIST = [
     'caches.open',
     'caches.has',
     'caches.keys',
@@ -17,19 +18,15 @@ const list = [
     'cache.delete',
     'cache.keys',
     'cache.match',
-    'cache.matchAll',
+    'cache.matchAll', // no statistics
     'cache.put'
 ];
 
-(async function () {
-    showCaseName('cache');
+const SCOPE = '/cases/cache/';
+
+async function main() {
 
     log('<< cache test >>');
-
-    // init store
-    list.map(async item => {
-        await featureStore.setItem(item, 0);
-    });
 
     // sw support
     if (!navigator.serviceWorker) {
@@ -37,14 +34,16 @@ const list = [
     }
 
     log('sw-cache register');
-    const reg = await navigator.serviceWorker.register('./sw-cache.js', {scope: '/cases/cache/'});
+    const reg = await navigator.serviceWorker.register('./sw-cache.js', {scope: SCOPE});
     await sleep(5000);
     await reg.unregister();
     log('cache: test finish');
 
-    if (parent && parent.result) {
-        log('refresh score');
-        parent.result('cache');
-    }
+};
 
-})();
+run({
+    name: 'cache',
+    scope: SCOPE,
+    features: CHECK_LIST,
+    main: main
+});

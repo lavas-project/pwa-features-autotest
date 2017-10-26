@@ -3,20 +3,21 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
+import {run} from 'base';
 import {featureStore} from 'store';
 import {sleep, one, showCaseName} from 'helper';
 import {log} from 'log';
-const list = [
+const CHECK_LIST = [
     'sw-msg-send',
     'sw-msg-got',
     'main-msg-send',
     'main-msg-got'
 ];
+const SCOPE = '/cases/postmessage/';
 
 let ch;
 
-(async function () {
-    showCaseName('postMessage');
+async function main() {
 
     log('<< postMessage test >>');
 
@@ -27,7 +28,7 @@ let ch;
 
     const messageWaiter = messageFromSWListener();
     log('sw-postmessage register');
-    const reg = await navigator.serviceWorker.register('./sw-postmessage.js', {scope: '/cases/postmessage/'});
+    const reg = await navigator.serviceWorker.register('./sw-postmessage.js', {scope: SCOPE});
     await sleep(3000);
 
     // main-msg-send test
@@ -75,7 +76,7 @@ let ch;
         parent.result('postmessage');
     }
 
-})();
+};
 
 async function messageFromSWListener() {
 
@@ -112,3 +113,10 @@ async function messageFromSWListener() {
         })
     ]);
 }
+
+run({
+    name: 'postMessage',
+    scope: SCOPE,
+    features: CHECK_LIST,
+    main: main
+});

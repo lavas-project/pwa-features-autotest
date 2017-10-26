@@ -3,11 +3,17 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
+import {run} from 'base';
 import {featureStore} from 'store';
 import {sleep, showCaseName} from 'helper';
 import {log} from 'log';
+const CHECK_LIST = [
+    'syncEvent'
+];
 
-(async function () {
+const SCOPE = '/cases/sync/';
+
+async function main() {
     showCaseName('sync');
 
     log('<< sync test >>');
@@ -17,11 +23,9 @@ import {log} from 'log';
         return;
     }
 
-    featureStore.setItem('syncEvent', 0);
-
     log('start to register sync sw');
     // syncEvent test
-    const reg = await navigator.serviceWorker.register('./sw-sync.js', {scope: '/cases/sync/'});
+    const reg = await navigator.serviceWorker.register('./sw-sync.js', {scope: SCOPE});
     log('sync sw registered', reg);
 
     await sleep(3000);
@@ -58,4 +62,11 @@ import {log} from 'log';
         log('refresh score');
         parent.result('sync');
     }
-})();
+};
+
+run({
+    name: 'sync',
+    scope: SCOPE,
+    features: CHECK_LIST,
+    main: main
+});

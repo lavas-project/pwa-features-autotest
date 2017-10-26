@@ -2,7 +2,6 @@
  * @file client entry js file
  * @author clark-t (clarktanglei@163.com)
  */
-
 import './index.styl';
 import axios from 'axios';
 import {featureStore, uaStore, uuidStore} from 'store';
@@ -43,16 +42,16 @@ initFeatureScore();
 // test case
 // caseList.forEach(test);
 [
-    '/cases/lifecycle/index.html',
+    // '/cases/lifecycle/index.html',
+    '/cases/sync/index.html',
     '/cases/cache/index.html',
-    '/cases/fetch/index.html',
-    '/cases/getregistration/index.html',
-    '/cases/indexeddb/index.html',
-    // ,
+    // '/cases/fetch/index.html',
+    // '/cases/getregistration/index.html',
+    // '/cases/indexeddb/index.html',
+    // // ,
     '/cases/notification/index.html',
     '/cases/postmessage/index.html',
-    '/cases/push/index.html',
-    '/cases/sync/index.html'
+    '/cases/push/index.html'
 ].forEach(item => test(item));
 
 function test(src) {
@@ -109,8 +108,8 @@ function refreshFeatureScore(list) {
 
 function uaProcess() {
     uaParse();
-    uaKeys.forEach(async item => {
-        summary.info[item] = await uaStore.getItem(item);
+    uaKeys.forEach(item => {
+        summary.info[item] = uaStore.getItem(item);
     });
 }
 

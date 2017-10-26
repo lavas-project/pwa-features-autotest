@@ -3,26 +3,23 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
+import {run} from 'base';
 import 'whatwg-fetch';
 import {featureStore} from 'store';
 import {sleep, showCaseName} from 'helper';
 import {log} from 'log';
-const list = [
+const CHECK_LIST = [
     'notification',
     'notification.requestPermission',
     'showNotification',
     'getNotification',
     'notificationclick' // no statistics
 ];
+const SCOPE = '/cases/notification/';
 
-(async function () {
-    showCaseName('notification');
+async function main() {
 
     log('<< notification-test >>');
-
-    list.map(async item => {
-        await featureStore.setItem(item, 0);
-    });
 
     // sw support
     if (!navigator.serviceWorker) {
@@ -30,7 +27,7 @@ const list = [
     }
 
     // sw register
-    const reg = await navigator.serviceWorker.register('./sw-notification.js', {scope: '/cases/notification/'});
+    const reg = await navigator.serviceWorker.register('./sw-notification.js', {scope: SCOPE});
     await sleep(3000);
 
     // notification test
@@ -70,9 +67,11 @@ const list = [
     await reg.unregister();
     log('notification: test finish');
 
-    if (parent && parent.result) {
-        log('refresh score');
-        parent.result('notification');
-    }
+};
 
-})();
+run({
+    name: 'notification',
+    scope: SCOPE,
+    features: CHECK_LIST,
+    main: main
+});

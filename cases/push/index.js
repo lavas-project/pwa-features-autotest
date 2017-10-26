@@ -3,13 +3,13 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
+import {run} from 'base';
 import 'whatwg-fetch';
 import {featureStore} from 'store';
 import {sleep, showCaseName} from 'helper';
 import {log} from 'log';
 import webpush from 'web-push';
-// const webpush = require();
-const list = [
+const CHECK_LIST = [
     'pushManager', // no statistics
     'pushManager.permissionState',
     'pushManager.getSubscription',
@@ -17,19 +17,15 @@ const list = [
     'pushSubscription.unsubscribe',
     'pushEvent' // no statistics
 ];
+const SCOPE = '/cases/push/';
 
 const vapidKeys = webpush.generateVAPIDKeys();
 
 const applicationServerKey = urlB64ToUint8Array(vapidKeys.publicKey);
 
-(async function () {
-    showCaseName('push');
+async function main() {
 
     log('<< push-test >>');
-
-    list.map(async item => {
-        await featureStore.setItem(item, 0);
-    });
 
     // sw support
     if (!navigator.serviceWorker) {
@@ -37,7 +33,7 @@ const applicationServerKey = urlB64ToUint8Array(vapidKeys.publicKey);
     }
 
     // sw register
-    const reg = await navigator.serviceWorker.register('./sw-push.js', {scope: '/cases/push/'});
+    const reg = await navigator.serviceWorker.register('./sw-push.js', {scope: SCOPE});
     await sleep(3000);
 
     const pushManager = reg.pushManager;
@@ -104,13 +100,7 @@ const applicationServerKey = urlB64ToUint8Array(vapidKeys.publicKey);
     await sleep(5000);
     await reg.unregister();
     log('push: test finish');
-
-    if (parent && parent.result) {
-        log('refresh score');
-        parent.result('push');
-    }
-
-})();
+};
 
 /**
  * urlB64ToUint8Array public key
@@ -133,3 +123,9 @@ function urlB64ToUint8Array(base64String) {
     return outputArray;
 }
 
+run({
+    name: 'push',
+    scope: SCOPE,
+    features: CHECK_LIST,
+    main: main
+});
