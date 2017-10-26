@@ -6,7 +6,7 @@
 import {run} from 'base';
 import 'whatwg-fetch';
 import {featureStore} from 'store';
-import {sleep, showCaseName} from 'helper';
+import {sleep} from 'helper';
 import {log} from 'log';
 import webpush from 'web-push';
 const CHECK_LIST = [

@@ -5,7 +5,7 @@
 
 import {run} from 'base';
 import {featureStore} from 'store';
-import {sleep, showCaseName} from 'helper';
+import {sleep} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
     'caches.open',

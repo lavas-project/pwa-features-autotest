@@ -5,7 +5,7 @@
 
 import {run} from 'base';
 import {featureStore} from 'store';
-import {sleep, one, showCaseName} from 'helper';
+import {sleep, one} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
     'sw-msg-send',

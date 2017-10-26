@@ -5,7 +5,7 @@
 
 import {run} from 'base';
 import {featureStore} from 'store';
-import {sleep, showCaseName} from 'helper';
+import {sleep} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
     'syncEvent'
@@ -14,7 +14,6 @@ const CHECK_LIST = [
 const SCOPE = '/cases/sync/';
 
 async function main() {
-    showCaseName('sync');
 
     log('<< sync test >>');
 
