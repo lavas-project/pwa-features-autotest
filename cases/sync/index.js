@@ -10,7 +10,6 @@ import {log} from 'log';
 const CHECK_LIST = [
     'syncEvent'
 ];
-
 const SCOPE = '/cases/sync/';
 
 async function main() {
@@ -45,8 +44,7 @@ async function main() {
             }
         }
         catch (error) {
-            log('It broke (probably sync not supported or flag not enabled)', error.message);
-            // console.error(error.message);
+            log('sync not supported', error.message);
             return;
         }
     }
@@ -56,11 +54,6 @@ async function main() {
     await sleep(5000);
     await reg.unregister();
     log('sync: test finish');
-
-    if (parent && parent.result) {
-        log('refresh score');
-        parent.result('sync');
-    }
 };
 
 run({
