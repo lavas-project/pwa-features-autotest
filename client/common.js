@@ -46,7 +46,7 @@ export function refreshCommon() {
 function initFeatureScore() {
     let tbody = [];
     let schedule = [];
-    for (let key of featureKeys) {
+    for (let key in featureKeys) {
         let mid = featureKeys[key].map(item => {
             summary.feature[item] = 0;
             return [
