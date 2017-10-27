@@ -1,6 +1,6 @@
 /**
- * @file sync-test entry for test in order
- * @author ruoran (liuruoran@baidu.com)
+ * @file indexeddb entry for test in order
+ * @author clark-t (clarktanglei@163.com)
  */
 
 import caseCreator from './demo';
@@ -8,3 +8,4 @@ import caseCreator from './demo';
 const SCOPE = '/';
 
 export default caseCreator(SCOPE);
+

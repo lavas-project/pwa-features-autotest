@@ -4,7 +4,6 @@
  */
 
 import {sleep, grade, one} from 'helper';
-import {isFunction} from 'utils';
 import {log} from 'log';
 
 self.addEventListener('install', e => {
@@ -49,7 +48,7 @@ function testClientsClaim() {
     self.addEventListener('activate', e => {
         self.clients.claim().then(() => {
             log('lifecycle sw-1: clients.claim called');
-        })
+        });
     });
 }
 
