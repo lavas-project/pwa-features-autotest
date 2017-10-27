@@ -9,6 +9,8 @@ import UAParser from 'ua-parser-js';
 
 /**
  * unregister sw controller and then reload the page
+ *
+ * @param {Array} scopes description
  */
 export async function init(scopes) {
     const sw = navigator.serviceWorker;
@@ -127,11 +129,11 @@ export function sleep(duration) {
 
 // uuid
 export function uuid(duration) {
-    return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4() + '-' + Date.now());
+    return (s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4() + '-' + Date.now());
 }
 
 // 4 random number
-export function S4() {
+export function s4() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
 }
 
@@ -228,7 +230,8 @@ export function createStepTest(totalStep, onSuccess, onFail) {
 
 export function showCaseName(caseName) {
     let div = document.createElement('div');
-    div.style = "width:100%;height:20px;text-align:center;background:rgba(0,0,0,0.5);color:#fff;position:fixed;top:0;left:0";
+    div.style
+        = 'width:100%;height:20px;text-align:center;background:rgba(0,0,0,0.5);color:#fff;position:fixed;top:0;left:0';
     div.innerHTML = caseName;
     document.body.appendChild(div);
 }
@@ -243,10 +246,6 @@ export async function uaParse() {
     document.querySelector('.browser span').innerHTML = browser.name + ' ' + browser.version;
     document.querySelector('.os span').innerHTML = os.name + ' ' + os.version;
     document.querySelector('.device span').innerHTML = deviceTip;
-    // await uaStore.setItem('browser', JSON.stringify(browser));
-    // await uaStore.setItem('os', JSON.stringify(os));
-    // await uaStore.setItem('device', JSON.stringify(device));
-    // await uaStore.setItem('ua', JSON.stringify(ua));
 
     await Promise.all([
         uaStore.setItem('browser', JSON.stringify(browser)),

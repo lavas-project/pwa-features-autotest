@@ -100,7 +100,7 @@ export function mainLog(...args) {
     wrapper.innerHTML = html;
 }
 
-let count = 0;
+// let count = 0;
 
 export async function swLog(...args) {
     await until(lock.bind(null, 'sw' + Math.floor(Math.random() * Date.now())));
