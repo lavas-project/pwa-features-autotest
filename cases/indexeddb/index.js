@@ -12,10 +12,6 @@ export const CHECK_LIST = [
 ];
 
 async function main() {
-    // showCaseName('indexeddb');
-
-    // await zero(CHECK_LIST);
-
     if (typeof indexedDB === 'undefined') {
         log('indexeddb: indexedDB unsupport');
         return;

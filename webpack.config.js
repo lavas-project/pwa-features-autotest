@@ -38,7 +38,8 @@ var webpackConfig = {
             return result;
         },
         {
-            index: './client/index.js'
+            index: './client/index.js',
+            test: './client/test.js'
         }
     ),
     output: {
@@ -149,6 +150,11 @@ var webpackConfig = {
             filename: 'index.html',
             template: './client/index.html',
             chunks: ['index']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'test.html',
+            template: './client/index.html',
+            chunks: ['test']
         })
         // new webpack.HotModuleReplacementPlugin()
     ]
