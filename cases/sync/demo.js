@@ -3,9 +3,9 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-import {run} from 'base';
-import {featureStore} from 'store';
-import {sleep, showCaseName} from 'helper';
+// import {run} from 'base';
+// import {featureStore} from 'store';
+import {sleep} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
     'syncEvent'
@@ -27,7 +27,7 @@ export default function (scope) {
 
             log('start to register sync sw');
             // syncEvent test
-            const reg = await navigator.serviceWorker.register(scope + 'sw-sync.js', {scope: scope});
+            const reg = await navigator.serviceWorker.register(scope + 'sw-sync.js', {scope});
             log('sync sw registered', reg);
 
             await sleep(3000);
