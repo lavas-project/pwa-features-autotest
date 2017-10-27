@@ -55,15 +55,16 @@ export default function (scope) {
                     applicationServerKey: applicationServerKey
                 });
                 await featureStore.setItem('pushManager.permissionState', 1);
+                log('- pushManager.permissionState done -', 1);
+
                 if (permissionState === 'denied') {
                     log('permission denied');
                     await reg.unregister();
                     return;
                 }
-                log('- pushManager.permissionState done -', 1);
             }
             catch (err) {
-                console.error(err);
+                log(err);
             }
 
             // subscribe test
@@ -80,12 +81,12 @@ export default function (scope) {
 
             // getSubscription test
             let getSubscribe = await pushManager.getSubscription();
+            await featureStore.setItem('pushManager.getSubscription', 1);
+            log('- pushManager.getSubscription done -', 1);
+
             if (getSubscribe) {
                 await featureStore.setItem('pushManager.subscribe', 1);
                 log('- pushManager.subscribe done -', 1);
-
-                await featureStore.setItem('pushManager.getSubscription', 1);
-                log('- pushManager.getSubscription done -', 1);
             }
 
             if (subscribe) {

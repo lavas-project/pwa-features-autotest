@@ -3,8 +3,6 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-// import {run} from 'base';
-// import {featureStore} from 'store';
 import {sleep} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
@@ -13,7 +11,7 @@ const CHECK_LIST = [
 
 export default function (scope) {
     return {
-        name: 'fetch',
+        name: 'sync',
         scope: scope,
         features: CHECK_LIST,
         async main() {

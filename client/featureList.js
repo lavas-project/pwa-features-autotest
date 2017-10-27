@@ -1,3 +1,8 @@
+/**
+ * @file client entry js file
+ * @author clark-t (clarktanglei@163.com)
+ */
+
 export const featureKeys = {
     cache: [
         'caches.open',

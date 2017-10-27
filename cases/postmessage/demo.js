@@ -30,7 +30,7 @@ export default function (scope) {
 
             const messageWaiter = messageFromSWListener();
             log('sw-postmessage register');
-            const reg = await navigator.serviceWorker.register(scope + '/sw-postmessage.js', {scope});
+            const reg = await navigator.serviceWorker.register(scope + 'sw-postmessage.js', {scope});
             await sleep(3000);
 
             // main-msg-send test
@@ -59,15 +59,15 @@ export default function (scope) {
             ]);
 
             // postmessage score
-            let point = 0;
-            CHECK_LIST.map(async item => {
-                const score = await featureStore.getItem(item);
-                point += parseFloat(score);
-            });
-            const result = (point / CHECK_LIST.length).toFixed(2);
+            // let point = 0;
+            // CHECK_LIST.map(async item => {
+            //     const score = await featureStore.getItem(item);
+            //     point += parseFloat(score);
+            // });
+            // const result = (point / CHECK_LIST.length).toFixed(2);
 
-            await featureStore.setItem('postMessage', result);
-            log('- postmessage -', result);
+            // await featureStore.setItem('postMessage', result);
+            // log('- postmessage -', result);
 
             await sleep(5000);
             await reg.unregister();
