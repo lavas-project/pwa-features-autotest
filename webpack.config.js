@@ -8,6 +8,7 @@
 var glob = require('glob');
 var path = require('path');
 var webpack = require('webpack');
+var fs = require('fs');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -19,7 +20,6 @@ var caseEntryFiles = glob.sync('./cases/**/+(index|sw*).js');
 var caseIndexFiles = caseEntryFiles.filter(function (filePath) {
     return path.basename(filePath).indexOf('sw') !== 0;
 });
-
 
 /* eslint-disable no-console */
 console.log('\x1b[35m%s\x1b[0m', '[' + new Date().toLocaleString() + ']', '--webpack start');
@@ -35,11 +35,19 @@ var webpackConfig = {
         function (result, filePath) {
             let caseName = filePath.replace(/\.js$/, '').slice(2);
             result[caseName] = filePath;
+
+            let name = path.basename(filePath);
+
+            if (name.indexOf('sw') === 0) {
+                let rootSWName = caseName.split('/').slice(2).join('/');
+                result[rootSWName] = filePath;
+            }
+
             return result;
         },
         {
             index: './client/index.js',
-            test: './client/test.js'
+            sequence: './client/sequence.js'
         }
     ),
     output: {
@@ -152,9 +160,9 @@ var webpackConfig = {
             chunks: ['index']
         }),
         new HtmlWebpackPlugin({
-            filename: 'test.html',
+            filename: 'sequence.html',
             template: './client/index.html',
-            chunks: ['test']
+            chunks: ['sequence']
         })
         // new webpack.HotModuleReplacementPlugin()
     ]

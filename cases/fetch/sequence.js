@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import caseCreator from './case';
+import caseCreator from './demo';
 
 const SCOPE = '/';
 

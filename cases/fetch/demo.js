@@ -25,6 +25,7 @@ export default function (scope) {
             log('fetch: start');
 
             const value = Number(!!(window.Promise));
+
             await grade('Promise', value);
             log('- Promise done -', value);
 
@@ -36,9 +37,10 @@ export default function (scope) {
                 Headers: 1
             });
             /* eslint-enable fecs-camelcase */
+
             log('fetch: register sw.js');
 
-            let reg = await register(scope + 'sw.js', scope);
+            let reg = await register(scope + 'sw-fetch.js', scope);;
 
             log('fetch: registered');
 
@@ -55,8 +57,8 @@ export default function (scope) {
                 log('fetch: get response', data);
                 if (data && data.im === 'fetch-sw') {
                     await Promise.all([
-                        await grade('fetch', 1),
-                        await grade('Response', 1)
+                        grade('fetch', 1),
+                        grade('Response', 1)
                     ]);
                     log('fetch: full score');
                 }
@@ -69,6 +71,10 @@ export default function (scope) {
             await unregister(reg);
 
             log('fetch: test finish');
+        },
+        error(e) {
+            log('fetch: catch unhandled error');
+            log(JSON.stringify(e));
         }
     };
 }

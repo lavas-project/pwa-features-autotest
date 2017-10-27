@@ -1,11 +1,12 @@
-import caseList from './cases';
+import demoList from './demos';
 import {zero} from 'helper';
+import 'babel-polyfill';
 
 async function main() {
-    let features = caseList.reduce(
-        (arr, app) => {
-            if (app.features) {
-                arr = arr.concat(app.features);
+    let features = demoList.reduce(
+        (arr, demo) => {
+            if (demo.features) {
+                arr = arr.concat(demo.features);
             }
 
             return arr;
@@ -15,9 +16,9 @@ async function main() {
 
     await zero(features);
 
-    for (let i = 0; i < caseList.length; i++) {
-        await run(caseList[i]);
-        console.log(caseList[i].name + ' finish');
+    for (let i = 0; i < demoList.length; i++) {
+        await run(demoList[i]);
+        // console.log(demoList[i].name + ' finish');
     }
 }
 

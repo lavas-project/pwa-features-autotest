@@ -4,7 +4,7 @@
  */
 
 import {run} from 'base';
-import caseCreator from './case';
+import caseCreator from './demo';
 
 const SCOPE = '/cases/fetch/';
 

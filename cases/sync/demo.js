@@ -27,7 +27,8 @@ export default function (scope) {
 
             log('start to register sync sw');
             // syncEvent test
-            const reg = await navigator.serviceWorker.register(scope + 'sw-sync.js', {scope: scope});
+            let reg = await navigator.serviceWorker.register(scope + 'sw-sync.js', {scope: scope});
+
             log('sync sw registered', reg);
 
             await sleep(3000);
@@ -59,6 +60,10 @@ export default function (scope) {
             await sleep(5000);
             await reg.unregister();
             log('sync: test finish');
+        },
+        error(e) {
+            log('sync: catch unhandled error');
+            log(e);
         }
     };
 }

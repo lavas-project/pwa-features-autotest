@@ -3,7 +3,7 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-import caseCreator from './case';
+import caseCreator from './demo';
 
 const SCOPE = '/';
 
