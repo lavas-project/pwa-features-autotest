@@ -14,6 +14,7 @@ let summary = {
     info: {},
     feature: {}
 };
+let id;
 
 let totalTestNum = 0;
 let totalTestDone = 0;
@@ -37,6 +38,8 @@ export function refreshCommon() {
 
     // ua
     uaProcess();
+
+    uuidProcess();
 
     // init page table
     initFeatureScore();
@@ -76,7 +79,7 @@ function refreshFeatureScore(list) {
     list = list || [];
     list.forEach(async item => {
         let score = await featureStore.getItem(item);
-        log('++++++++++++', item, score);
+        // log('++++++++++++', item, score);
         score = score || 0;
         totalTestScore += score;
         summary.feature[item] = score;
@@ -93,9 +96,17 @@ function refreshFeatureScore(list) {
 
 function uaProcess() {
     uaParse();
-    uaKeys.forEach(item => {
-        summary.info[item] = uaStore.getItem(item);
+    uaKeys.forEach(async item => {
+        summary.info[item] = await uaStore.getItem(item);
     });
+}
+
+async function uuidProcess() {
+    id = await uuidStore.getItem('id');
+    if (!id) {
+        id = uuid();
+        await uuidStore.setItem('id', id);
+    }
 }
 
 function sendDataBtnBind() {
@@ -104,21 +115,12 @@ function sendDataBtnBind() {
         let sendDataConfirm = confirm('send data to the database ?');
 
         if (sendDataConfirm) {
-            // send uuid
-            // let id = await uuidStore.getItem('id');
-            // console.log('!!!!!!!!!00', id);
-            // if (!id) {
-            //     id = uuid();
-            //     await uuidStore.setItem('id', id);
-            // }
-            // console.log('!!!!!!!!!1', id);
-            // send ua
 
             let res = await axios({
                 method: 'post',
                 url: 'https://lavas.baidu.com/api/ready/statistic',
                 data: {
-                    // id,
+                    id,
                     info: summary.info,
                     feature: summary.feature
                 }
