@@ -4,7 +4,7 @@
   "description": "浏览器 PWA 功能支持度自动化测试",
   "scripts": {
     "dev": "webpack-dev-server",
-    "build": "rm -rf dist && cross-env NODE_ENV=production webpack",
+    "build": "rm -rf dist && cross-env NODE_ENV=production webpack -w",
     "test": "",
     "precommit": ""
   },

@@ -1,5 +1,5 @@
 /**
- * @file postMessage-test
+ * @file postmessage-test
  * @author ruoran (liuruoran@baidu.com)
  */
 

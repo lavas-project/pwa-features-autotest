@@ -13,6 +13,7 @@ self.addEventListener('install', function (event) {
 
 self.addEventListener('activate', function (event) {
     log('Activate event');
+    // self.clients.claim();
 });
 
 self.addEventListener('sync', function (event) {

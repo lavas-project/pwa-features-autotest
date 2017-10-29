@@ -55,7 +55,7 @@ export default function (scope) {
             log('sleep for 5000');
 
             await sleep(5000);
-            await reg.unregister();
+            // await reg.unregister();
             log('sync: test finish');
         },
         error(e) {

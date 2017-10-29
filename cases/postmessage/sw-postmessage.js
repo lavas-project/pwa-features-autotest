@@ -1,5 +1,5 @@
 /**
- * @file sw-cache
+ * @file sw-postmessage
  * @author ruoran (liuruoran@baidu.com)
  */
 

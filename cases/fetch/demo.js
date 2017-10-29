@@ -3,7 +3,6 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {run} from 'base';
 import {register, unregister, sleep, grade, checkProperties} from 'helper';
 import {log} from 'log';
 
@@ -40,7 +39,7 @@ export default function (scope) {
 
             log('fetch: register sw.js');
 
-            let reg = await register(scope + 'sw-fetch.js', scope);;
+            let reg = await register(scope + 'sw-fetch.js', scope);
 
             log('fetch: registered');
 

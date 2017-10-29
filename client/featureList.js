@@ -4,6 +4,31 @@
  */
 
 export const featureKeys = {
+    fetch: [
+        'Promise',
+        'fetch',
+        'Request',
+        'Response',
+        'Headers',
+        'fetchEvent',
+        'fetchEvent.request',
+        'fetchEvent.respondWith'
+    ],
+    sync: [
+        'syncEvent'
+    ],
+    lifecycle: [
+        'navigator.serviceWorker',
+        'navigator.serviceWorker.ready',
+        'oncontrollerchange',
+        'onstatechange',
+        'Registered',
+        'Unregistered',
+        'clients.claim',
+        'skipWaiting',
+        'installEvent.waitUntil',
+        'activateEvent.waitUntil'
+    ],
     cache: [
         'caches.open',
         'caches.has',
@@ -18,16 +43,6 @@ export const featureKeys = {
         // 'cache.matchAll',
         'cache.put'
     ],
-    fetch: [
-        'Promise',
-        'fetch',
-        'Request',
-        'Response',
-        'Headers',
-        'fetchEvent',
-        'fetchEvent.request',
-        'fetchEvent.respondWith'
-    ],
     getregistration: [
         'navigator.serviceWorker.getRegistration',
         'navigator.serviceWorker.getRegistrations'
@@ -36,29 +51,11 @@ export const featureKeys = {
         'indexedDB',
         'indexedDB.getAll'
     ],
-    lifecycle: [
-        'navigator.serviceWorker',
-        'navigator.serviceWorker.ready',
-        'oncontrollerchange',
-        'onstatechange',
-        'Registered',
-        'Unregistered',
-        'clients.claim',
-        'skipWaiting',
-        'installEvent.waitUntil',
-        'activateEvent.waitUntil'
-    ],
     notification: [
         'notification',
-        'notification.requestPermission',
+        // 'notification.requestPermission',
         'showNotification',
         'getNotification'
-    ],
-    postmessage: [
-        'sw-msg-send',
-        'sw-msg-got',
-        'main-msg-send',
-        'main-msg-got'
     ],
     push: [
         'pushManager.subscribe',
@@ -66,8 +63,11 @@ export const featureKeys = {
         'pushManager.permissionState',
         'pushSubscription.unsubscribe'
     ],
-    sync: [
-        'syncEvent'
+    postmessage: [
+        'sw-msg-send',
+        'sw-msg-got',
+        'main-msg-send',
+        'main-msg-got'
     ]
 };
 

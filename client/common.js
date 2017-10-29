@@ -4,6 +4,7 @@
  */
 
 import './index.styl';
+import {log} from 'log';
 import axios from 'axios';
 import {featureStore, uaStore, uuidStore} from 'store';
 import {sleep, uaParse, uuid} from 'helper';
@@ -75,9 +76,10 @@ function refreshFeatureScore(list) {
     list = list || [];
     list.forEach(async item => {
         let score = await featureStore.getItem(item);
+        log('++++++++++++', item, score);
+        score = score || 0;
         totalTestScore += score;
         summary.feature[item] = score;
-        // console.log('++++++++++++', item, score, totalTestScore);
         let idClass = '#' + item.toLowerCase().replace(/\./g, '-') + ' .score';
         document.querySelector(idClass).innerHTML = score;
         totalTestDone++;

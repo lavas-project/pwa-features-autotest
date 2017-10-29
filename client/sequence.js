@@ -5,29 +5,71 @@
 
 import {refreshCommon} from './common.js';
 import demoList from './demos';
-import {zero} from 'helper';
+import {zero, init} from 'helper';
+import {log} from 'log';
+import {featureStore} from 'store';
 import 'babel-polyfill';
 
-
 async function main() {
-    await refreshCommon();
+    try {
+        let reg = await navigator.serviceWorker.getRegistration();
+        if (reg && typeof reg === 'object') {
+            await reg.unregister();
+            await new Promise(() => {
+                window.location.reload();
+            })
+        }
+    }
+    catch (e) {
+        log('init error', e)
+    }
+    // await init();
+    refreshCommon();
 
-    let features = demoList.reduce(
-        (arr, demo) => {
-            if (demo.features) {
-                arr = arr.concat(demo.features);
-            }
+    let startIndex = 0;
+    if (localStorage.getItem('step')) {
+        startIndex = demoList.findIndex(item => {
+            return item.name === localStorage.getItem('step');
+        });
+        startIndex = startIndex + 1;
+    }
+    else {
 
-            return arr;
-        },
-        []
-    );
+        let features = demoList.reduce(
+            (arr, demo) => {
+                if (demo.features) {
+                    arr = arr.concat(demo.features);
+                }
 
-    await zero(features);
+                return arr;
+            },
+            []
+        );
 
-    for (let i = 0; i < demoList.length; i++) {
+        // await zero(features);
+        features.map(async item => {
+            await featureStore.setItem(item, 0);
+        });
+    }
+
+
+    for (let j = 0; j < startIndex; j++) {
+        window.result(demoList[j].name);
+    }
+
+    for (let i = startIndex; i < demoList.length; i++) {
         await run(demoList[i]);
-        window.result(demoList[i].name);
+
+        if (i < demoList.length - 1) {
+            localStorage.setItem('step', demoList[i].name);
+            location.reload();
+
+        }
+        else {
+            localStorage.setItem('step', '');
+            window.result(demoList[i].name);
+        }
+
         // console.log(demoList[i].name + ' finish');
     }
 }
@@ -37,9 +79,11 @@ async function run({name, scope, features, main, error}) {
         await main();
     }
     catch (e) {
-        if (error) {
-            await error(e);
-        }
+        log('main-error', e);
+
+        // if (error) {
+        //     await error(e);
+        // }
     }
 }
 

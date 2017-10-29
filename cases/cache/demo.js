@@ -36,7 +36,7 @@ export default function (scope) {
 
             log('sw-cache register');
             const reg = await navigator.serviceWorker.register(scope + 'sw-cache.js', {scope});
-            await sleep(5000);
+            await sleep(10000);
             await reg.unregister();
             log('cache: test finish');
         }
