@@ -6,6 +6,15 @@
 import {checkProperties, grade} from 'helper';
 import {log} from 'log';
 
+/* eslint-disable fecs-camelcase */
+checkProperties(self, {
+    fetch: 0.5,
+    Request: 1,
+    Response: 0.5,
+    Headers: 1
+});
+/* eslint-enable fecs-camelcase */
+
 self.addEventListener('install', e => {
     self.skipWaiting();
 });

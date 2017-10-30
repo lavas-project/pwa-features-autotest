@@ -14,14 +14,14 @@ import postmessageCase from '../cases/postmessage/sequence'; // ok
 import pushCase from '../cases/push/sequence';
 
 export default [
-    fetchCase,
-    syncCase,
     lifecycleCase,
-    cacheCase,
     getregistrationCase,
+    fetchCase,
     indexeddbCase,
+    cacheCase,
+    syncCase,
+    postmessageCase,
     notificationCase,
-    pushCase,
-    postmessageCase
+    pushCase
 ];
 

@@ -5,6 +5,7 @@
 
 import {sleep} from 'helper';
 import {log} from 'log';
+
 const CHECK_LIST = [
     'syncEvent'
 ];

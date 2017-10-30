@@ -2,7 +2,7 @@
  * @file fetch & fetchEvent test
  * @author clark-t (clarktanglei@163.com)
  */
-
+import 'whatwg-fetch';
 import {register, unregister, sleep, grade, checkProperties} from 'helper';
 import {log} from 'log';
 
@@ -27,15 +27,6 @@ export default function (scope) {
 
             await grade('Promise', value);
             log('- Promise done -', value);
-
-            /* eslint-disable fecs-camelcase */
-            await checkProperties(window, {
-                fetch: 0.5,
-                Request: 1,
-                Response: 0.5,
-                Headers: 1
-            });
-            /* eslint-enable fecs-camelcase */
 
             log('fetch: register sw.js');
 

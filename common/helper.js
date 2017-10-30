@@ -39,8 +39,10 @@ export async function unregister(scopes) {
 
             switch (typeof scope) {
                 case 'string':
-                case 'undefined':
                     reg = await navigator.serviceWorker.getRegistration(scope);
+                    break;
+                case 'undefined':
+                    reg = await navigator.serviceWorker.getRegistration();
                     break;
                 case 'object':
                     reg = scope;
@@ -166,7 +168,7 @@ export function grade(feature, score) {
     return featureStore.setItem(feature, score);
 }
 
-export function createOnce({name, prefix = 'pwa-test-once-'}) {
+export function createStep({name, prefix = 'pwa-test-step-'}) {
     const key = prefix + name;
 
     // const getStep = () => +localStorage.getItem(key);
@@ -174,7 +176,7 @@ export function createOnce({name, prefix = 'pwa-test-once-'}) {
     let stepNumber = -1;
     let target = +localStorage.getItem(key);
 
-    const once = async (fn, needReload = true) => {
+    const step = async (fn, needReload = true) => {
         stepNumber++;
 
         if (target === stepNumber) {
@@ -189,11 +191,11 @@ export function createOnce({name, prefix = 'pwa-test-once-'}) {
         }
     };
 
-    once.done = () => {
+    step.done = () => {
         localStorage.removeItem(key);
     };
 
-    return once;
+    return step;
 }
 
 export function createStepTest(totalStep, onSuccess, onFail) {

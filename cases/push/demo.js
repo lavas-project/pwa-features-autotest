@@ -124,7 +124,9 @@ export default function (scope) {
                 log('- pushSubscription.unsubscribe done -', Number(!getSubscribe));
             }
 
+            log('sleep for 5s');
             await sleep(5000);
+            log('unregister sw-push.js');
             await reg.unregister();
             log('push: test finish');
         }
