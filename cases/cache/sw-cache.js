@@ -70,6 +70,26 @@ self.addEventListener('install', function (event) {
         log('- cache add done -', value);
         log('- cache match done -', value);
 
+
+        // cache.put
+        const urlPut = baseUrl + 'put';
+        const resPut = await fetch(urlPut);
+        await cache1.put(urlPut, resPut);
+        await featureStore.setItem('cache.put', 0.5);
+
+        matchCache = await cache1.match(urlPut);
+        matchCacheData = await matchCache.json();
+        value = Number(matchCacheData.data === urlPut);
+        await featureStore.setItem('cache.put', value);
+        log('- cache put done -', value);
+
+        // cache.delete
+        await cache1.delete(urlPut);
+        matchCache = await cache1.match(urlPut);
+        value = Number(!matchCache);
+        await featureStore.setItem('cache.delete', value);
+        log('- cache delete done -', value);
+
         // cache.addAll
         const urlAddAll = [
             baseUrl + '1',
@@ -98,23 +118,16 @@ self.addEventListener('install', function (event) {
 
 
         // cache.put
-        const urlPut = '/cache/' + 'put';
-        const resPut = await fetch(urlPut);
-        await cache1.put(urlPut, resPut);
-        await featureStore.setItem('cache.put', 0.5);
+        // const urlPut = '/cache/' + 'put';
+        // const resPut = await fetch(urlPut);
+        // await cache1.put(urlPut, resPut);
+        // await featureStore.setItem('cache.put', 0.5);
 
-        matchCache = await cache1.match(urlPut);
-        matchCacheData = await matchCache.json();
-        value = Number(matchCacheData.data === urlPut);
-        await featureStore.setItem('cache.put', value);
-        log('- cache put done -', value);
-
-        // cache.delete
-        await cache1.delete(urlPut);
-        matchCache = await cache1.match(urlPut);
-        value = Number(!matchCache);
-        await featureStore.setItem('cache.delete', value);
-        log('- cache delete done -', value);
+        // matchCache = await cache1.match(urlPut);
+        // matchCacheData = await matchCache.json();
+        // value = Number(matchCacheData.data === urlPut);
+        // await featureStore.setItem('cache.put', value);
+        // log('- cache put done -', value);
 
         // delete test cache
         await caches.delete('caches-1');
