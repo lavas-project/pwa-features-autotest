@@ -99,8 +99,8 @@ export default function (scope) {
                 CHECK_LIST.map(feature => featureStore.getItem(feature))
             );
 
-            let lifecycleScore = scores.reduce((a, b) => a + b, 0) / (CHECK_LIST.length - 1);
-            await grade('lifecycle', lifecycleScore);
+            let lifecycleScore = (scores.reduce((a, b) => a + b, 0) / (CHECK_LIST.length - 1)).toFixed(2);
+            await grade('lifecycle', Number(lifecycleScore));
 
             log('lifecycle: test finished');
         },
