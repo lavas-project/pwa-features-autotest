@@ -4,20 +4,8 @@
  */
 
 export const featureKeys = {
-    fetch: [
-        'Promise',
-        'fetch',
-        'Request',
-        'Response',
-        // 'Headers',
-        'fetchEvent',
-        'fetchEvent.request',
-        'fetchEvent.respondWith'
-    ],
-    sync: [
-        'syncEvent'
-    ],
     lifecycle: [
+        'lifecycle',
         'navigator.serviceWorker',
         'navigator.serviceWorker.ready',
         'oncontrollerchange',
@@ -30,6 +18,20 @@ export const featureKeys = {
         'activateEvent',
         'installEvent.waitUntil',
         'activateEvent.waitUntil'
+    ],
+    fetch: [
+        'Promise',
+        'fetch',
+        'Request',
+        'Response',
+        // 'Headers',
+        'fetchEvent',
+        'fetchEvent.request',
+        'fetchEvent.respondWith'
+    ],
+    indexeddb: [
+        'indexedDB',
+        'indexedDB.getAll'
     ],
     cache: [
         'Cache',
@@ -47,14 +49,19 @@ export const featureKeys = {
         // 'cache.matchAll',
         'cache.put'
     ],
+    sync: [
+        'syncEvent'
+    ],
+    postmessage: [
+        'sw-msg-send',
+        'sw-msg-got',
+        'main-msg-send',
+        'main-msg-got'
+    ],
     // getregistration: [
     //     'navigator.serviceWorker.getRegistration',
     //     'navigator.serviceWorker.getRegistrations'
     // ],
-    indexeddb: [
-        'indexedDB',
-        'indexedDB.getAll'
-    ],
     notification: [
         'Notification'
         // 'notification.requestPermission',
@@ -66,12 +73,6 @@ export const featureKeys = {
         'pushManager.getSubscription',
         'pushManager.permissionState',
         'pushSubscription.unsubscribe'
-    ],
-    postmessage: [
-        'sw-msg-send',
-        'sw-msg-got',
-        'main-msg-send',
-        'main-msg-got'
     ]
 };
 
