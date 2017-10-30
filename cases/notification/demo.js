@@ -35,7 +35,7 @@ export default function (scope) {
 
             // notification test
             if (window.Notification) {
-                await featureStore.setItem('notification', 1);
+                await featureStore.setItem('Notification', 1);
                 log('- notification done -', 1);
             }
 

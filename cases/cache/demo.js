@@ -6,6 +6,8 @@
 import {sleep} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
+    'Cache',
+    'caches',
     'caches.open',
     'caches.has',
     'caches.keys',

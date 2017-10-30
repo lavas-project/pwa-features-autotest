@@ -9,7 +9,7 @@ export const featureKeys = {
         'fetch',
         'Request',
         'Response',
-        'Headers',
+        // 'Headers',
         'fetchEvent',
         'fetchEvent.request',
         'fetchEvent.respondWith'
@@ -21,15 +21,19 @@ export const featureKeys = {
         'navigator.serviceWorker',
         'navigator.serviceWorker.ready',
         'oncontrollerchange',
-        'onstatechange',
+        // 'onstatechange',
         'Registered',
         'Unregistered',
         'clients.claim',
         'skipWaiting',
+        'installEvent',
+        'activateEvent',
         'installEvent.waitUntil',
         'activateEvent.waitUntil'
     ],
     cache: [
+        'Cache',
+        'caches',
         'caches.open',
         'caches.has',
         'caches.keys',
@@ -43,19 +47,19 @@ export const featureKeys = {
         // 'cache.matchAll',
         'cache.put'
     ],
-    getregistration: [
-        'navigator.serviceWorker.getRegistration',
-        'navigator.serviceWorker.getRegistrations'
-    ],
+    // getregistration: [
+    //     'navigator.serviceWorker.getRegistration',
+    //     'navigator.serviceWorker.getRegistrations'
+    // ],
     indexeddb: [
         'indexedDB',
         'indexedDB.getAll'
     ],
     notification: [
-        'notification',
+        'Notification'
         // 'notification.requestPermission',
-        'showNotification',
-        'getNotification'
+        // 'showNotification',
+        // 'getNotification'
     ],
     push: [
         'pushManager.subscribe',
@@ -71,6 +75,4 @@ export const featureKeys = {
     ]
 };
 
-export const uaKeys = ['browser', 'os', 'system', 'ua'];
-
-
+export const uaKeys = ['browser', 'os', 'device', 'ua'];

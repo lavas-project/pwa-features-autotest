@@ -8,7 +8,7 @@ import {log} from 'log';
 import axios from 'axios';
 import {featureStore, uaStore, uuidStore} from 'store';
 import {sleep, uaParse, uuid} from 'helper';
-import {featureKeys, uaKeys} from './featureList.js';
+import {featureKeys, uaKeys} from './featureList';
 
 let summary = {
     info: {},
@@ -97,7 +97,10 @@ function refreshFeatureScore(list) {
 function uaProcess() {
     uaParse();
     uaKeys.forEach(async item => {
-        summary.info[item] = await uaStore.getItem(item);
+        let info = await uaStore.getItem(item);
+        if (item !== 'ua') {
+            summary.info[item] = JSON.parse(info);
+        }
     });
 }
 

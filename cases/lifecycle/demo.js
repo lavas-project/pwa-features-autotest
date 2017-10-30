@@ -8,6 +8,7 @@ import {one, sleep, register, grade, zero} from 'helper';
 import {log} from 'log';
 
 const CHECK_LIST = [
+    'lifecycle',
     'navigator.serviceWorker',
     'navigator.serviceWorker.ready',
     'oncontrollerchange',
@@ -93,6 +94,13 @@ export default function (scope) {
 
             log('lifecycle: sw-lifecycle.js is unregistered', result);
             await grade('Unregistered', 1);
+
+            let scores = await Promise.all(
+                CHECK_LIST.map(feature => featureStore.getItem(feature))
+            );
+
+            let lifecycleScore = scores.reduce((a, b) => a + b, 0) / (CHECK_LIST.length - 1);
+            await grade('lifecycle', lifecycleScore);
 
             log('lifecycle: test finished');
         },

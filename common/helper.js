@@ -253,7 +253,7 @@ export async function uaParse() {
         uaStore.setItem('browser', JSON.stringify(browser)),
         uaStore.setItem('os', JSON.stringify(os)),
         uaStore.setItem('device', JSON.stringify(device)),
-        uaStore.setItem('ua', JSON.stringify(ua))
+        uaStore.setItem('ua', ua)
     ]);
 }
 

@@ -9,6 +9,14 @@ import {log} from 'log';
 self.addEventListener('install', function (event) {
     log('Install event');
 
+    if (self.Cache) {
+        featureStore.setItem('Cache', 1);
+    }
+
+    if (self.caches) {
+        featureStore.setItem('caches', 1);
+    }
+
     const baseUrl = '/cache/';
 
     /* eslint-disable fecs-max-statements */
