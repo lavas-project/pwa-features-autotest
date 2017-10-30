@@ -17,7 +17,7 @@ const CHECK_LIST = [
     'Registered',
     'Unregistered',
     'clients.claim',
-    'skipWaiting',
+    'self.skipWaiting',
     'installEvent',
     'activateEvent',
     'installEvent.waitUntil',

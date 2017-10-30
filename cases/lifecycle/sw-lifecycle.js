@@ -12,8 +12,6 @@ self.addEventListener('install', e => {
     log('lifecycle sw-lifecycle: oninstall');
     grade('installEvent', 1);
 
-
-
     if (e.waitUntil) {
         e.waitUntil(
             sleep(1000)
@@ -29,7 +27,7 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
     log('lifecycle sw-lifecycle: onactivate');
-    grade('skipWaiting', 1);
+    grade('self.skipWaiting', 1);
     grade('installEvent.waitUntil', installWaitingScore);
     grade('activateEvent', 1);
 
