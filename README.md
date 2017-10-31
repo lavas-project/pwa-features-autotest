@@ -1,9 +1,9 @@
-# pwa-test
+# PWA-TEST
 
 
 Tracks the features of service worker supported in browsers and analyse the PWA supported in browsers.
 
-> [PWA Score](https://lavas.baidu.com/ready): You can get the statistics which is updated per two weeks.
+> [PWA Trend](https://lavas.baidu.com/ready): You can get the statistics which is updated per two weeks.
 
 > [PWA Test](https://lavas-project/lavas-project.github.io/pwa-demo/pwa-test): Provide auto test page for developer.
 
