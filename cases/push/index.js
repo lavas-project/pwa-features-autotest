@@ -6,7 +6,7 @@
 import {run} from 'base';
 import caseCreator from './demo';
 
-const SCOPE = '/cases/push/';
+const SCOPE = process.env.ROUTE_PREFIX + '/cases/push/';
 
 // let case = caseCreator(SCOPE);
 

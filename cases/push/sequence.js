@@ -5,6 +5,6 @@
 
 import caseCreator from './demo';
 
-const SCOPE = '/';
+const SCOPE = process.env.ROUTE_PREFIX + '/';
 
 export default caseCreator(SCOPE);

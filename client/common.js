@@ -125,7 +125,6 @@ function sendDataBtnBind() {
             let res = await axios({
                 method: 'post',
                 url: 'https://lavas.baidu.com/api/ready/statistic',
-                // url: 'http://cp01-rdqa-dev420-tanglei02.epc.baidu.com:8849/api/ready/statistic',
                 data: {
                     id,
                     info: summary.info,
