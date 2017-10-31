@@ -5,7 +5,7 @@ Tracks the features of service worker supported in browsers and analyse the PWA 
 
 > [PWA Trend](https://lavas.baidu.com/ready): You can get the statistics which is updated per two weeks.
 
-> [PWA Test](https://lavas-project/lavas-project.github.io/pwa-demo/pwa-test): Provide auto test page for developer.
+> [PWA Test](https://lavas-project/lavas-project.github.io/pwa-demo/pwa-test/sequence): Provide auto test page for developer.
 
 > [Maintain Data Manually](https://github.com/lavas-project/pwa-expo): Manifest feature and some extra details.
 
