@@ -15,6 +15,9 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var mode = process.env.NODE_ENV || 'development';
 
+var ROUTE_PREFIX = mode === 'development' ? '' : '/pwa-test';
+
+
 var caseEntryFiles = glob.sync('./cases/**/+(index|sw*).js');
 
 var caseIndexFiles = caseEntryFiles.filter(function (filePath) {
@@ -141,9 +144,11 @@ var webpackConfig = {
                 // pwa feature test cases html entry list
                 CASE_ENTRY_LIST: JSON.stringify(
                     caseIndexFiles.map(function (filePath) {
-                        return filePath.slice(1).replace(/js$/, 'html');
+                        return ROUTE_PREFIX + filePath.slice(1).replace(/js$/, 'html');
                     })
-                )
+                ),
+
+                ROUTE_PREFIX: JSON.stringify(ROUTE_PREFIX)
             }
         }),
         new ExtractTextPlugin({
@@ -179,7 +184,7 @@ var webpackConfig = {
 
 if (mode === 'development') {
     Object.assign(webpackConfig, {
-        devtool: 'cheap-module-eval-source-map',
+        devtool: 'source-map',
         devServer: {
             contentBase: path.join(__dirname, 'dist'),
             // host: 'localhost',
