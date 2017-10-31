@@ -17,7 +17,7 @@ self.addEventListener('install', function (event) {
         featureStore.setItem('caches', 1);
     }
 
-    const baseUrl = '/cache/';
+    const baseUrl = process.env.ROUTE_PREFIX + '/cache/';
 
     /* eslint-disable fecs-max-statements */
     event.waitUntil((async () => {
@@ -52,10 +52,10 @@ self.addEventListener('install', function (event) {
         const resPut = await fetch(urlPut);
         await cache1.put(urlPut, resPut);
         await featureStore.setItem('cache.put', 0.5);
-
+        // cache.match
         let matchCache = await cache1.match(urlPut);
         let matchCacheData = await matchCache.json();
-        value = Number(matchCacheData.data === urlPut);
+        value = Number(matchCacheData.data === 'put');
         await featureStore.setItem('cache.put', value);
         await featureStore.setItem('cache.match', value);
         log('- cache put done -', value);
@@ -67,7 +67,7 @@ self.addEventListener('install', function (event) {
                 cacheName: 'caches-1'
             });
             const matchCachesData = await matchCaches.json();
-            value = Number(matchCachesData.data === urlPut);
+            value = Number(matchCachesData.data === 'put');
             await featureStore.setItem('cache.add', value);
             await featureStore.setItem('caches.match', value);
             log('- caches match done -', value);
@@ -110,7 +110,7 @@ self.addEventListener('install', function (event) {
         // cache.match
         matchCache = await cache1.match(urlAdd);
         matchCacheData = await matchCache.json();
-        value = Number(matchCacheData.data === urlAdd);
+        value = Number(matchCacheData.data === 'add');
         await featureStore.setItem('cache.add', value);
         await featureStore.setItem('cache.match', value);
         log('- cache add done -', value);
