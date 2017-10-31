@@ -61,6 +61,7 @@ export default function (scope) {
             ]);
 
             // postmessage score
+            await sleep(3000);
             let point = 0;
             let processItem = [
                 'sw-msg-send',

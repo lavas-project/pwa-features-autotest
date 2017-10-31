@@ -57,7 +57,9 @@ self.addEventListener('install', function (event) {
         let matchCacheData = await matchCache.json();
         value = Number(matchCacheData.data === urlPut);
         await featureStore.setItem('cache.put', value);
+        await featureStore.setItem('cache.match', value);
         log('- cache put done -', value);
+        log('- cache match done -', value);
 
         // caches.match
         try {
