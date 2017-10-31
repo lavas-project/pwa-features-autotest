@@ -1,13 +1,13 @@
 # pwa-test
 
 
-Tracks the features of service worker supported in browsers to analyse the PWA supported in in browsers.
+Tracks the features of service worker supported in browsers and analyse the PWA supported in browsers.
 
 > [PWA Score](https://lavas.baidu.com/ready): You can get the statistics which is updated per two weeks.
 
-> [PWA Test](https://lavas-project/lavas-project.github.io/pwa-demo/pwa-test): Provide auto test page for developer
+> [PWA Test](https://lavas-project/lavas-project.github.io/pwa-demo/pwa-test): Provide auto test page for developer.
 
-> [Maintain Data Manually](https://github.com/lavas-project/pwa-expo): Manifest feature and some extra Detail.
+> [Maintain Data Manually](https://github.com/lavas-project/pwa-expo): Manifest feature and some extra details.
 
 
 
@@ -32,11 +32,12 @@ npm run build
 
 Found the test result is out of date ?
 
-Please feedback it on the issue. If convenient, offer more information.
+If convenient, please offer more information on the issue, such as the capture pic.
+
+And we will verify and update the data promptly.
 
 ![Image text](./static/test-result.jpeg)
 
-And we will verify and update the data promptly.
 
 
 ## Reference:
