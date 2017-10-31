@@ -36,6 +36,7 @@ function init() {
 
     if (typeof document !== 'undefined') {
         wrapper = document.createElement('div');
+        wrapper.classList.add('log-wrapper');
         wrapper.style.wordBreak = 'break-all';
         wrapper.style.background = 'rgba(0,0,0,0.5)';
         document.body.appendChild(wrapper);

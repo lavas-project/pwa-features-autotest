@@ -79,7 +79,7 @@ function refreshFeatureScore(list) {
     list = list || [];
     list.forEach(async item => {
         let score = await featureStore.getItem(item);
-        // log('++++++++++++', item, score);
+        // log('1111++++++++++++', item, score, totalTestScore);
         score = score || 0;
         totalTestScore += score;
         summary.feature[item] = score;
@@ -87,7 +87,7 @@ function refreshFeatureScore(list) {
         document.querySelector(idClass).innerHTML = score;
         totalTestDone++;
         totalSchedule.innerHTML = parseInt(totalTestDone / totalTestNum * 100, 10) + ' %';
-        totalScore.innerHTML = parseInt(totalTestScore / totalTestNum * 100, 10);
+        totalScore.innerHTML = parseInt((totalTestScore / totalTestNum) * 100, 10);
         if (totalTestNum === totalTestDone) {
             sendDataBtn.classList.remove('hide');
         }
