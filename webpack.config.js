@@ -189,7 +189,7 @@ if (mode === 'development') {
             contentBase: path.join(__dirname, 'dist'),
             // host: 'localhost',
             port: 8849,
-            inline: true
+            inline: false
         }
     });
 }
