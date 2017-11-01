@@ -11,4 +11,3 @@ const SCOPE = process.env.ROUTE_PREFIX + '/cases/push/';
 // let case = caseCreator(SCOPE);
 
 run(caseCreator(SCOPE));
-

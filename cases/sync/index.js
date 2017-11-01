@@ -4,6 +4,7 @@
  */
 
 import {run} from 'base';
+
 import caseCreator from './demo';
 
 const SCOPE = process.env.ROUTE_PREFIX + '/cases/sync/';
@@ -11,4 +12,3 @@ const SCOPE = process.env.ROUTE_PREFIX + '/cases/sync/';
 // let case = caseCreator(SCOPE);
 
 run(caseCreator(SCOPE));
-
