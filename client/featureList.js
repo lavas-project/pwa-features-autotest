@@ -9,7 +9,7 @@ export const featureKeys = {
         'navigator.serviceWorker',
         'navigator.serviceWorker.ready',
         'oncontrollerchange',
-        // 'onstatechange',
+        'onstatechange',
         'Registered',
         'Unregistered',
         'clients.claim',
@@ -24,7 +24,7 @@ export const featureKeys = {
         'fetch',
         'Request',
         'Response',
-        // 'Headers',
+        'Headers',
         'fetchEvent',
         'fetchEvent.request',
         'fetchEvent.respondWith'
@@ -38,15 +38,15 @@ export const featureKeys = {
         'caches',
         'caches.open',
         'caches.has',
-        // 'caches.keys',
-        // 'caches.match',
+        'caches.keys',
+        'caches.match',
         'caches.delete',
         'cache.add',
         'cache.addAll',
         'cache.delete',
         'cache.keys',
         'cache.match',
-        // 'cache.matchAll',
+        'cache.matchAll',
         'cache.put'
     ],
     sync: [
@@ -60,15 +60,15 @@ export const featureKeys = {
         'main-msg-send',
         'main-msg-got'
     ],
-    // getregistration: [
-    //     'navigator.serviceWorker.getRegistration',
-    //     'navigator.serviceWorker.getRegistrations'
-    // ],
+    getregistration: [
+        'navigator.serviceWorker.getRegistration',
+        'navigator.serviceWorker.getRegistrations'
+    ],
     notification: [
-        'Notification'
-        // 'notification.requestPermission',
-        // 'showNotification',
-        // 'getNotification'
+        'Notification',
+        'notification.requestPermission',
+        'showNotification',
+        'getNotification'
     ],
     push: [
         'pushManager.subscribe',

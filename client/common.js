@@ -132,27 +132,42 @@ function sendDataBtnBind() {
                 }
             });
 
-            let sendTip = document.querySelector('.send-data-tip');
+            // let sendTip = document.querySelector('.send-data-tip');
             if (res && res.data && res.data.status === 0) {
-                sendTip.innerHTML = 'Success!';
-                sendTip.classList.remove('hide-tip');
-                sendTip.classList.add('show-tip');
-                setTimeout(function () {
-                    sendTip.classList.remove('show-tip');
-                    sendTip.classList.add('hide-tip');
-                }, 3000);
+                toast('Success!');
+                // sendTip.innerHTML = 'Success!';
+                // sendTip.classList.remove('hide-tip');
+                // sendTip.classList.add('show-tip');
+                // setTimeout(function () {
+                //     sendTip.classList.remove('show-tip');
+                //     sendTip.classList.add('hide-tip');
+                // }, 3000);
             }
             else {
-                sendTip.innerHTML = 'Failed!';
-                sendTip.classList.remove('hide-tip');
-                sendTip.classList.add('show-tip');
-                setTimeout(function () {
-                    sendTip.classList.remove('show-tip');
-                    sendTip.classList.add('hide-tip');
-                }, 3000);
+                toast('Failed!');
+                // sendTip.innerHTML = 'Failed!';
+                // sendTip.classList.remove('hide-tip');
+                // sendTip.classList.add('show-tip');
+                // setTimeout(function () {
+                //     sendTip.classList.remove('show-tip');
+                //     sendTip.classList.add('hide-tip');
+                // }, 3000);
             }
         }
     });
 
 }
 
+function toast(msg, timeout = 3000) {
+    let sendTip = document.querySelector('.send-data-tip');
+    sendTip.innerHTML = msg;
+    sendTip.classList.remove('hide-tip');
+    sendTip.classList.add('show-tip');
+    setTimeout(
+        () => {
+            sendTip.classList.remove('show-tip');
+            sendTip.classList.add('hide-tip');
+        },
+        timeout
+    );
+}

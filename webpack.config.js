@@ -188,7 +188,7 @@ if (mode === 'development') {
         devServer: {
             contentBase: path.join(__dirname, 'dist'),
             // host: 'localhost',
-            port: 8849,
+            port: 8081,
             inline: false
         }
     });
