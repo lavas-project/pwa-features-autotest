@@ -75,6 +75,10 @@ export default function (scope) {
                 log('indexeddb: getAll unsupport');
             }
 
+            deleteStore();
+
+            await sleep(1000);
+
             log('indexeddb: test finish');
         }
     };
@@ -121,9 +125,12 @@ function createStore() {
     });
 }
 
-// function deleteStore() {
-//     indexedDB.deleteDatabase('pwa-test-indexeddb');
-// }
+function deleteStore() {
+    try {
+        indexedDB.deleteDatabase(DB_NAME);
+    }
+    catch (e) {}
+}
 
 function promisify(request) {
     return new Promise((resolve, reject) => {
