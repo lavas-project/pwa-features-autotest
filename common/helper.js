@@ -5,7 +5,6 @@
 
 import {get} from 'utils';
 import {featureStore, uaStore} from 'store';
-import UAParser from 'ua-parser-js';
 
 /**
  * unregister sw controller and then reload the page
@@ -171,8 +170,6 @@ export function grade(feature, score) {
 export function createStep({name, prefix = 'pwa-test-step-'}) {
     const key = prefix + name;
 
-    // const getStep = () => +localStorage.getItem(key);
-
     let stepNumber = -1;
     let target = +localStorage.getItem(key);
 
@@ -229,32 +226,3 @@ export function createStepTest(totalStep, onSuccess, onFail) {
 
     return tester;
 }
-
-export function showCaseName(caseName) {
-    let div = document.createElement('div');
-    div.style
-        = 'width:100%;height:20px;text-align:center;background:rgba(0,0,0,0.5);color:#fff;position:fixed;top:0;left:0';
-    div.innerHTML = caseName;
-    document.body.appendChild(div);
-}
-
-export async function uaParse() {
-    const parser = new UAParser();
-    const {browser, os, device, ua} = parser.getResult();
-
-    let deviceTip = (device.type || '---') + ' ' + (device.model || '---') + ' ' + (device.vendor || '---');
-
-
-    document.querySelector('.browser span').innerHTML = browser.name + ' ' + browser.version;
-    document.querySelector('.os span').innerHTML = os.name + ' ' + os.version;
-    document.querySelector('.device span').innerHTML = deviceTip;
-
-    await Promise.all([
-        uaStore.setItem('browser', JSON.stringify(browser)),
-        uaStore.setItem('os', JSON.stringify(os)),
-        uaStore.setItem('device', JSON.stringify(device)),
-        uaStore.setItem('ua', ua)
-    ]);
-}
-
-

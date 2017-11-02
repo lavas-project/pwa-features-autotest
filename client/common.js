@@ -7,8 +7,9 @@ import './index.styl';
 import {log} from 'log';
 import axios from 'axios';
 import {featureStore, uaStore, uuidStore} from 'store';
-import {sleep, uaParse, uuid} from 'helper';
-import {featureKeys, uaKeys} from './featureList';
+import {sleep, uuid} from 'helper';
+import {featureKeys, uaKeys} from './feature-list';
+import UAParser from 'ua-parser-js';
 
 let summary = {
     info: {},
@@ -135,23 +136,9 @@ function sendDataBtnBind() {
             // let sendTip = document.querySelector('.send-data-tip');
             if (res && res.data && res.data.status === 0) {
                 toast('Success!');
-                // sendTip.innerHTML = 'Success!';
-                // sendTip.classList.remove('hide-tip');
-                // sendTip.classList.add('show-tip');
-                // setTimeout(function () {
-                //     sendTip.classList.remove('show-tip');
-                //     sendTip.classList.add('hide-tip');
-                // }, 3000);
             }
             else {
                 toast('Failed!');
-                // sendTip.innerHTML = 'Failed!';
-                // sendTip.classList.remove('hide-tip');
-                // sendTip.classList.add('show-tip');
-                // setTimeout(function () {
-                //     sendTip.classList.remove('show-tip');
-                //     sendTip.classList.add('hide-tip');
-                // }, 3000);
             }
         }
     });
@@ -170,4 +157,23 @@ function toast(msg, timeout = 3000) {
         },
         timeout
     );
+}
+
+async function uaParse() {
+    const parser = new UAParser();
+    const {browser, os, device, ua} = parser.getResult();
+
+    let deviceTip = (device.type || '---') + ' ' + (device.model || '---') + ' ' + (device.vendor || '---');
+
+
+    document.querySelector('.browser span').innerHTML = browser.name + ' ' + browser.version;
+    document.querySelector('.os span').innerHTML = os.name + ' ' + os.version;
+    document.querySelector('.device span').innerHTML = deviceTip;
+
+    await Promise.all([
+        uaStore.setItem('browser', JSON.stringify(browser)),
+        uaStore.setItem('os', JSON.stringify(os)),
+        uaStore.setItem('device', JSON.stringify(device)),
+        uaStore.setItem('ua', ua)
+    ]);
 }
