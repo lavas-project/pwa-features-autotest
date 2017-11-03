@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 import 'whatwg-fetch';
-import {register, unregister, sleep, grade, checkProperties} from 'helper';
+import {register, unregister, sleep, grade} from 'helper';
 import {log} from 'log';
 
 export default function (scope) {

@@ -75,6 +75,9 @@ export default function (scope) {
             await sleep(5000);
             await reg.unregister();
             log('notification: test finish');
+        },
+        error(e) {
+            log(e);
         }
     };
 }

@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {grade} from 'helper';
+import {grade, sleep} from 'helper';
 import {log} from 'log';
 
 export const CHECK_LIST = [

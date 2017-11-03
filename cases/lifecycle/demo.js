@@ -30,9 +30,6 @@ export default function (scope) {
         scope: scope,
         features: CHECK_LIST,
         async main() {
-
-            await zero(CHECK_LIST);
-
             if (navigator.serviceWorker) {
                 await grade('navigator.serviceWorker', 1);
                 log('lifecycle: navigator.serviceWorker exist');
@@ -62,7 +59,7 @@ export default function (scope) {
             reg.addEventListener('updatefound', e => {
                 let worker = reg.installing;
 
-                worker.addEventListener('statechange', e => {
+                worker.addEventListener('statechange', async e => {
                     let state = worker.state;
                     log('lifecycle: statechange', state);
 
@@ -72,12 +69,12 @@ export default function (scope) {
                         return;
                     }
 
-                    setTimeout(async () => {
-                        let score = await featureStore.getItem('activateEvent.waitUntil');
-                        if (+score > 0) {
-                            grade('activateEvent.waitUntil', 1);
-                        }
-                    }, 100);
+                    await sleep(100);
+
+                    let score = await featureStore.getItem('activateEvent.waitUntil');
+                    if (+score > 0) {
+                        grade('activateEvent.waitUntil', 1);
+                    }
                 });
 
                 grade('onupdatefound', 1);
@@ -101,6 +98,8 @@ export default function (scope) {
 
             let lifecycleScore = (scores.reduce((a, b) => a + b, 0) / (CHECK_LIST.length - 1)).toFixed(2);
             await grade('lifecycle', Number(lifecycleScore));
+
+            await sleep(2000);
 
             log('lifecycle: test finished');
         },

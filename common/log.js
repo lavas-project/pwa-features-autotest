@@ -3,39 +3,20 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {until} from 'helper';
+// import {noop} from 'utils';
+// import {until} from 'helper';
 import {getStore} from 'store';
 
-const logStore = getStore('log');
-
-export function log(...args) {
-    console.log(...args);
-
-    args = args.map(msg => {
-        if (typeof msg === 'object') {
-            msg = JSON.stringify(msg);
-        }
-        return msg;
-    });
-
-    args.unshift(Date.now());
-
-    if (typeof document === 'undefined') {
-        swLog(...args);
-    }
-    else {
-        mainLog(...args);
-    }
-}
-
+let logStore;
 let wrapper;
 let scope;
 let startTime;
 
 async function init() {
     startTime = Date.now();
-    scope = location.pathname.split('/').slice(0, -1).join('/');
+    scope = location.pathname.split('/').slice(0, -1).join('/') || 'root';
     let scopeLen = scope.length;
+    logStore = getStore('log');
 
     if (typeof document !== 'undefined') {
         // init display dom
@@ -69,26 +50,23 @@ async function init() {
             return tictok(displayTime);
         }, 200);
 
-        tictok(startTime);
+        return tictok(startTime);
     }
     else {
         // clear expired log data
         let keys = await logStore.keys();
 
         keys.filter(key => key.slice(0, scopeLen) === scope)
-            .filter(
-                key => +key.slice(scopeLen) < startTime
-                    || /-lock$/.test(key)
-                    || /-stack$/.test(key)
+            .filter(key => +key.slice(scopeLen) < startTime
+                || /-lock$/.test(key)
+                || /-stack$/.test(key)
             )
             .forEach(key => logStore.removeItem(key));
     }
 
 }
 
-// let logStack = [];
-
-export function mainLog(...args) {
+function mainLog(...args) {
     let msg = args.slice(1).join(' - ');
     let div = document.createElement('div');
     div.style.wordBreak = 'break-all';
@@ -96,23 +74,55 @@ export function mainLog(...args) {
     div.innerText = msg;
 
     wrapper.appendChild(div);
-    // logStack.push(args);
-
-    // let html = logStack.sort((a, b) => a[0] - b[0])
-    //     .map(msg => {
-    //         let str = msg.slice(1).join(' - ');
-    //         return `<div style="word-break: break-all; color: #fff">${str}</div>`;
-    //     })
-    //     .join('');
-
-    // wrapper.innerHTML = html;
 }
 
-export function swLog(...args) {
+// let logStack = [];
+// export function mainLog(...args) {
+//     logStack.push(args);
+
+//     let html = logStack.sort((a, b) => a[0] - b[0])
+//         .map(msg => {
+//             let str = msg.slice(1).join(' - ');
+//             return `<div style="word-break: break-all; color: #fff">${str}</div>`;
+//         })
+//         .join('');
+
+//     wrapper.innerHTML = html;
+// }
+
+function swLog(...args) {
     let timestamp = args[0];
     let msg = args.slice(1).join(' - ');
 
     logStore.setItem(scope + timestamp, msg);
 }
 
+// const mode = process.env.NODE_ENV || 'development';
+
+// export const log = mode === 'development' ? devLog : noop;
+
+// if (mode === 'development') {
+//     init();
+// }
+
 init();
+
+export function log(...args) {
+    console.log(...args);
+
+    args = args.map(msg => {
+        if (typeof msg === 'object') {
+            msg = JSON.stringify(msg);
+        }
+        return msg;
+    });
+
+    args.unshift(Date.now());
+
+    if (typeof document === 'undefined') {
+        swLog(...args);
+    }
+    else {
+        mainLog(...args);
+    }
+}
