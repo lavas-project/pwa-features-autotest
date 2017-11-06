@@ -18,3 +18,9 @@ export function get(obj, ...arr) {
 
     return obj;
 }
+
+export function instanceName(obj) {
+    return Object.prototype.toString.call(obj);
+}
+
+export function noop() {}

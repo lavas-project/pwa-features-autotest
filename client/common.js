@@ -80,7 +80,7 @@ function refreshFeatureScore(list) {
     list = list || [];
     list.forEach(async item => {
         let score = await featureStore.getItem(item);
-        // log('1111++++++++++++', item, score, totalTestScore);
+
         score = score || 0;
         totalTestScore += score;
         summary.feature[item] = score;
@@ -133,7 +133,6 @@ function sendDataBtnBind() {
                 }
             });
 
-            // let sendTip = document.querySelector('.send-data-tip');
             if (res && res.data && res.data.status === 0) {
                 toast('Success!');
             }

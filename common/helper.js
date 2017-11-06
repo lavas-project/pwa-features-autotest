@@ -4,7 +4,7 @@
  */
 
 import {get} from 'utils';
-import {featureStore, uaStore} from 'store';
+import {featureStore} from 'store';
 
 /**
  * unregister sw controller and then reload the page
@@ -177,10 +177,10 @@ export function createStep({name, prefix = 'pwa-test-step-'}) {
         stepNumber++;
 
         if (target === stepNumber) {
+            await fn();
+
             target++;
             localStorage.setItem(key, target);
-
-            await fn();
 
             if (needReload) {
                 await reload();
@@ -195,34 +195,34 @@ export function createStep({name, prefix = 'pwa-test-step-'}) {
     return step;
 }
 
-export function createStepTest(totalStep, onSuccess, onFail) {
-    let currentStepNo = 0;
-    let isFinished = false;
+// export function createStepTest(totalStep, onSuccess, onFail) {
+//     let currentStepNo = 0;
+//     let isFinished = false;
 
-    const tester = expectStepNo => {
-        if (isFinished) {
-            return;
-        }
+//     const tester = expectStepNo => {
+//         if (isFinished) {
+//             return;
+//         }
 
-        if (expectStepNo !== currentStepNo) {
-            isFinished = true;
-            onFail();
-            return false;
-        }
+//         if (expectStepNo !== currentStepNo) {
+//             isFinished = true;
+//             onFail();
+//             return false;
+//         }
 
-        if (expectStepNo + 1 === totalStep) {
-            isFinished = true;
-            onSuccess();
-        }
-        else {
-            currentStepNo++;
-        }
+//         if (expectStepNo + 1 === totalStep) {
+//             isFinished = true;
+//             onSuccess();
+//         }
+//         else {
+//             currentStepNo++;
+//         }
 
-        return true;
-    };
+//         return true;
+//     };
 
-    tester.currentStep = () => currentStepNo;
-    tester.isFinished = () => isFinished;
+//     tester.currentStep = () => currentStepNo;
+//     tester.isFinished = () => isFinished;
 
-    return tester;
-}
+//     return tester;
+// }

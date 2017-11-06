@@ -5,13 +5,7 @@
 
 import {init, zero} from 'helper';
 
-export async function run({
-    name,
-    scope,
-    features,
-    main,
-    error
-}) {
+export async function run({name, scope, features, main, error}) {
     showCaseName(name);
     await init(scope);
     await zero(features);
@@ -29,7 +23,6 @@ export async function run({
         parent.result(name);
     }
 }
-
 
 function showCaseName(caseName) {
     let div = document.createElement('div');
