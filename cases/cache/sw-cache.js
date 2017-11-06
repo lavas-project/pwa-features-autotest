@@ -38,20 +38,24 @@ self.addEventListener('install', function (event) {
         value = Number(hasCachesKeys && hasCachesKeys.length >= 2);
         await featureStore.setItem('caches.keys', value);
         log('- caches keys done -', value, hasCachesKeys);
-
+log('+++++++0');
         // caches.delete
         await caches.delete('caches-2');
+log('dafdaf---')
         const hasCaches2 = await caches.has('caches-2');
+log('aaaaaaaaa')
         value = Number(!hasCaches2);
+log('000000000')
         await featureStore.setItem('caches.delete', value);
         log('- caches delete done -', value);
 
-
+log('+++++++1');
         // cache.put
         const urlPut = baseUrl + 'put';
         const resPut = await fetch(urlPut);
         await cache1.put(urlPut, resPut);
         await featureStore.setItem('cache.put', 0.5);
+log('+++++++2');
         // cache.match
         let matchCache = await cache1.match(urlPut);
         let matchCacheData = await matchCache.json();
@@ -60,7 +64,7 @@ self.addEventListener('install', function (event) {
         await featureStore.setItem('cache.match', value);
         log('- cache put done -', value);
         log('- cache match done -', value);
-
+log('+++++++3');
         // caches.match
         try {
             const matchCaches = await caches.match(urlPut, {
