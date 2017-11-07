@@ -11,17 +11,23 @@ import {featureStore} from 'store';
  *
  * @param {Array} scopes description
  */
-export async function init(scopes) {
+export async function init(scopes, timeout = 5000) {
     const sw = navigator.serviceWorker;
 
     if (!sw || typeof sw.getRegistration !== 'function') {
         return;
     }
 
-    let results = await unregister(scopes);
-
-    if (results.some(result => result === true)) {
-        await reload();
+    try {
+        await limit(async () => {
+            let results = await unregister(scopes);
+            if (results.some(result => result === true)) {
+                await reload();
+            }
+        }, timeout);
+    }
+    catch (e) {
+        console.log(e);
     }
 }
 
@@ -29,10 +35,10 @@ export async function register(filePath, scope) {
     return navigator.serviceWorker.register(filePath, {scope});
 }
 
-export async function unregister(scopes) {
+export function unregister(scopes) {
     let arr = Array.isArray(scopes) ? scopes : [scopes];
 
-    return await Promise.all(
+    return Promise.all(
         arr.map(async scope => {
             let reg;
 
@@ -40,13 +46,11 @@ export async function unregister(scopes) {
                 case 'string':
                     reg = await navigator.serviceWorker.getRegistration(scope);
                     break;
-                case 'undefined':
-                    reg = await navigator.serviceWorker.getRegistration();
-                    break;
                 case 'object':
                     reg = scope;
                     break;
                 default:
+                    reg = await navigator.serviceWorker.getRegistration();
                     break;
             }
             // QQ browser 7.2.0.2930 unexpectedly returns a STRANGE boolean value `true`
@@ -194,35 +198,3 @@ export function createStep({name, prefix = 'pwa-test-step-'}) {
 
     return step;
 }
-
-// export function createStepTest(totalStep, onSuccess, onFail) {
-//     let currentStepNo = 0;
-//     let isFinished = false;
-
-//     const tester = expectStepNo => {
-//         if (isFinished) {
-//             return;
-//         }
-
-//         if (expectStepNo !== currentStepNo) {
-//             isFinished = true;
-//             onFail();
-//             return false;
-//         }
-
-//         if (expectStepNo + 1 === totalStep) {
-//             isFinished = true;
-//             onSuccess();
-//         }
-//         else {
-//             currentStepNo++;
-//         }
-
-//         return true;
-//     };
-
-//     tester.currentStep = () => currentStepNo;
-//     tester.isFinished = () => isFinished;
-
-//     return tester;
-// }

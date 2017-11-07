@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {refreshCommon} from './common.js';
+import {refreshCommon} from './common';
 import demoList from './demos';
 import {zero, init, createStep} from 'helper';
 import {log} from 'log';
