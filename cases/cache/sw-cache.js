@@ -3,6 +3,7 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
+import {sleep} from 'helper';
 import {featureStore} from 'store';
 import {log} from 'log';
 
@@ -34,15 +35,29 @@ self.addEventListener('install', function (event) {
 
         // caches.keys
         await caches.open('caches-2');
-        const hasCachesKeys = await caches.keys('caches-keys');
+        const hasCachesKeys = await caches.keys();
         value = Number(hasCachesKeys && hasCachesKeys.length >= 2);
         await featureStore.setItem('caches.keys', value);
         log('- caches keys done -', value, hasCachesKeys);
 
-        // caches.delete
-        await caches.delete('caches-2');
-        const hasCaches2 = await caches.has('caches-2');
-        value = Number(!hasCaches2);
+        // caches.delete (** 猎豹 caches.delete().then() no response **)
+        // await caches.delete('caches-2');
+        caches.delete('caches-2').then(async res => {
+            await sleep(3000);
+            log('delete then',res);
+            if (res) {
+                value = Number(res);
+                await featureStore.setItem('caches.delete', value);
+                log('- caches delete done -', value);
+            }
+        });
+        await sleep(2000);
+        const cachesKeys = await caches.keys();
+        log('- caches keys done -', cachesKeys);
+        const cachesKeysCheck = cachesKeys.length >= hasCachesKeys.length;
+        const hasCheck = await caches.has('caches-2');
+        const hasCaches2 = cachesKeysCheck && hasCheck;
+        value = Number(!hasCaches2) * 0.8;
         await featureStore.setItem('caches.delete', value);
         log('- caches delete done -', value);
 
@@ -124,13 +139,13 @@ self.addEventListener('install', function (event) {
         log('- cache matchAll done -', value, matchAllCache);
 
         // delete test cache
-        await caches.delete('caches-1');
+        caches.delete('caches-1');
         log('- cache test done -');
 
     })());
     /* eslint-enable */
-
     self.skipWaiting();
+
 });
 
 self.addEventListener('activate', function (event) {
