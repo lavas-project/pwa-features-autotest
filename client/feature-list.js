@@ -33,6 +33,12 @@ export const featureKeys = {
         'indexedDB',
         'indexedDB.getAll'
     ],
+    client: [
+        'clients',
+        'clients.matchAll',
+        'clients.claim',
+        'clients.get'
+    ],
     cache: [
         'Cache',
         'caches',

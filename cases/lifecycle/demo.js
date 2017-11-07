@@ -87,15 +87,6 @@ export default function (scope) {
             log('lifecycle: sleep for 5s');
             await sleep(5000);
 
-            if (navigator.serviceWorker.controller) {
-                if (navigator.serviceWorker.controller.state === 'activated') {
-                    grade('clients.claim', 1);
-                    log('lifecycle: clients.claim works');
-                }
-            }
-
-            await sleep(1000);
-
             log('lifecycle: register sw-lifecycle-2.js');
 
             let reg2 = await register(scope + 'sw-lifecycle-2.js', scope);

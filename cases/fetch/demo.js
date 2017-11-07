@@ -54,9 +54,9 @@ export default function (scope) {
                 }
             }
 
-            log('fetch: sleep 3s');
+            log('fetch: sleep 1s');
 
-            await sleep(3000);
+            await sleep(1000);
 
             await unregister(reg);
 
@@ -64,7 +64,7 @@ export default function (scope) {
         },
         error(e) {
             log('fetch: catch unhandled error');
-            log(JSON.stringify(e));
+            log(e);
         }
     };
 }
