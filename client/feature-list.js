@@ -75,6 +75,13 @@ export const featureKeys = {
         'pushManager.getSubscription',
         'pushManager.permissionState',
         'pushSubscription.unsubscribe'
+    ],
+    deviceapi: [
+        'navigator.geolocation',
+        // 'navigator.geolocation.getCurrentPosition',
+        // 'navigator.geolocation.watchPosition',
+        'DeviceOrientationEvent',
+        'DeviceMotionEvent'
     ]
 };
 

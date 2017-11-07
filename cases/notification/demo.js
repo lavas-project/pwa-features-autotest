@@ -8,8 +8,8 @@ import {featureStore} from 'store';
 import {sleep} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
-    'notification',
-    // 'notification.requestPermission',
+    'Notification',
+    'notification.requestPermission',
     'showNotification',
     'getNotification',
     'notificationclick' // no statistics
@@ -34,32 +34,58 @@ export default function (scope) {
             await sleep(3000);
 
             // notification test
-            if (window.Notification) {
-                await featureStore.setItem('Notification', 1);
-                log('- notification done -', 1);
+            if (!window.Notification) {
+                await sleep(5000);
+                await reg.unregister();
+                log('Notification: no support');
+                log('notification: test finish');
+                return;
             }
 
+            await featureStore.setItem('Notification', 1);
+            log('- Notification done -',  Notification.permission, 1);
+
             // notification.requestPermission test
-            // try {
-                // let permission = await new Promise((resolve, reject) => {
-                //     const permissionPromise = Notification.requestPermission(result => {
-                //         resolve(result);
-                //     });
+            // if Notification.permission is 'denied', Notification.requestPermission() doesn't work
+            if (Notification.permission !== 'denied') {
+                let permission = await Promise.race([
+                    new Promise((resolve, reject) => {
+                        const permissionPromise = Notification.requestPermission(result => {
+                            log('in callback');
+                            resolve(result);
+                        });
 
-                //     if (permissionPromise) {
-                //         permissionPromise.then(resolve);
-                //     }
-                // });
+                        if (permissionPromise) {
+                            log('in promise', permissionPromise);
+                            permissionPromise.then(resolve);
+                        }
+                        else {
+                            log('in undefined');
+                            reject('no permission');
+                        }
+                    }),
+                    sleep(3000)
+                ]);
 
-                // if (permission === 'granted') {
-                //     await featureStore.setItem('notification.requestPermission', 1);
-                //     log('- notification.requestPermission done -', 1, permission);
-                // }
-            // }
-            // catch (e) {
-            //     log('error: not support');
+                if (permission === 'granted') {
+                    await featureStore.setItem('notification.requestPermission', 1);
+                    log('- notification.requestPermission done -', 1, permission);
+                }
+                else {
+                    await reg.unregister();
+                    log('Notification.permission: denied');
+                    log('notification: test finish');
+                    return;
+                }
+            }
+            else {
+                await sleep(5000);
+                await reg.unregister();
+                log('Notification.permission: denied');
+                log('notification: test finish');
+                return;
+            }
 
-            // }
 
             // notification.showNotification test
             await reg.showNotification('Hello World!');

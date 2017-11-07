@@ -46,12 +46,12 @@ self.addEventListener('install', function (event) {
         await featureStore.setItem('caches.delete', value);
         log('- caches delete done -', value);
 
-
         // cache.put
         const urlPut = baseUrl + 'put';
         const resPut = await fetch(urlPut);
         await cache1.put(urlPut, resPut);
         await featureStore.setItem('cache.put', 0.5);
+
         // cache.match
         let matchCache = await cache1.match(urlPut);
         let matchCacheData = await matchCache.json();
