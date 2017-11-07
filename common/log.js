@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-// import {noop} from 'utils';
+import {random} from 'utils';
 // import {until} from 'helper';
 import {getStore} from 'store';
 
@@ -28,8 +28,7 @@ async function init() {
 
         const tictok = displayTime => setTimeout(async () => {
             let infos = await logStore.iterate((value, key, i) => {
-                let currScope = key.slice(0, scopeLen);
-                let timestamp = +key.slice(scopeLen);
+                let [currScope, timestamp] = key.split('-');
 
                 if (currScope === scope && timestamp >= displayTime) {
                     return [[key, timestamp, value]];
@@ -56,12 +55,20 @@ async function init() {
         // clear expired log data
         let keys = await logStore.keys();
 
-        keys.filter(key => key.slice(0, scopeLen) === scope)
-            .filter(key => +key.slice(scopeLen) < startTime
-                || /-lock$/.test(key)
-                || /-stack$/.test(key)
-            )
-            .forEach(key => logStore.removeItem(key));
+        keys.filter(key => {
+            if (/-lock$/.test(key) || /-stack$/.test(key)) {
+                return true;
+            }
+
+            let [currScope, timestamp] = key.split('-');
+
+            if (currScope !== scope) {
+                return false;
+            }
+
+            return +timestamp < startTime
+        })
+        .forEach(key => logStore.removeItem(key));
     }
 
 }
@@ -94,7 +101,7 @@ function swLog(...args) {
     let timestamp = args[0];
     let msg = args.slice(1).join(' - ');
 
-    logStore.setItem(scope + timestamp, msg);
+    logStore.setItem(`${scope}-${timestamp}-${random()}`, msg);
 }
 
 // const mode = process.env.NODE_ENV || 'development';

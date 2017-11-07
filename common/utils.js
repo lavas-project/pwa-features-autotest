@@ -24,3 +24,7 @@ export function instanceName(obj) {
 }
 
 export function noop() {}
+
+export function random() {
+    return Math.random().toString().slice(2);
+}

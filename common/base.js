@@ -7,6 +7,7 @@ import {init, zero} from 'helper';
 
 export async function run({name, scope, features, main, error}) {
     showCaseName(name);
+
     await init(scope);
     await zero(features);
 

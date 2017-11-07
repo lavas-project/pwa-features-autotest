@@ -13,15 +13,19 @@ self.addEventListener('install', e => {
     grade('installEvent', 1);
 
     if (e.waitUntil) {
-        e.waitUntil(
-            sleep(1000)
-            .then(() => {
-                installWaitingScore = 1;
-                log('lifecycle sw-lifecycle: installEvent.waitUntil wait for 1s');
-            })
-        );
+        e.waitUntil((async () => {
+            await sleep(100);
+            log('lifecycle sw-lifecycle: installEvent.waitUntil wait for 1s');
+            await sleep(1000);
+
+            installWaitingScore = 1;
+            log('lifecycle sw-lifecycle: installEvent.waitUntil wait for 1s finished');
+
+            await sleep(100);
+        })());
     }
 
+    log('lifecycle sw-lifecycle: skipWaiting');
     self.skipWaiting();
 });
 
@@ -32,14 +36,16 @@ self.addEventListener('activate', e => {
     grade('activateEvent', 1);
 
     if (e.waitUntil) {
-        e.waitUntil(
-            sleep(1000)
-            .then(() => {
-                grade('activateEvent.waitUntil', 0.5);
-                log('lifecycle sw-lifecycle: activateEvent.waitUntil wait for 1s');
-            })
-        );
+        e.waitUntil((async () => {
+            await sleep(100);
+            log('lifecycle sw-lifecycle: activateEvent.waitUntil wait for 1s');
+            await sleep(1000);
+            grade('activateEvent.waitUntil', 0.5);
+            log('lifecycle sw-lifecycle: activateEvent.waitUntil wait for 1s finished');
+            await sleep(100);
+        })());
     }
 
+    log('lifecycle sw-lifecycle: clients.cliam');
     self.clients.claim();
 });
