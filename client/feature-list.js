@@ -77,11 +77,11 @@ export const featureKeys = {
         'pushSubscription.unsubscribe'
     ],
     deviceapi: [
-        'navigator.geolocation',
-        // 'navigator.geolocation.getCurrentPosition',
-        // 'navigator.geolocation.watchPosition',
         'DeviceOrientationEvent',
-        'DeviceMotionEvent'
+        'DeviceMotionEvent',
+        'navigator.geolocation',
+        'navigator.geolocation.getCurrentPosition',
+        'navigator.geolocation.watchPosition'
     ]
 };
 
