@@ -7,7 +7,7 @@ import {featureStore} from 'store';
 import {sleep, one} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
-    'postMessage',
+    // 'postMessage',
     'sw-msg-send',
     'sw-msg-got',
     'main-msg-send',
@@ -60,23 +60,23 @@ export default function (scope) {
             ]);
 
             // postmessage score
-            await sleep(3000);
-            let point = 0;
-            let processItem = [
-                'sw-msg-send',
-                'sw-msg-got',
-                'main-msg-send',
-                'main-msg-got'
-            ];
+            // await sleep(3000);
+            // let point = 0;
+            // let processItem = [
+            //     'sw-msg-send',
+            //     'sw-msg-got',
+            //     'main-msg-send',
+            //     'main-msg-got'
+            // ];
 
-            for (let i = 0; i < processItem.length; i++) {
-                const score = await featureStore.getItem(processItem[i]);
-                point += score;
-            }
-            const result = Number((point / processItem.length).toFixed(2));
+            // for (let i = 0; i < processItem.length; i++) {
+            //     const score = await featureStore.getItem(processItem[i]);
+            //     point += score;
+            // }
+            // const result = Number((point / processItem.length).toFixed(2));
 
-            await featureStore.setItem('postMessage', result);
-            log('- postmessage -', result);
+            // await featureStore.setItem('postMessage', result);
+            // log('- postmessage -', result);
 
             await sleep(5000);
             await reg.unregister();

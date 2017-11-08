@@ -59,8 +59,7 @@ export const featureKeys = {
         'syncEvent'
     ],
     postmessage: [
-        'postMessage',
-        'clients.matchAll',
+        // 'postMessage',
         'sw-msg-send',
         'sw-msg-got',
         'main-msg-send',

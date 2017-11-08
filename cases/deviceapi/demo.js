@@ -3,7 +3,7 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-import {grade, sleep} from 'helper';
+import {grade, sleep, isEmpty} from 'helper';
 import {log} from 'log';
 
 const CHECK_LIST = [
@@ -49,8 +49,13 @@ export default function (scope) {
                         async position => {
                             done = 1;
                             resolve();
-                            await grade('navigator.geolocation.getCurrentPosition', 1);
-                            log('-- navigator.geolocation.getCurrentPosition done --', 1, position);
+                            if (position.isEmpty()) {
+                                log('-- navigator.geolocation.getCurrentPosition done --', 'empty', position);
+                            }
+                            else {
+                                await grade('navigator.geolocation.getCurrentPosition', 1);
+                                log('-- navigator.geolocation.getCurrentPosition done --', 1, position);
+                            }
                         },
                         (e) => {
                             reject();
@@ -75,8 +80,13 @@ export default function (scope) {
                         async position => {
                             done = 1;
                             resolve();
-                            await grade('navigator.geolocation.watchPosition', 1);
-                            log('-- navigator.geolocation.watchPosition done --', 1, position);
+                            if (position.isEmpty()) {
+                                log('-- navigator.geolocation.watchPosition done --', 'empty', position);
+                            }
+                            else {
+                                await grade('navigator.geolocation.watchPosition', 1);
+                                log('-- navigator.geolocation.watchPosition done --', 1, position);
+                            }
                         },
                         (e) => {
                             reject();
@@ -91,8 +101,8 @@ export default function (scope) {
                         }
                     }, 3000);
 
-                    await sleep(3000);
                     if (watchId) {
+                        await sleep(4000);
                         // clearWatch
                         navigator.geolocation.clearWatch(watchId);
                         // await grade('navigator.geolocation.clearWatch', 1);
@@ -101,6 +111,8 @@ export default function (scope) {
                 });
 
             }
+
+            await sleep(5000);
 
             log('deviceapi: test finish');
         }

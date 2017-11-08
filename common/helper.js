@@ -198,3 +198,31 @@ export function createStep({name, prefix = 'pwa-test-step-'}) {
 
     return step;
 }
+
+/**
+ * Empty
+ * @param  {anything}  obj [description]
+ * @return {boolean}     [description]
+ * @example
+ * "", {}, [], 0, null, undefined, false   empty
+ */
+export function isEmpty(obj) {
+    if (Array.isArray(obj)) {
+        return obj.length === 0;
+    }
+    else if (isObject(obj)) {
+        return Object.keys(obj).length === 0;
+    }
+    return !obj;
+}
+
+/**
+ * Object or not
+ * @param  {anything}  obj
+ * @return {boolean}     [description]
+ */
+export function isObject(obj) {
+    // incase of arrow function and array
+    return Object(obj) === obj && String(obj) === '[object Object]' && typeof obj !== 'function' && !Array.isArray(obj);
+}
+
