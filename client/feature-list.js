@@ -5,14 +5,14 @@
 
 export const featureKeys = {
     lifecycle: [
-        'lifecycle',
+        // 'lifecycle',
         'navigator.serviceWorker',
         'navigator.serviceWorker.ready',
         'oncontrollerchange',
         'onstatechange',
         'Registered',
         'Unregistered',
-        'clients.claim',
+        // 'clients.claim',
         'self.skipWaiting',
         'installEvent',
         'activateEvent',
@@ -32,6 +32,12 @@ export const featureKeys = {
     indexeddb: [
         'indexedDB',
         'indexedDB.getAll'
+    ],
+    client: [
+        'clients',
+        'clients.matchAll',
+        'clients.claim',
+        'clients.get'
     ],
     cache: [
         'Cache',

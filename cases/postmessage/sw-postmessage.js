@@ -21,8 +21,6 @@ self.addEventListener('message', async function (event) {
     await featureStore.setItem('sw-msg-got', 1);
     log('- sw-msg-got done -', 1);
 
-    await featureStore.setItem('clients.matchAll', Number(!!self.clients.matchAll));
-
     if (event.source) {
         event.source.postMessage('Woop!');
         await featureStore.setItem('sw-msg-send', 1);

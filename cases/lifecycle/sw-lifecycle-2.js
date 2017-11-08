@@ -1,2 +1,5 @@
 self.skipWaiting();
-self.clients.claim();
+
+self.addEventListener('activate', e => {
+    self.clients.claim();
+});

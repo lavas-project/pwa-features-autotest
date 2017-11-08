@@ -8,7 +8,6 @@ import {sleep, one} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
     'postMessage',
-    'clients.matchAll',
     'sw-msg-send',
     'sw-msg-got',
     'main-msg-send',

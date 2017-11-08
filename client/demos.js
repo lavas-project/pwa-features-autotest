@@ -13,10 +13,12 @@ import notificationCase from '../cases/notification/sequence';
 import postmessageCase from '../cases/postmessage/sequence'; // ok
 import pushCase from '../cases/push/sequence';
 import deviceapiCase from '../cases/deviceapi/sequence';
+import clientCase from '../cases/client/sequence';
 
 export default [
     lifecycleCase,
     getregistrationCase,
+    clientCase,
     fetchCase,
     indexeddbCase,
     cacheCase,
