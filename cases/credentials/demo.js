@@ -6,31 +6,23 @@
 import {sleep, grade, checkProperties} from 'helper';
 import {log} from 'log';
 
+const CHECK_LIST = [
+    'navigator.credentials',
+    'PasswordCredential',
+    'FederatedCredential',
+    'navigator.credentials.store',
+    'navigator.credentials.get'
+];
+
 export default function (scope) {
     return {
         name: 'credentials',
         scope: scope,
-        features: [
-            'navigator.credentials',
-            'PasswordCredential',
-            'FederatedCredential',
-            'navigator.credentials.store',
-            'navigator.credentials.get'
-        ],
+        features: CHECK_LIST,
         async main() {
             log('credentials: start');
 
-            checkProperties(
-                window,
-                [
-                    'navigator.credentials',
-                    'PasswordCredential',
-                    'FederatedCredential',
-                    'navigator.credentials.store',
-                    'navigator.credentials.get'
-                ],
-                1
-            );
+            await checkProperties(window, CHECK_LIST, 1);
 
             log('credentials: test finish');
         },

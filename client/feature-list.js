@@ -88,6 +88,13 @@ export const featureKeys = {
         // 'navigator.geolocation.watchPosition',
         'DeviceOrientationEvent',
         'DeviceMotionEvent'
+    ],
+    credentials: [
+        'navigator.credentials',
+        'PasswordCredential',
+        'FederatedCredential',
+        'navigator.credentials.store',
+        'navigator.credentials.get'
     ]
 };
 

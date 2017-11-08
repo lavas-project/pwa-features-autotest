@@ -14,6 +14,7 @@ import postmessageCase from '../cases/postmessage/sequence'; // ok
 import pushCase from '../cases/push/sequence';
 import deviceapiCase from '../cases/deviceapi/sequence';
 import clientCase from '../cases/client/sequence';
+import credentialsCase from '../cases/credentials/sequence';
 
 export default [
     lifecycleCase,
@@ -26,6 +27,7 @@ export default [
     postmessageCase,
     notificationCase,
     pushCase,
-    deviceapiCase
+    deviceapiCase,
+    credentialsCase
 ];
 
