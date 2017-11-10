@@ -94,6 +94,11 @@ export const featureKeys = {
         'FederatedCredential',
         'navigator.credentials.store',
         'navigator.credentials.get'
+    ],
+    payment: [
+        'paymentRequest',
+        'paymentRequest.show',
+        'paymentRequest.abort'
     ]
 };
 
