@@ -84,7 +84,7 @@ export default function (scope) {
     };
 }
 
-const DB_NAME = 'pwa-test-indexeddb';
+const DB_NAME = 'pwa-features-autotest-indexeddb';
 const VERSION = 1;
 const STORE_NAME = 'test';
 

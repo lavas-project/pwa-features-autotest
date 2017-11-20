@@ -1,5 +1,5 @@
 {
-  "name": "pwa-test",
+  "name": "pwa-features-autotest",
   "version": "0.0.1",
   "description": "浏览器 PWA 功能支持度自动化测试",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lavas-project/pwa-test.git"
+    "url": "git+https://github.com/lavas-project/pwa-features-autotest.git"
   },
   "keywords": [
     "PWA",
@@ -20,7 +20,7 @@
   "author": "lavas-project",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lavas-project/pwa-test/issues"
+    "url": "https://github.com/lavas-project/pwa-features-autotest/issues"
   },
   "dependencies": {
     "whatwg-fetch": "^2.0.3",

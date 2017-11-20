@@ -15,7 +15,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var mode = process.env.NODE_ENV || 'development';
 
-var ROUTE_PREFIX = mode === 'development' ? '' : '/pwa-test';
+var ROUTE_PREFIX = mode === 'development' ? '' : '/pwa-features-autotest';
 
 
 var caseEntryFiles = glob.sync('./cases/**/+(index|sw*).js');

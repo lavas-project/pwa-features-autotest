@@ -171,7 +171,7 @@ export function grade(feature, score) {
     return featureStore.setItem(feature, score);
 }
 
-export function createStep({name, prefix = 'pwa-test-step-'}) {
+export function createStep({name, prefix = 'pwa-features-autotest-step-'}) {
     const key = prefix + name;
 
     let stepNumber = -1;
