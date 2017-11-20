@@ -1,11 +1,11 @@
-# PWA-Features-autotest
+# PWA Features Autotest
 
 
 Tracks the features of service worker supported in browsers and analyse the PWA supported in browsers.
 
 > [PWA Trend](https://lavas.baidu.com/ready): You can get the statistics which is updated per two weeks.
 
-> [PWA-Features-autotest](https://lavas-project/lavas-project.github.io/pwa-demo/pwa-features-autotest/sequence): Provide auto test page for developer.
+> [PWA Features Autotest](https://lavas-project/lavas-project.github.io/pwa-demo/pwa-features-autotest/sequence): Provide auto test page for developer.
 
 > [Maintain Data Manually](https://github.com/lavas-project/pwa-expo): Manifest feature and some extra details.
 
