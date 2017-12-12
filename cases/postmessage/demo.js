@@ -3,8 +3,7 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-import {featureStore} from 'store';
-import {sleep, one} from 'helper';
+import {sleep, one, grade} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
     // 'postMessage',
@@ -40,7 +39,7 @@ export default function (scope) {
                     text: 'Hi!',
                     port: ch && ch.port2
                 }, [ch && ch.port2]);
-                await featureStore.setItem('main-msg-send', 1);
+                await grade('main-msg-send', 1);
                 log('- main-msg-send done -', 1);
             }
             catch (err) {
@@ -49,7 +48,7 @@ export default function (scope) {
                 reg.active.postMessage({
                     text: 'Hi!'
                 });
-                await featureStore.setItem('main-msg-send', 0.5);
+                await grade('main-msg-send', 0.5);
                 log('- main-msg-send done -', 0.5);
             }
 
@@ -70,12 +69,12 @@ export default function (scope) {
             // ];
 
             // for (let i = 0; i < processItem.length; i++) {
-            //     const score = await featureStore.getItem(processItem[i]);
+            //     const score = await grade(processItem[i]);
             //     point += score;
             // }
             // const result = Number((point / processItem.length).toFixed(2));
 
-            // await featureStore.setItem('postMessage', result);
+            // await grade('postMessage', result);
             // log('- postmessage -', result);
 
             await sleep(5000);
@@ -93,7 +92,7 @@ async function messageFromSWListener() {
         ch = new MessageChannel();
         ch.port1.onmessage = async event => {
             log('Got reply from sw via ch.port2', event.data);
-            await featureStore.setItem('main-msg-got', 0.8);
+            await grade('main-msg-got', 0.8);
             log('- main-msg-got done -', 0.8);
             // await store.put('feature', 'messageChannel.port1', 'main-msg-got-by')
         };
@@ -103,18 +102,18 @@ async function messageFromSWListener() {
     return Promise.race([
         one(window, 'error', async error => {
             console.error(error);
-            await featureStore.setItem('main-msg-got', 0);
+            await grade('main-msg-got', 0);
             log('- main-msg-send done -', 0);
         }),
         one(window, 'message', async event => {
             console.warn('Got reply from serviceWorker via window', event.data);
-            await featureStore.setItem('main-msg-got', 0.5);
+            await grade('main-msg-got', 0.5);
             log('- main-msg-got done -', 0.5);
           // await store.put('feature', 'window', 'main-msg-got-by')
         }),
         one(navigator.serviceWorker, 'message', async event => {
             log('Got reply from serviceWorker via navigator.serviceWorker', event);
-            await featureStore.setItem('main-msg-got', 1);
+            await grade('main-msg-got', 1);
             log('- main-msg-got done -', 1);
           // await store.put('feature', 'navigator.serviceWorker', 'main-msg-got-by')
         })

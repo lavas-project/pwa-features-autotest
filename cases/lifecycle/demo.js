@@ -4,7 +4,7 @@
  */
 import 'whatwg-fetch';
 import {featureStore} from 'store';
-import {one, sleep, register, grade, zero} from 'helper';
+import {sleep, register, grade} from 'helper';
 import {log} from 'log';
 
 const CHECK_LIST = [

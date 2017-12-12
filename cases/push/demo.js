@@ -3,8 +3,7 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 import 'whatwg-fetch';
-import {featureStore} from 'store';
-import {sleep} from 'helper';
+import {sleep, grade} from 'helper';
 import {log} from 'log';
 // import webpush from 'web-push';
 const CHECK_LIST = [
@@ -61,7 +60,7 @@ export default function (scope) {
                 log('push: test finish');
                 return;
             }
-            await featureStore.setItem('pushManager', 1);
+            await grade('pushManager', 1);
             log('- pushManager done -', 1, pushManager);
 
 
@@ -71,7 +70,7 @@ export default function (scope) {
                     userVisibleOnly: true,
                     applicationServerKey: applicationServerKey
                 });
-                await featureStore.setItem('pushManager.permissionState', 1);
+                await grade('pushManager.permissionState', 1);
                 log('- pushManager.permissionState done -', 1);
 
                 if (permissionState === 'denied') {
@@ -100,11 +99,11 @@ export default function (scope) {
             let getSubscribe;
             try {
                 getSubscribe = await pushManager.getSubscription();
-                await featureStore.setItem('pushManager.getSubscription', 1);
+                await grade('pushManager.getSubscription', 1);
                 log('- pushManager.getSubscription done -', 1);
 
                 if (getSubscribe) {
-                    await featureStore.setItem('pushManager.subscribe', 1);
+                    await grade('pushManager.subscribe', 1);
                     log('- pushManager.subscribe done -', 1);
                 }
 
@@ -119,7 +118,7 @@ export default function (scope) {
                 await subscribe.unsubscribe();
                 getSubscribe = await pushManager.getSubscription();
                 if (!getSubscribe) {
-                    await featureStore.setItem('pushSubscription.unsubscribe', 1);
+                    await grade('pushSubscription.unsubscribe', 1);
                 }
                 log('- pushSubscription.unsubscribe done -', Number(!getSubscribe));
             }

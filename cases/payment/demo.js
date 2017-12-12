@@ -25,17 +25,17 @@ const DETAILS = {
     displayItems: [
         {
             label: 'Original donation amount',
-            amount: { currency: 'USD', value : '10.00' }, // US$10.00
+            amount: {currency: 'USD', value: '10.00'} // US$10.00
         },
         {
             label: 'Friends and family discount',
-            amount: { currency: 'USD', value : '-9.99' }, // -US$9.99
+            amount: {currency: 'USD', value: '-9.99'}, // -US$9.99
             pending: true // The price is not determined yet
         }
     ],
-    total:  {
+    total: {
         label: 'Total',
-        amount: { currency: 'USD', value : '0.01' }, // US$55.00
+        amount: {currency: 'USD', value: '0.01'} // US$55.00
     },
     shippingOptions: [
         {
@@ -70,7 +70,6 @@ export default function (scope) {
                 return;
             }
 
-
             const request = new PaymentRequest(
                 METHOD_DATA, // required payment method data
                 DETAILS,     // required information about transaction
@@ -86,8 +85,8 @@ export default function (scope) {
                 .then(paymentResponse => {
                     log('-- paymentResponse done --', 1, paymentResponse);
                     // Process paymentResponse here
-                    paymentResponse.complete('success').then((res) => {
-                      log('-- paymentResponse.complete done --', 1, paymentResponse);
+                    paymentResponse.complete('success').then(res => {
+                        log('-- paymentResponse.complete done --', 1, paymentResponse);
                     });
                 })
                 .catch(err => {

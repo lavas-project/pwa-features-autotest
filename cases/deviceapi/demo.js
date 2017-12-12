@@ -3,7 +3,7 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-import {grade, sleep, isEmpty} from 'helper';
+import {grade, sleep} from 'helper';
 import {log} from 'log';
 
 const CHECK_LIST = [
@@ -57,7 +57,7 @@ export default function (scope) {
                                 log('-- navigator.geolocation.getCurrentPosition done --', 1, position);
                             }
                         },
-                        (e) => {
+                        e => {
                             reject();
                             log('getCurrentPosition error:', e);
                         }
@@ -88,7 +88,7 @@ export default function (scope) {
                                 log('-- navigator.geolocation.watchPosition done --', 1, position);
                             }
                         },
-                        (e) => {
+                        e => {
                             reject();
                             log('watchPosition error:', e);
                         }

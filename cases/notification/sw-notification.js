@@ -3,7 +3,7 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-import {featureStore} from 'store';
+import {grade} from 'helper';
 import {log} from 'log';
 
 self.addEventListener('install', function (event) {
@@ -17,7 +17,7 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('notificationclick', async function (event) {
 
-    await featureStore.setItem('notificationclick', 1);
+    await grade('notificationclick', 1);
     log('- notificationclick done -', 1);
     event.notification.close();
 });

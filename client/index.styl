@@ -109,6 +109,20 @@ iframe
                         // background #39b54a url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1508493210792&di=ee1987cc4a680db7cd80f2fb1e098117&imgtype=0&src=http%3A%2F%2Fimglf0.ph.126.net%2Fw7zhaR2_IBP7G01G3eYYjA%3D%3D%2F28710447642466602.png') no-repeat center center
                         // background-size 50%
 
+        // .done-rate
+        //     height 12px
+        //     line-height 12px
+        //     background #eee
+        //     border-radius 5px
+        //     overflow hidden
+        //     .done
+        //         display inline-block
+        //         background #39b54a
+        //         overflow visible
+        //         text-align right
+        //         transition width 1s linear
+
+
     .features
         width 100%
         table
@@ -163,6 +177,15 @@ iframe
     -ms-transition all 0.5s linear
     -o-transition all 0.5s linear
     transition all 0.5s linear
+
+.case-shake
+    animation shake 2s infinite
+
+@keyframes shake {
+    0%,50%,100%{opacity:1;transform: scale(1);}
+    25%,75%{opacity:0.5;transform: scale(0.8);}
+}
+
 
 @media screen and (min-width: 500px)
     .schedule

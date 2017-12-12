@@ -7,7 +7,7 @@ import {refreshCommon} from './common';
 import demoList from './demos';
 import {zero, init, createStep} from 'helper';
 import {log} from 'log';
-import {featureStore} from 'store';
+// import {featureStore} from 'store';
 import 'babel-polyfill';
 
 async function main() {
@@ -31,6 +31,11 @@ async function main() {
 
     for (let i = 0; i < demoList.length; i++) {
         await step(async () => {
+            if (parent && parent.schedulePerCase) {
+                parent.schedulePerCase({
+                    caseName: demoList[i].name || ''
+                });
+            }
             await run(demoList[i]);
         });
 

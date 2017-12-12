@@ -3,7 +3,7 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-import {featureStore} from 'store';
+import {grade} from 'helper';
 import {log} from 'log';
 
 self.addEventListener('install', function (event) {
@@ -17,7 +17,7 @@ self.addEventListener('activate', function (event) {
 });
 
 self.addEventListener('sync', function (event) {
-    featureStore.setItem('syncEvent', 1);
+    grade('syncEvent', 1);
     log('- syncEvent test -', 1);
 });
 

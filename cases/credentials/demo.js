@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 // import 'whatwg-fetch';
-import {sleep, grade, checkProperties} from 'helper';
+import {checkProperties} from 'helper';
 import {log} from 'log';
 
 const CHECK_LIST = [

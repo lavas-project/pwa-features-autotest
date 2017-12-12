@@ -3,7 +3,7 @@
  * @author clark-t (clarktanglei@163.com)
  */
 
-import {sleep, grade, one} from 'helper';
+import {sleep, grade} from 'helper';
 import {log} from 'log';
 
 let installWaitingScore = 0;

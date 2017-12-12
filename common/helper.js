@@ -164,10 +164,21 @@ export function until(fn, interval = 50) {
 }
 
 export function zero(list) {
-    return Promise.all(list.map(feature => grade(feature, 0)));
+    return Promise.all(list.map(feature => featureStore.setItem(feature, 0)));
 }
 
 export function grade(feature, score) {
+    try {
+        if (parent && parent.schedulePerCase) {
+            parent.schedulePerCase({
+                feature,
+                score
+            })
+        }
+
+    }
+    catch(e) {}
+
     return featureStore.setItem(feature, score);
 }
 

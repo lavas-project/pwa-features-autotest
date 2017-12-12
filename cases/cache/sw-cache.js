@@ -3,19 +3,18 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-import {sleep} from 'helper';
-import {featureStore} from 'store';
+import {sleep, grade} from 'helper';
 import {log} from 'log';
 
 self.addEventListener('install', function (event) {
     log('Install event');
 
     if (self.Cache) {
-        featureStore.setItem('Cache', 1);
+        grade('Cache', 1);
     }
 
     if (self.caches) {
-        featureStore.setItem('caches', 1);
+        grade('caches', 1);
     }
 
     const baseUrl = process.env.ROUTE_PREFIX + '/cache/';
@@ -29,25 +28,25 @@ self.addEventListener('install', function (event) {
         const cache1 = await caches.open('caches-1');
         let hasCaches1 = await caches.has('caches-1');
         value = Number(hasCaches1);
-        await featureStore.setItem('caches.open', value);
-        await featureStore.setItem('caches.has', value);
+        await grade('caches.open', value);
+        await grade('caches.has', value);
         log('- caches open/has done -', value);
 
         // caches.keys
         await caches.open('caches-2');
         const hasCachesKeys = await caches.keys();
         value = Number(hasCachesKeys && hasCachesKeys.length >= 2);
-        await featureStore.setItem('caches.keys', value);
+        await grade('caches.keys', value);
         log('- caches keys done -', value, hasCachesKeys);
 
         // caches.delete (** 猎豹 caches.delete().then() no response **)
         // await caches.delete('caches-2');
         caches.delete('caches-2').then(async res => {
             await sleep(3000);
-            log('delete then',res);
+            log('delete then', res);
             if (res) {
                 value = Number(res);
-                await featureStore.setItem('caches.delete', value);
+                await grade('caches.delete', value);
                 log('- caches delete done -', value);
             }
         });
@@ -58,21 +57,21 @@ self.addEventListener('install', function (event) {
         const hasCheck = await caches.has('caches-2');
         const hasCaches2 = cachesKeysCheck && hasCheck;
         value = Number(!hasCaches2) * 0.8;
-        await featureStore.setItem('caches.delete', value);
+        await grade('caches.delete', value);
         log('- caches delete done -', value);
 
         // cache.put
         const urlPut = baseUrl + 'put';
         const resPut = await fetch(urlPut);
         await cache1.put(urlPut, resPut);
-        await featureStore.setItem('cache.put', 0.5);
+        await grade('cache.put', 0.5);
 
         // cache.match
         let matchCache = await cache1.match(urlPut);
         let matchCacheData = await matchCache.json();
         value = Number(matchCacheData.data === 'put');
-        await featureStore.setItem('cache.put', value);
-        await featureStore.setItem('cache.match', value);
+        await grade('cache.put', value);
+        await grade('cache.match', value);
         log('- cache put done -', value);
         log('- cache match done -', value);
 
@@ -83,8 +82,8 @@ self.addEventListener('install', function (event) {
             });
             const matchCachesData = await matchCaches.json();
             value = Number(matchCachesData.data === 'put');
-            await featureStore.setItem('cache.add', value);
-            await featureStore.setItem('caches.match', value);
+            await grade('cache.add', value);
+            await grade('caches.match', value);
             log('- caches match done -', value);
         }
         catch (e) {
@@ -95,7 +94,7 @@ self.addEventListener('install', function (event) {
         await cache1.delete(urlPut);
         matchCache = await cache1.match(urlPut);
         value = Number(!matchCache);
-        await featureStore.setItem('cache.delete', value);
+        await grade('cache.delete', value);
         log('- cache delete done -', value);
 
         // cache.addAll
@@ -106,28 +105,28 @@ self.addEventListener('install', function (event) {
             baseUrl + '4'
         ];
         await cache1.addAll(urlAddAll);
-        await featureStore.setItem('cache.addAll', 0.5);
+        await grade('cache.addAll', 0.5);
 
         const cacheKeys = await cache1.keys();
         value = Number(cacheKeys && cacheKeys.length >= 4);
-        await featureStore.setItem('cache.addAll', value);
+        await grade('cache.addAll', value);
         log('- cache addAll done -', value, cacheKeys);
 
         value = Number(cacheKeys && cacheKeys.length >= 2);
-        await featureStore.setItem('cache.keys', value);
+        await grade('cache.keys', value);
         log('- cache keys done -', value, cacheKeys);
 
         // cache.add
         const urlAdd = baseUrl + 'add';
         await cache1.add(urlAdd);
-        await featureStore.setItem('cache.add', 0.5);
+        await grade('cache.add', 0.5);
 
         // cache.match
         matchCache = await cache1.match(urlAdd);
         matchCacheData = await matchCache.json();
         value = Number(matchCacheData.data === 'add');
-        await featureStore.setItem('cache.add', value);
-        await featureStore.setItem('cache.match', value);
+        await grade('cache.add', value);
+        await grade('cache.match', value);
         log('- cache add done -', value);
         log('- cache match done -', value);
 
@@ -135,7 +134,7 @@ self.addEventListener('install', function (event) {
         // cache.matchAll
         const matchAllCache = await cache1.matchAll(baseUrl);
         value = Number(matchAllCache && matchAllCache.length >= 4);
-        await featureStore.setItem('cache.matchAll', value);
+        await grade('cache.matchAll', value);
         log('- cache matchAll done -', value, matchAllCache);
 
         // delete test cache

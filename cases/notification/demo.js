@@ -4,8 +4,7 @@
  */
 
 import 'whatwg-fetch';
-import {featureStore} from 'store';
-import {sleep} from 'helper';
+import {sleep, grade} from 'helper';
 import {log} from 'log';
 const CHECK_LIST = [
     'Notification',
@@ -42,7 +41,7 @@ export default function (scope) {
                 return;
             }
 
-            await featureStore.setItem('Notification', 1);
+            await grade('Notification', 1);
             log('- Notification done -',  Notification.permission, 1);
 
             // notification.requestPermission test
@@ -68,7 +67,7 @@ export default function (scope) {
                 ]);
 
                 if (permission === 'granted') {
-                    await featureStore.setItem('notification.requestPermission', 1);
+                    await grade('notification.requestPermission', 1);
                     log('- notification.requestPermission done -', 1, permission);
                 }
                 else {
@@ -89,12 +88,12 @@ export default function (scope) {
 
             // notification.showNotification test
             await reg.showNotification('Hello World!');
-            await featureStore.setItem('showNotification', 1);
+            await grade('showNotification', 1);
             log('- showNotification done -', 1);
 
             // notification.getNotification test
             const hasNotification = await reg.getNotifications();
-            await featureStore.setItem('getNotification', 1);
+            await grade('getNotification', 1);
             log('- getNotifications done -', 1, hasNotification);
 
 

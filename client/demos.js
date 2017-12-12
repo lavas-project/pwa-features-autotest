@@ -15,17 +15,17 @@ import pushCase from '../cases/push/sequence';
 import deviceapiCase from '../cases/deviceapi/sequence';
 import clientCase from '../cases/client/sequence';
 import credentialsCase from '../cases/credentials/sequence';
-import paymentCase from '../cases/payment/sequence'
+import paymentCase from '../cases/payment/sequence';
 
 export default [
     lifecycleCase,
-    getregistrationCase,
-    clientCase,
     fetchCase,
     indexeddbCase,
+    clientCase,
     cacheCase,
     syncCase,
     postmessageCase,
+    getregistrationCase,
     notificationCase,
     pushCase,
     deviceapiCase,
