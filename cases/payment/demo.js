@@ -107,7 +107,7 @@ export default function (scope) {
                 }, 3000);
             }
 
-            await sleep(3000);
+            await sleep(5000);
 
             log('payment: test finish');
         },

@@ -3,7 +3,7 @@
  * @author ruoran (liuruoran@baidu.com)
  */
 
-import {grade, sleep} from 'helper';
+import {grade, sleep, isEmpty} from 'helper';
 import {log} from 'log';
 
 const CHECK_LIST = [
@@ -49,7 +49,7 @@ export default function (scope) {
                         async position => {
                             done = 1;
                             resolve();
-                            if (position.isEmpty()) {
+                            if (!position || isEmpty(position)) {
                                 log('-- navigator.geolocation.getCurrentPosition done --', 'empty', position);
                             }
                             else {
@@ -80,10 +80,11 @@ export default function (scope) {
                         async position => {
                             done = 1;
                             resolve();
-                            if (position.isEmpty()) {
+                            if (!position || isEmpty(position)) {
                                 log('-- navigator.geolocation.watchPosition done --', 'empty', position);
                             }
                             else {
+                                log('catched the new position');
                                 await grade('navigator.geolocation.watchPosition', 1);
                                 log('-- navigator.geolocation.watchPosition done --', 1, position);
                             }
@@ -95,14 +96,17 @@ export default function (scope) {
                     );
                     setTimeout(() => {
                         if (!done) {
-                            log('watchPosition timeout');
+                            log('position has not change or watchPosition timeout');
                             return resolve();
 
                         }
-                    }, 3000);
+                    }, 5000);
 
                     if (watchId) {
-                        await sleep(4000);
+                        await sleep(5000);
+                        log('watchId exist');
+                        await grade('navigator.geolocation.watchPosition', 1);
+                        log('-- navigator.geolocation.watchPosition done --', 1);
                         // clearWatch
                         navigator.geolocation.clearWatch(watchId);
                         // await grade('navigator.geolocation.clearWatch', 1);

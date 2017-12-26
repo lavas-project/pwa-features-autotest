@@ -132,8 +132,8 @@ self.addEventListener('install', function (event) {
 
 
         // cache.matchAll
-        const matchAllCache = await cache1.matchAll(baseUrl);
-        value = Number(matchAllCache && matchAllCache.length >= 4);
+        const matchAllCache = await cache1.matchAll(urlAdd);
+        value = Number(matchAllCache && matchAllCache.length > 0);
         await grade('cache.matchAll', value);
         log('- cache matchAll done -', value, matchAllCache);
 
