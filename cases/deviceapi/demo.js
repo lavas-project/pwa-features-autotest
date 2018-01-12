@@ -40,6 +40,7 @@ export default function (scope) {
             if (navigator.geolocation) {
                 await grade('navigator.geolocation', 1);
                 log('-- navigator.geolocation done --', 1, navigator.geolocation);
+                let getCurrentPosition = 0;
 
                 // getCurrentPosition
                 // "Network location provider at 'https://www.googleapis.com/' : No response received."
@@ -53,6 +54,7 @@ export default function (scope) {
                                 log('-- navigator.geolocation.getCurrentPosition done --', 'empty', position);
                             }
                             else {
+                                getCurrentPosition = 1;
                                 await grade('navigator.geolocation.getCurrentPosition', 1);
                                 log('-- navigator.geolocation.getCurrentPosition done --', 1, position);
                             }
@@ -102,9 +104,9 @@ export default function (scope) {
                         }
                     }, 5000);
 
-                    if (watchId) {
+                    if (watchId && getCurrentPosition) {
                         await sleep(5000);
-                        log('watchId exist');
+                        log('getCurrentPosition and watchId exist');
                         await grade('navigator.geolocation.watchPosition', 1);
                         log('-- navigator.geolocation.watchPosition done --', 1);
                         // clearWatch

@@ -85,32 +85,57 @@ export default function (scope) {
 
             // subscribe test
             let subscribe;
-            try {
-                subscribe = await pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: applicationServerKey
-                });
-            }
-            catch (err) {
-                log('Failed to subscribe the user: ', err);
-            }
+            await new Promise(async (resolve, reject) => {
+                let done = 0;
+                try {
+                    subscribe = await pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: applicationServerKey
+                    });
+                    done = 1;
+                    resolve();
+                }
+                catch (err) {
+                    reject();
+                    log('Failed to subscribe the user: ', err);
+                }
+
+                setTimeout(() => {
+                    if (!done) {
+                        log('pushManager.subscribe timeout');
+                        resolve();
+                    }
+                }, 5000);
+            });
 
             // getSubscription test
             let getSubscribe;
-            try {
-                getSubscribe = await pushManager.getSubscription();
-                await grade('pushManager.getSubscription', 1);
-                log('- pushManager.getSubscription done -', 1);
+            await new Promise(async (resolve, reject) => {
+                let done = 0;
+                try {
+                    getSubscribe = await pushManager.getSubscription();
+                    await grade('pushManager.getSubscription', 1);
+                    log('- pushManager.getSubscription done -', 1);
 
-                if (getSubscribe) {
-                    await grade('pushManager.subscribe', 1);
-                    log('- pushManager.subscribe done -', 1);
+                    if (getSubscribe) {
+                        await grade('pushManager.subscribe', 1);
+                        log('- pushManager.subscribe done -', 1);
+                    }
+                    done = 1;
+                    resolve();
+                }
+                catch (err) {
+                    reject();
+                    log('Failed to test getSubscription: ', err);
                 }
 
-            }
-            catch (err) {
-                log('Failed to test getSubscription: ', err);
-            }
+                setTimeout(() => {
+                    if (!done) {
+                        log('pushManager.getSubscription timeout');
+                        resolve();
+                    }
+                }, 5000);
+            });
 
             if (subscribe) {
 
