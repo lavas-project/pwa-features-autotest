@@ -80,7 +80,10 @@ var webpackConfig = {
                             ['es2015'],
                             ['stage-2']
                         ],
-                        plugins: ['transform-runtime']
+                        plugins: [
+                            'transform-runtime',
+                            'add-module-exports'
+                        ]
                     }
                 }]
             },
@@ -140,14 +143,6 @@ var webpackConfig = {
             'process.env': {
 
                 NODE_ENV: '"' + mode + '"',
-
-                // pwa feature test cases html entry list
-                CASE_ENTRY_LIST: JSON.stringify(
-                    caseIndexFiles.map(function (filePath) {
-                        return ROUTE_PREFIX + filePath.slice(1).replace(/js$/, 'html');
-                    })
-                ),
-
                 ROUTE_PREFIX: JSON.stringify(ROUTE_PREFIX)
             }
         }),

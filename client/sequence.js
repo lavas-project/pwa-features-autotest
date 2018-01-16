@@ -2,13 +2,13 @@
  * @file client entry js file
  * @author clark-t (clarktanglei@163.com)
  */
-
+import 'babel-polyfill';
 import {refreshCommon} from './common';
-import demoList from './demos';
 import {zero, init, createStep} from 'helper';
 import {log} from 'log';
-// import {featureStore} from 'store';
-import 'babel-polyfill';
+
+const files = require.context('../cases', true, /sequence\.js$/);
+const caseList = files.keys().map(key => files(key));
 
 async function main() {
     let step = createStep('main');
@@ -18,28 +18,21 @@ async function main() {
     refreshCommon();
 
     await step(async () => {
-        let features = demoList.reduce(
-            (arr, demo) => {
-                arr = arr.concat(demo.features || []);
-                return arr;
-            },
-            []
-        );
-
+        let features = caseList.reduce((arr, demo) => [...arr, ...(demo.features || [])], []);
         await zero(features);
     }, false);
 
-    for (let i = 0; i < demoList.length; i++) {
+    for (let i = 0; i < caseList.length; i++) {
         await step(async () => {
             if (parent && parent.schedulePerCase) {
                 parent.schedulePerCase({
-                    caseName: demoList[i].name || ''
+                    caseName: caseList[i].name || ''
                 });
             }
-            await run(demoList[i]);
+            await run(caseList[i]);
         });
 
-        window.result(demoList[i].name);
+        window.result(caseList[i].name);
     }
 
     step.done();

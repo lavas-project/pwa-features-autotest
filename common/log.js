@@ -15,7 +15,7 @@ let startTime;
 async function init() {
     startTime = Date.now();
     scope = location.pathname.split('/').slice(0, -1).join('/') || 'root';
-    let scopeLen = scope.length;
+    // let scopeLen = scope.length;
     logStore = getStore('log');
 
     if (typeof document !== 'undefined') {
@@ -51,25 +51,24 @@ async function init() {
 
         return tictok(startTime);
     }
-    else {
-        // clear expired log data
-        let keys = await logStore.keys();
 
-        keys.filter(key => {
-            if (/-lock$/.test(key) || /-stack$/.test(key)) {
-                return true;
-            }
+    // clear expired log data
+    let keys = await logStore.keys();
 
-            let [currScope, timestamp] = key.split('-');
+    keys.filter(key => {
+        if (/-lock$/.test(key) || /-stack$/.test(key)) {
+            return true;
+        }
 
-            if (currScope !== scope) {
-                return false;
-            }
+        let [currScope, timestamp] = key.split('-');
 
-            return +timestamp < startTime
-        })
-        .forEach(key => logStore.removeItem(key));
-    }
+        if (currScope !== scope) {
+            return false;
+        }
+
+        return +timestamp < startTime;
+    })
+    .forEach(key => logStore.removeItem(key));
 
 }
 

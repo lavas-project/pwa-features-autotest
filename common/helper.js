@@ -1,6 +1,6 @@
 /**
  * @file helper.js
- * @author clark -t (clarktanglei@163.com)
+ * @author clark-t (clarktanglei@163.com)
  */
 
 import {get} from 'utils';
@@ -10,6 +10,7 @@ import {featureStore} from 'store';
  * unregister sw controller and then reload the page
  *
  * @param {Array} scopes description
+ * @param {number} timeout timeout
  */
 export async function init(scopes, timeout = 5000) {
     const sw = navigator.serviceWorker;
@@ -173,11 +174,13 @@ export function grade(feature, score) {
             parent.schedulePerCase({
                 feature,
                 score
-            })
+            });
         }
 
     }
-    catch(e) {}
+    catch (e) {
+        console.log(e);
+    }
 
     return featureStore.setItem(feature, score);
 }
@@ -212,10 +215,9 @@ export function createStep({name, prefix = 'pwa-features-autotest-step-'}) {
 
 /**
  * Empty
- * @param  {anything}  obj [description]
- * @return {boolean}     [description]
- * @example
- * "", {}, [], 0, null, undefined, false   empty
+ *
+ * @param  {anything}  obj obj
+ * @return {boolean} is  "", {}, [], 0, null, undefined, false   empty
  */
 export function isEmpty(obj) {
     if (Array.isArray(obj)) {
@@ -224,16 +226,19 @@ export function isEmpty(obj) {
     else if (isObject(obj)) {
         return Object.keys(obj).length === 0;
     }
+
     return !obj;
 }
 
 /**
  * Object or not
- * @param  {anything}  obj
- * @return {boolean}     [description]
+ *
+ * @param  {anything} obj obj
+ * @return {boolean} is Object
  */
 export function isObject(obj) {
+    return Object.prototype.toString.call(obj) === '[object Object]';
     // incase of arrow function and array
-    return Object(obj) === obj && String(obj) === '[object Object]' && typeof obj !== 'function' && !Array.isArray(obj);
+    // return Object(obj) === obj && String(obj) === '[object Object]' && typeof obj !== 'function' && !Array.isArray(obj);
 }
 

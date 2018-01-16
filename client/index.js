@@ -4,7 +4,11 @@
  */
 
 import {refreshCommon} from './common.js';
-const caseList = process.env.CASE_ENTRY_LIST;
+const files = require.context('../cases', true, /index\.js$/);
+
+const caseList = files.keys()
+    .map(key => key.slice(1).replace(/js$/, 'html'))
+    .map(key => process.env.ROUTE_PREFIX + '/cases' + key);
 
 refreshCommon();
 
