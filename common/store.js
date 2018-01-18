@@ -20,6 +20,14 @@ export function getStore(storeName) {
     });
 }
 
+export function getLocalStore(storeName) {
+    return localforage.createInstance({
+        name: 'pwaTest',
+        driver: localforage.LOCALSTORAGE,
+        storeName: storeName
+    });
+}
+
 export default getStore;
 
 /**
@@ -34,11 +42,11 @@ export const featureStore = getStore('feature');
  *
  * @type {Object}
  */
-export const uaStore = getStore('ua');
+export const uaStore = getLocalStore('ua');
 
 /**
  * an indexedDB storage instance for uuid
  *
  * @type {Object}
  */
-export const uuidStore = getStore('uuid');
+export const uuidStore = getLocalStore('uuid');

@@ -170,13 +170,12 @@ export function zero(list) {
 
 export function grade(feature, score) {
     try {
-        if (parent && parent.schedulePerCase) {
+        if (typeof parent !== 'undefined' && parent.schedulePerCase) {
             parent.schedulePerCase({
                 feature,
                 score
             });
         }
-
     }
     catch (e) {
         console.log(e);

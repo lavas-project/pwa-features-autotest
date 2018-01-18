@@ -6,12 +6,15 @@ import 'babel-polyfill';
 import {refreshCommon} from './common';
 import {zero, init, createStep} from 'helper';
 import {log} from 'log';
+import {featureKeys} from './feature-list';
 
 const files = require.context('../cases', true, /sequence\.js$/);
-const caseList = files.keys().map(key => files(key));
+const caseList = Object.keys(featureKeys).map(key => files('./' + key.toLowerCase() + '/sequence.js'));
+
+
 
 async function main() {
-    let step = createStep('main');
+    let step = createStep({name: 'main'});
 
     await step(init, false);
 
@@ -31,6 +34,7 @@ async function main() {
             }
             await run(caseList[i]);
         });
+
 
         window.result(caseList[i].name);
     }
